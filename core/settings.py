@@ -7,7 +7,13 @@ SECRET_KEY = 'django-insecure-change-this-in-production-xyz123abc456'
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app', '.now.sh']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '.vercel.app',
+    'toolsvera.com',
+    'www.toolsvera.com',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
