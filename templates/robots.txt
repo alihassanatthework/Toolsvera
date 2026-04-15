@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /media/tmp/
+
+Sitemap: https://toolsvera.com/sitemap.xml

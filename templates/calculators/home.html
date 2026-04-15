@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Free Online Calculators — BMI, Mortgage, Percentage & More{% endblock %}
+{% block meta_description %}ToolsVera free online calculators. BMI calculator, mortgage calculator, percentage calculator and more. No signup, instant results.{% endblock %}
+{% block meta_keywords %}free online calculators, bmi calculator, mortgage calculator, percentage calculator{% endblock %}
+{% block canonical_path %}/calculators/{% endblock %}
+{% block og_title %}Free Online Calculators — ToolsVera{% endblock %}
+{% block og_description %}BMI, mortgage, percentage calculators and more. All free, no signup needed.{% endblock %}
+{% block twitter_title %}Free Online Calculators — ToolsVera{% endblock %}
+{% block twitter_description %}BMI, mortgage, percentage calculators and more. All free, no signup needed.{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a>
+    <span class="mx-2">/</span>
+    <span class="text-gray-600">Calculators</span>
+  </div>
+  <div class="text-center mb-10">
+    <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Free Online Calculators</h1>
+    <p class="text-gray-500">Instant results, no signup required</p>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-5">
+    <a href="/calculators/bmi/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-blue-200">
+      <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">⚖️</div>
+      <div class="font-semibold text-gray-800">BMI Calculator</div>
+      <div class="text-xs text-gray-400 mt-1">Body mass index</div>
+    </a>
+    <a href="/calculators/mortgage/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-blue-200">
+      <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🏦</div>
+      <div class="font-semibold text-gray-800">Mortgage Calculator</div>
+      <div class="text-xs text-gray-400 mt-1">Monthly payments</div>
+    </a>
+    <a href="/calculators/percentage/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-blue-200">
+      <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">💯</div>
+      <div class="font-semibold text-gray-800">Percentage</div>
+      <div class="text-xs text-gray-400 mt-1">Calculate percentages</div>
+    </a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Image Converter — Convert JPG PNG WEBP BMP Free Online{% endblock %}
+{% block meta_description %}Convert images between JPG, PNG, WEBP, and BMP formats for free online. Fast image format converter with no quality loss and no signup.{% endblock %}
+{% block meta_keywords %}image converter, jpg to png, png to webp, convert image format free, online image converter{% endblock %}
+{% block canonical_path %}/images/convert/{% endblock %}
+{% block og_title %}Free Image Converter — ToolsVera{% endblock %}
+{% block og_description %}Convert images between JPG, PNG, WEBP and BMP formats instantly. Free, no signup.{% endblock %}
+{% block twitter_title %}Free Image Converter — ToolsVera{% endblock %}
+{% block twitter_description %}Convert images between JPG, PNG, WEBP and BMP formats instantly. Free, no signup.{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Image Format Converter",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free online image converter. Convert between JPG, PNG, WEBP, and BMP formats."
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a>
+    <span class="mx-2">/</span>
+    <span class="text-gray-600">Convert Image</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-purple-600 to-purple-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🔀</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Image Converter</h1>
+          <p class="text-purple-100 text-sm">Convert images between any format</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-5">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Select image</label>
+          <input type="file" name="image" accept="image/*" required
+                 class="w-full text-sm text-gray-500 border border-gray-200 rounded-xl px-4 py-3 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-purple-50 file:text-purple-700 file:font-medium hover:file:bg-purple-100 transition">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-gray-700 mb-3">Convert to</label>
+          <div class="grid grid-cols-4 gap-3">
+            <label class="cursor-pointer">
+              <input type="radio" name="format" value="jpeg" class="peer sr-only" checked>
+              <div class="border-2 border-gray-200 peer-checked:border-purple-500 peer-checked:bg-purple-50 rounded-xl py-3 text-center text-sm font-semibold text-gray-600 peer-checked:text-purple-700 transition uppercase">JPEG</div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="format" value="png" class="peer sr-only">
+              <div class="border-2 border-gray-200 peer-checked:border-purple-500 peer-checked:bg-purple-50 rounded-xl py-3 text-center text-sm font-semibold text-gray-600 peer-checked:text-purple-700 transition uppercase">PNG</div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="format" value="webp" class="peer sr-only">
+              <div class="border-2 border-gray-200 peer-checked:border-purple-500 peer-checked:bg-purple-50 rounded-xl py-3 text-center text-sm font-semibold text-gray-600 peer-checked:text-purple-700 transition uppercase">WEBP</div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="format" value="bmp" class="peer sr-only">
+              <div class="border-2 border-gray-200 peer-checked:border-purple-500 peer-checked:bg-purple-50 rounded-xl py-3 text-center text-sm font-semibold text-gray-600 peer-checked:text-purple-700 transition uppercase">BMP</div>
+            </label>
+          </div>
+        </div>
+        <button type="submit"
+                class="w-full bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition shadow-sm text-base">
+          Convert & Download
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

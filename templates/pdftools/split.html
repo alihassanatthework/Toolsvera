@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Split PDF Online Free — Extract Pages from PDF{% endblock %}
+{% block meta_description %}Split PDF files online for free. Extract pages from any PDF document instantly. No signup, no watermark.{% endblock %}
+{% block meta_keywords %}split pdf, extract pdf pages, pdf splitter online free, separate pdf pages{% endblock %}
+{% block canonical_path %}/pdf/split/{% endblock %}
+{% block og_title %}Split PDF Free — ToolsVera{% endblock %}
+{% block og_description %}Extract and split PDF pages instantly online. Free, no signup needed.{% endblock %}
+{% block twitter_title %}Split PDF Free — ToolsVera{% endblock %}
+{% block twitter_description %}Extract and split PDF pages instantly online. Free, no signup needed.{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a>
+    <span class="mx-2">/</span>
+    <span class="text-gray-600">Split PDF</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-red-600 to-red-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">✂️</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Split PDF</h1>
+          <p class="text-red-100 text-sm">Extract pages from your PDF</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center mb-6 hover:border-red-300 transition">
+          <div class="text-4xl mb-3">📂</div>
+          <p class="text-gray-600 font-medium mb-1">Select a PDF file</p>
+          <p class="text-sm text-gray-400 mb-4">Supports .pdf files</p>
+          <input type="file" name="pdf" accept=".pdf" required
+                 class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-red-50 file:text-red-700 file:font-medium hover:file:bg-red-100 transition">
+        </div>
+        <button type="submit"
+                class="w-full bg-red-600 text-white py-3 rounded-xl font-semibold hover:bg-red-700 transition shadow-sm text-base">
+          Split & Download
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

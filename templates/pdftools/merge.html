@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Merge PDF Files Online Free — Combine PDFs Instantly{% endblock %}
+{% block meta_description %}Merge multiple PDF files into one document online for free. No signup required. Fast and secure PDF merger tool.{% endblock %}
+{% block meta_keywords %}merge pdf, combine pdf, join pdf files, pdf merger online free{% endblock %}
+{% block canonical_path %}/pdf/merge/{% endblock %}
+{% block og_title %}Merge PDF Files Free — ToolsVera{% endblock %}
+{% block og_description %}Combine multiple PDFs into one file instantly. Free, no signup, no watermark.{% endblock %}
+{% block twitter_title %}Merge PDF Files Free — ToolsVera{% endblock %}
+{% block twitter_description %}Combine multiple PDFs into one file instantly. Free, no signup, no watermark.{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PDF Merger",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free online PDF merger. Combine multiple PDF files into one document."
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a>
+    <span class="mx-2">/</span>
+    <span class="text-gray-600">Merge PDFs</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-red-600 to-red-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">📎</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Merge PDFs</h1>
+          <p class="text-red-100 text-sm">Combine multiple PDF files into one</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center mb-6 hover:border-red-300 transition">
+          <div class="text-4xl mb-3">📂</div>
+          <p class="text-gray-600 font-medium mb-1">Select PDF files to merge</p>
+          <p class="text-sm text-gray-400 mb-4">Select 2 or more PDF files</p>
+          <input type="file" name="pdfs" multiple accept=".pdf" required
+                 class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-red-50 file:text-red-700 file:font-medium hover:file:bg-red-100 transition">
+        </div>
+        <button type="submit"
+                class="w-full bg-red-600 text-white py-3 rounded-xl font-semibold hover:bg-red-700 transition shadow-sm text-base">
+          Merge & Download PDF
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Word to PDF Converter — Convert DOCX to PDF Free Online{% endblock %}
+{% block meta_description %}Convert Word documents to PDF online for free. Upload your .docx file and download a perfect PDF instantly. No signup needed, no watermark.{% endblock %}
+{% block meta_keywords %}word to pdf, convert docx to pdf, word to pdf converter free, doc to pdf{% endblock %}
+{% block canonical_path %}/files/word-to-pdf/{% endblock %}
+{% block og_title %}Word to PDF Converter Free — ToolsVera{% endblock %}
+{% block og_description %}Convert Word .docx files to PDF instantly online. Free, no signup, no watermark.{% endblock %}
+{% block twitter_title %}Word to PDF Converter Free — ToolsVera{% endblock %}
+{% block twitter_description %}Convert Word .docx files to PDF instantly online. Free, no signup, no watermark.{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Word to PDF Converter",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free online Word to PDF converter. Convert DOCX files to PDF instantly."
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a>
+    <span class="mx-2">/</span>
+    <span class="text-gray-600">Word to PDF</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-green-600 to-green-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">📋</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Word to PDF</h1>
+          <p class="text-green-100 text-sm">Convert Word documents to PDF instantly</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center mb-6 hover:border-green-300 transition">
+          <div class="text-4xl mb-3">📄</div>
+          <p class="text-gray-600 font-medium mb-1">Select a Word file</p>
+          <p class="text-sm text-gray-400 mb-4">Supports .docx files</p>
+          <input type="file" name="docx" accept=".docx" required
+                 class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-50 file:text-green-700 file:font-medium hover:file:bg-green-100 transition">
+        </div>
+        <button type="submit"
+                class="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition shadow-sm text-base">
+          Convert & Download PDF
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

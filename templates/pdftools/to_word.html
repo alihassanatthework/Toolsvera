@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}PDF to Word Converter — Convert PDF to DOCX Free Online{% endblock %}
+{% block meta_description %}Convert PDF files to editable Word documents online for free. Fast, accurate PDF to Word conversion with no watermark and no signup.{% endblock %}
+{% block meta_keywords %}pdf to word, convert pdf to docx, pdf to word converter free, pdf converter online{% endblock %}
+{% block canonical_path %}/pdf/to-word/{% endblock %}
+{% block og_title %}PDF to Word Converter Free — ToolsVera{% endblock %}
+{% block og_description %}Convert any PDF to an editable Word document instantly. Free, no watermark, no signup.{% endblock %}
+{% block twitter_title %}PDF to Word Converter Free — ToolsVera{% endblock %}
+{% block twitter_description %}Convert any PDF to an editable Word document instantly. Free, no watermark, no signup.{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PDF to Word Converter",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free online PDF to Word converter. Convert PDF files to editable DOCX documents."
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a>
+    <span class="mx-2">/</span>
+    <span class="text-gray-600">PDF to Word</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-red-600 to-red-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">📝</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">PDF to Word</h1>
+          <p class="text-red-100 text-sm">Convert PDF to editable Word document</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center mb-6 hover:border-red-300 transition">
+          <div class="text-4xl mb-3">📂</div>
+          <p class="text-gray-600 font-medium mb-1">Select a PDF file</p>
+          <p class="text-sm text-gray-400 mb-4">Supports .pdf files</p>
+          <input type="file" name="pdf" accept=".pdf" required
+                 class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-red-50 file:text-red-700 file:font-medium hover:file:bg-red-100 transition">
+        </div>
+        <button type="submit"
+                class="w-full bg-red-600 text-white py-3 rounded-xl font-semibold hover:bg-red-700 transition shadow-sm text-base">
+          Convert & Download DOCX
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
