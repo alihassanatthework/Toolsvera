@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 Allow: /calculators/
-Allow: /pdf/
+Allow: /pdf-tools/
 Allow: /text/
 Allow: /images/
 Allow: /files/

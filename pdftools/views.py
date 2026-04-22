@@ -9,8 +9,9 @@ from django.conf import settings
 
 
 def _tmp():
-    # Use /tmp on Vercel (read-only filesystem elsewhere) and OS temp elsewhere.
-    base = '/tmp' if os.environ.get('VERCEL') else tempfile.gettempdir()
+    # Serverless platforms (Vercel/AWS Lambda) only allow writes under /tmp.
+    is_serverless = any(os.environ.get(k) for k in ('VERCEL', 'VERCEL_ENV', 'AWS_LAMBDA_FUNCTION_NAME', 'LAMBDA_TASK_ROOT'))
+    base = '/tmp' if is_serverless else tempfile.gettempdir()
     tmp = os.path.join(base, 'toolsvera')
     os.makedirs(tmp, exist_ok=True)
     return tmp

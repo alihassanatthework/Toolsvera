@@ -93,8 +93,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/tmp/media' if os.environ.get('VERCEL') else str(BASE_DIR / 'media')
-os.makedirs(MEDIA_ROOT, exist_ok=True)
+IS_SERVERLESS = any(os.environ.get(k) for k in ('VERCEL', 'VERCEL_ENV', 'AWS_LAMBDA_FUNCTION_NAME', 'LAMBDA_TASK_ROOT'))
+MEDIA_ROOT = '/tmp/media' if IS_SERVERLESS else str(BASE_DIR / 'media')
+FILE_UPLOAD_TEMP_DIR = '/tmp' if IS_SERVERLESS else None
+try:
+    os.makedirs(MEDIA_ROOT, exist_ok=True)
+except OSError:
+    MEDIA_ROOT = '/tmp/media'
+    os.makedirs(MEDIA_ROOT, exist_ok=True)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
