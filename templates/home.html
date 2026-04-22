@@ -4,6 +4,19 @@
 {% block meta_keywords %}free online tools, calculators, pdf tools, image converter, file converter, bmi calculator, pdf merger, text tools{% endblock %}
 {% block canonical_path %}/{% endblock %}
 
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"ToolsVera Free Online Tools","itemListElement":[{"@type":"ListItem","position":1,"url":"https://toolsvera.com/calculators/","name":"Calculators"},{"@type":"ListItem","position":2,"url":"https://toolsvera.com/pdf/merge/","name":"PDF Tools"},{"@type":"ListItem","position":3,"url":"https://toolsvera.com/text/","name":"Text Tools"},{"@type":"ListItem","position":4,"url":"https://toolsvera.com/images/convert/","name":"Image Tools"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are all tools on ToolsVera free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every tool on ToolsVera is 100% free with no signup or usage limits."}},{"@type":"Question","name":"Do I need to create an account?","acceptedAnswer":{"@type":"Answer","text":"No account is required. All tools run directly in the browser without registration."}},{"@type":"Question","name":"Are my files or data stored?","acceptedAnswer":{"@type":"Answer","text":"No. Uploaded files are processed and immediately discarded. We never store user data."}},{"@type":"Question","name":"How many tools does ToolsVera have?","acceptedAnswer":{"@type":"Answer","text":"ToolsVera offers 70+ free online tools across calculators, PDF, image and text utilities."}}]}</script>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+  @media (max-width: 639px){
+    .mobile-limit > *:nth-child(n+7){display:none}
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 
 <!-- ════════════════════════ HERO ════════════════════════ -->
@@ -78,7 +91,7 @@
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
       </a>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mobile-limit">
       {% for tool in pdf_tools %}{% endfor %}
       <a href="/pdf/merge/" class="tool-card group bg-white rounded-2xl border border-gray-100 p-4 text-center hover:border-blue-200 hover:shadow-md">
         <div class="w-11 h-11 bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center text-xl mx-auto mb-3 transition-colors">📎</div>
@@ -158,7 +171,7 @@
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
       </a>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mobile-limit">
       <a href="/calculators/bmi/" class="tool-card group bg-white rounded-2xl border border-gray-100 p-4 text-center hover:border-blue-200 hover:shadow-md"><div class="w-11 h-11 bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center text-xl mx-auto mb-3 transition-colors">⚖️</div><div class="font-semibold text-gray-800 text-sm group-hover:text-blue-600 transition-colors">BMI Calculator</div><div class="text-xs text-gray-400 mt-0.5">Body mass index</div></a>
       <a href="/calculators/calorie/" class="tool-card group bg-white rounded-2xl border border-gray-100 p-4 text-center hover:border-blue-200 hover:shadow-md"><div class="w-11 h-11 bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center text-xl mx-auto mb-3 transition-colors">🔥</div><div class="font-semibold text-gray-800 text-sm group-hover:text-blue-600 transition-colors">Calorie Calculator</div><div class="text-xs text-gray-400 mt-0.5">Daily calorie needs</div></a>
       <a href="/calculators/sleep/" class="tool-card group bg-white rounded-2xl border border-gray-100 p-4 text-center hover:border-blue-200 hover:shadow-md"><div class="w-11 h-11 bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center text-xl mx-auto mb-3 transition-colors">😴</div><div class="font-semibold text-gray-800 text-sm group-hover:text-blue-600 transition-colors">Sleep Calculator</div><div class="text-xs text-gray-400 mt-0.5">Best bedtime</div></a>
@@ -193,7 +206,7 @@
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
       </a>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mobile-limit">
       <a href="/text/word-counter/" class="tool-card group bg-white rounded-2xl border border-gray-100 p-4 text-center hover:border-blue-200 hover:shadow-md"><div class="w-11 h-11 bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center text-xl mx-auto mb-3 transition-colors">📝</div><div class="font-semibold text-gray-800 text-sm group-hover:text-blue-600 transition-colors">Word Counter</div><div class="text-xs text-gray-400 mt-0.5">Words & characters</div></a>
       <a href="/text/password-generator/" class="tool-card group bg-white rounded-2xl border border-gray-100 p-4 text-center hover:border-blue-200 hover:shadow-md"><div class="w-11 h-11 bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center text-xl mx-auto mb-3 transition-colors">🔐</div><div class="font-semibold text-gray-800 text-sm group-hover:text-blue-600 transition-colors">Password Generator</div><div class="text-xs text-gray-400 mt-0.5">Strong passwords</div></a>
       <a href="/text/json-formatter/" class="tool-card group bg-white rounded-2xl border border-gray-100 p-4 text-center hover:border-blue-200 hover:shadow-md"><div class="w-11 h-11 bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center text-xl mx-auto mb-3 transition-colors">🗂️</div><div class="font-semibold text-gray-800 text-sm group-hover:text-blue-600 transition-colors">JSON Formatter</div><div class="text-xs text-gray-400 mt-0.5">Beautify & validate</div></a>
@@ -216,7 +229,7 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mobile-limit">
       <a href="/images/convert/" class="tool-card group bg-white rounded-2xl border border-gray-100 p-4 text-center hover:border-blue-200 hover:shadow-md"><div class="w-11 h-11 bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center text-xl mx-auto mb-3 transition-colors">🔀</div><div class="font-semibold text-gray-800 text-sm group-hover:text-blue-600 transition-colors">Convert Image</div><div class="text-xs text-gray-400 mt-0.5">JPG, PNG, WEBP, BMP</div></a>
       <a href="/images/resize/" class="tool-card group bg-white rounded-2xl border border-gray-100 p-4 text-center hover:border-blue-200 hover:shadow-md"><div class="w-11 h-11 bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center text-xl mx-auto mb-3 transition-colors">📐</div><div class="font-semibold text-gray-800 text-sm group-hover:text-blue-600 transition-colors">Resize Image</div><div class="text-xs text-gray-400 mt-0.5">Change dimensions</div></a>
       <a href="/images/compress/" class="tool-card group bg-white rounded-2xl border border-gray-100 p-4 text-center hover:border-blue-200 hover:shadow-md"><div class="w-11 h-11 bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center text-xl mx-auto mb-3 transition-colors">🗜️</div><div class="font-semibold text-gray-800 text-sm group-hover:text-blue-600 transition-colors">Compress Image</div><div class="text-xs text-gray-400 mt-0.5">Reduce file size</div></a>

@@ -8,18 +8,29 @@
   <meta name="description" content="{% block meta_description %}ToolsVera offers 70+ free online tools including calculators, PDF tools, image editors and text utilities. No signup required.{% endblock %}">
   <meta name="keywords" content="{% block meta_keywords %}free online tools, calculators, pdf converter, image converter, text tools{% endblock %}">
   <meta name="author" content="ToolsVera">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="application-name" content="ToolsVera">
+  <meta name="apple-mobile-web-app-title" content="ToolsVera">
+  <meta name="format-detection" content="telephone=no">
   <link rel="canonical" href="https://toolsvera.com{% block canonical_path %}/{% endblock %}">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232563eb'/><text x='32' y='46' font-family='Arial' font-size='38' font-weight='900' fill='white' text-anchor='middle'>T</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ToolsVera">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://toolsvera.com{% block og_canonical %}/{% endblock %}">
   <meta property="og:title" content="{% block og_title %}ToolsVera — Free Online Tools{% endblock %}">
   <meta property="og:description" content="{% block og_description %}Free online calculators, PDF tools, image editors and text utilities. No signup required.{% endblock %}">
   <meta property="og:image" content="https://toolsvera.com/static/img/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@toolsvera">
   <meta name="twitter:title" content="{% block twitter_title %}ToolsVera — Free Online Tools{% endblock %}">
   <meta name="twitter:description" content="{% block twitter_description %}Free online calculators, PDF tools, image editors and text utilities.{% endblock %}">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"ToolsVera","url":"https://toolsvera.com","description":"Free online tools including calculators, PDF tools, image editors and text utilities"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"ToolsVera","url":"https://toolsvera.com","description":"Free online tools including calculators, PDF tools, image editors and text utilities","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://toolsvera.com/?q={search_term_string}"},"query-input":"required name=search_term_string"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"ToolsVera","url":"https://toolsvera.com","logo":"https://toolsvera.com/static/img/og-image.png","sameAs":["https://toolsvera.com"]}</script>
   {% block extra_schema %}{% endblock %}
   {% if not debug %}
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CNKXT3MW19"></script>
@@ -81,6 +92,22 @@
     .mob-links.open{max-height:500px}
     .mob-link{display:block;padding:8px 12px 8px 20px;font-size:.8125rem;color:#6b7280;text-decoration:none;border-radius:6px;transition:color .13s,background .13s}
     .mob-link:hover{color:#2563eb;background:#eff6ff}
+
+    /* ── Search ── */
+    .search-wrap{position:relative}
+    .search-input{width:200px;padding:8px 12px 8px 34px;font-size:.8125rem;border:1px solid #e5e7eb;border-radius:10px;background:#f9fafb;color:#111827;outline:none;transition:width .2s ease,border-color .15s,background .15s}
+    .search-input:focus{width:260px;border-color:#2563eb;background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+    .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#9ca3af;pointer-events:none}
+    .search-results{position:absolute;top:calc(100% + 6px);right:0;width:340px;max-height:420px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 20px 50px -10px rgba(0,0,0,.18);padding:6px;z-index:300;display:none}
+    .search-results.open{display:block}
+    .sr-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:8px;text-decoration:none;color:#374151;font-size:.8125rem;transition:background .12s,color .12s}
+    .sr-item:hover,.sr-item.active{background:#eff6ff;color:#2563eb}
+    .sr-icon{font-size:1.1rem;flex-shrink:0}
+    .sr-name{font-weight:500;line-height:1.3}
+    .sr-cat{font-size:.68rem;color:#9ca3af;margin-top:1px;text-transform:uppercase;letter-spacing:.05em}
+    .sr-empty{padding:18px 14px;text-align:center;color:#9ca3af;font-size:.8125rem}
+    .sr-hint{padding:10px 14px;font-size:.7rem;color:#9ca3af;border-top:1px solid #f3f4f6;margin-top:4px;text-align:center}
+    mark.hl{background:#fef3c7;color:#92400e;padding:0 2px;border-radius:2px}
   </style>
   {% block extra_head %}{% endblock %}
 </head>
@@ -189,6 +216,18 @@
 
       </div><!-- end desktop nav -->
 
+      <!-- Desktop search -->
+      <div class="hidden md:block search-wrap ml-3" id="search-wrap-desktop">
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="M14 14l3.5 3.5" stroke-linecap="round"/></svg>
+        <input type="search" class="search-input" id="search-input" placeholder="Search tools…" autocomplete="off" aria-label="Search tools">
+        <div class="search-results" id="search-results" role="listbox"></div>
+      </div>
+
+      <!-- Mobile search icon -->
+      <button id="mob-search-btn" aria-label="Search" class="md:hidden w-9 h-9 rounded-lg hover:bg-gray-100 transition flex items-center justify-center mr-1">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-700"><circle cx="9" cy="9" r="6"/><path d="M14 14l3.5 3.5" stroke-linecap="round"/></svg>
+      </button>
+
       <!-- Mobile hamburger -->
       <button id="nav-toggle" aria-label="Toggle menu" class="md:hidden flex flex-col justify-center items-center w-9 h-9 rounded-lg hover:bg-gray-100 transition-colors gap-1.5 shrink-0">
         <span class="hline block w-5 h-0.5 bg-gray-700 transition-all duration-200 origin-center rounded"></span>
@@ -196,6 +235,15 @@
         <span class="hline block w-5 h-0.5 bg-gray-700 transition-all duration-200 origin-center rounded"></span>
       </button>
     </div><!-- end flex row -->
+
+    <!-- Mobile search panel -->
+    <div id="mob-search-panel" class="md:hidden hidden pb-3">
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="M14 14l3.5 3.5" stroke-linecap="round"/></svg>
+        <input type="search" class="search-input" id="search-input-mob" placeholder="Search 70+ tools…" autocomplete="off" aria-label="Search tools" style="width:100%">
+        <div class="search-results" id="search-results-mob" style="width:100%;right:auto;left:0"></div>
+      </div>
+    </div>
 
     <!-- ── Mobile Menu ── -->
     <div id="mobile-menu">
@@ -366,6 +414,103 @@
     const isOpen = links.classList.toggle('open');
     btn.classList.toggle('open', isOpen);
   }
+
+  // ── Tools catalog + live search ──
+  const TOOLS = [
+    {n:"BMI Calculator",u:"/calculators/bmi/",i:"⚖️",c:"Calculator"},
+    {n:"Age Calculator",u:"/calculators/age/",i:"🎂",c:"Calculator"},
+    {n:"Mortgage Calculator",u:"/calculators/mortgage/",i:"🏦",c:"Calculator"},
+    {n:"Loan Calculator",u:"/calculators/loan/",i:"💳",c:"Calculator"},
+    {n:"Compound Interest",u:"/calculators/compound-interest/",i:"📈",c:"Calculator"},
+    {n:"Percentage Calculator",u:"/calculators/percentage/",i:"%",c:"Calculator"},
+    {n:"Tip Calculator",u:"/calculators/tip/",i:"💵",c:"Calculator"},
+    {n:"Tax Calculator",u:"/calculators/tax/",i:"🧾",c:"Calculator"},
+    {n:"Calorie Calculator",u:"/calculators/calorie/",i:"🔥",c:"Calculator"},
+    {n:"GPA Calculator",u:"/calculators/gpa/",i:"🎓",c:"Calculator"},
+    {n:"Grade Calculator",u:"/calculators/grade/",i:"📝",c:"Calculator"},
+    {n:"Scientific Calculator",u:"/calculators/scientific/",i:"🔬",c:"Calculator"},
+    {n:"Fraction Calculator",u:"/calculators/fraction/",i:"½",c:"Calculator"},
+    {n:"Unit Converter",u:"/calculators/unit-converter/",i:"📏",c:"Calculator"},
+    {n:"Area Calculator",u:"/calculators/area/",i:"📐",c:"Calculator"},
+    {n:"Speed Calculator",u:"/calculators/speed/",i:"🚗",c:"Calculator"},
+    {n:"Date Calculator",u:"/calculators/date/",i:"📅",c:"Calculator"},
+    {n:"Body Fat Calculator",u:"/calculators/body-fat/",i:"💪",c:"Calculator"},
+    {n:"Fuel Cost Calculator",u:"/calculators/fuel-cost/",i:"⛽",c:"Calculator"},
+    {n:"Discount Calculator",u:"/calculators/discount/",i:"🏷️",c:"Calculator"},
+    {n:"Pregnancy Calculator",u:"/calculators/pregnancy/",i:"🤰",c:"Calculator"},
+    {n:"Random Number Generator",u:"/calculators/random-number/",i:"🎲",c:"Calculator"},
+    {n:"Pace Calculator",u:"/calculators/pace/",i:"🏃",c:"Calculator"},
+    {n:"Retirement Calculator",u:"/calculators/retirement/",i:"🏖️",c:"Calculator"},
+    {n:"Average Calculator",u:"/calculators/average/",i:"📊",c:"Calculator"},
+    {n:"Sleep Calculator",u:"/calculators/sleep/",i:"😴",c:"Calculator"},
+    {n:"Water Intake Calculator",u:"/calculators/water-intake/",i:"💧",c:"Calculator"},
+    {n:"Percentage Change",u:"/calculators/percentage-change/",i:"📉",c:"Calculator"},
+    {n:"Word Counter",u:"/text/word-counter/",i:"📝",c:"Text"},
+    {n:"Password Generator",u:"/text/password-generator/",i:"🔐",c:"Text"},
+    {n:"Text Case Converter",u:"/text/text-case/",i:"🔡",c:"Text"},
+    {n:"Lorem Ipsum Generator",u:"/text/lorem-ipsum/",i:"📄",c:"Text"},
+    {n:"Base64 Encoder Decoder",u:"/text/base64/",i:"🔢",c:"Text"},
+    {n:"JSON Formatter",u:"/text/json-formatter/",i:"🗂️",c:"Text"},
+    {n:"URL Encoder Decoder",u:"/text/url-encoder/",i:"🔗",c:"Text"},
+    {n:"Remove Duplicate Lines",u:"/text/remove-duplicates/",i:"🧹",c:"Text"},
+    {n:"Merge PDF",u:"/pdf/merge/",i:"📎",c:"PDF"},
+    {n:"Split PDF",u:"/pdf/split/",i:"✂️",c:"PDF"},
+    {n:"Compress PDF",u:"/pdf/compress/",i:"🗜️",c:"PDF"},
+    {n:"PDF to Word",u:"/pdf/to-word/",i:"📝",c:"PDF"},
+    {n:"PDF to JPG",u:"/pdf/to-jpg/",i:"🖼️",c:"PDF"},
+    {n:"JPG to PDF",u:"/pdf/jpg-to-pdf/",i:"📄",c:"PDF"},
+    {n:"Rotate PDF",u:"/pdf/rotate/",i:"🔄",c:"PDF"},
+    {n:"Remove Pages from PDF",u:"/pdf/remove-pages/",i:"➖",c:"PDF"},
+    {n:"Extract PDF Pages",u:"/pdf/extract-pages/",i:"📑",c:"PDF"},
+    {n:"Add Page Numbers",u:"/pdf/add-page-numbers/",i:"🔢",c:"PDF"},
+    {n:"Watermark PDF",u:"/pdf/watermark/",i:"💧",c:"PDF"},
+    {n:"Protect PDF",u:"/pdf/protect/",i:"🔐",c:"PDF"},
+    {n:"Unlock PDF",u:"/pdf/unlock/",i:"🔓",c:"PDF"},
+    {n:"Organize PDF",u:"/pdf/organize/",i:"🗃️",c:"PDF"},
+    {n:"Word to PDF",u:"/files/word-to-pdf/",i:"📄",c:"File"},
+    {n:"Convert Image",u:"/images/convert/",i:"🔀",c:"Image"},
+    {n:"Resize Image",u:"/images/resize/",i:"📐",c:"Image"},
+    {n:"Compress Image",u:"/images/compress/",i:"🗜️",c:"Image"},
+    {n:"Rotate Image",u:"/images/rotate/",i:"🔄",c:"Image"},
+    {n:"Crop Image",u:"/images/crop/",i:"✂️",c:"Image"},
+    {n:"Image to PDF",u:"/images/to-pdf/",i:"📄",c:"Image"},
+    {n:"Watermark Image",u:"/images/watermark/",i:"💧",c:"Image"}
+  ];
+
+  function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function highlight(name,q){if(!q)return escapeHtml(name);const i=name.toLowerCase().indexOf(q.toLowerCase());if(i<0)return escapeHtml(name);return escapeHtml(name.slice(0,i))+'<mark class="hl">'+escapeHtml(name.slice(i,i+q.length))+'</mark>'+escapeHtml(name.slice(i+q.length))}
+
+  function wireSearch(inputId,resultsId){
+    const input=document.getElementById(inputId);
+    const box=document.getElementById(resultsId);
+    if(!input||!box)return;
+    let active=-1,matches=[];
+    function render(q){
+      q=q.trim();
+      if(!q){box.classList.remove('open');box.innerHTML='';return}
+      matches=TOOLS.filter(t=>t.n.toLowerCase().includes(q.toLowerCase())).slice(0,10);
+      if(!matches.length){box.innerHTML='<div class="sr-empty">No tools match "'+escapeHtml(q)+'"</div>';box.classList.add('open');return}
+      box.innerHTML=matches.map((t,idx)=>`<a href="${t.u}" class="sr-item" data-idx="${idx}"><span class="sr-icon">${t.i}</span><span><span class="sr-name">${highlight(t.n,q)}</span><span class="sr-cat">${t.c}</span></span></a>`).join('')+'<div class="sr-hint">↑↓ to navigate · ↵ to open</div>';
+      box.classList.add('open');active=-1;
+    }
+    input.addEventListener('input',e=>render(e.target.value));
+    input.addEventListener('focus',e=>{if(e.target.value.trim())render(e.target.value)});
+    input.addEventListener('keydown',e=>{
+      const items=box.querySelectorAll('.sr-item');
+      if(e.key==='ArrowDown'){e.preventDefault();active=Math.min(active+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('active',i===active))}
+      else if(e.key==='ArrowUp'){e.preventDefault();active=Math.max(active-1,0);items.forEach((el,i)=>el.classList.toggle('active',i===active))}
+      else if(e.key==='Enter'){if(active>=0&&matches[active]){e.preventDefault();window.location.href=matches[active].u}}
+      else if(e.key==='Escape'){box.classList.remove('open');input.blur()}
+    });
+    document.addEventListener('click',e=>{if(!input.parentElement.contains(e.target))box.classList.remove('open')});
+  }
+  wireSearch('search-input','search-results');
+  wireSearch('search-input-mob','search-results-mob');
+
+  // Mobile search toggle
+  const mobSearchBtn=document.getElementById('mob-search-btn');
+  const mobSearchPanel=document.getElementById('mob-search-panel');
+  if(mobSearchBtn){mobSearchBtn.addEventListener('click',()=>{mobSearchPanel.classList.toggle('hidden');if(!mobSearchPanel.classList.contains('hidden'))setTimeout(()=>document.getElementById('search-input-mob').focus(),50)})}
 
   // Scroll fade-in
   const observer = new IntersectionObserver((entries) => {

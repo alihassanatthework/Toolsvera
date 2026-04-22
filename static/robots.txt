@@ -1,6 +1,27 @@
 User-agent: *
 Allow: /
+Allow: /calculators/
+Allow: /pdf/
+Allow: /text/
+Allow: /images/
+Allow: /files/
 Disallow: /admin/
 Disallow: /media/tmp/
+Disallow: /*?*
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
 
 Sitemap: https://toolsvera.com/sitemap.xml
