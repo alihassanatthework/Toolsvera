@@ -4,9 +4,24 @@
     {
       "src": "core/wsgi.py",
       "use": "@vercel/python"
+    },
+    {
+      "src": "build_files.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles"
+      }
     }
   ],
   "routes": [
+    {
+      "src": "/sitemap.xml",
+      "dest": "/static/sitemap.xml"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/static/robots.txt"
+    },
     {
       "src": "/static/(.*)",
       "dest": "/static/$1"
