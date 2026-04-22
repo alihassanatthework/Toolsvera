@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Pace Calculator — Running Pace, Time & Distance Free | ToolsVera{% endblock %}
+{% block meta_description %}Calculate running pace, finish time or distance. Free online pace calculator for runners and athletes. No signup required.{% endblock %}
+{% block meta_keywords %}pace calculator, running pace, marathon pace, race time calculator, running calculator{% endblock %}
+{% block canonical_path %}/calculators/pace/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/calculators/" class="hover:text-blue-600 transition">Calculators</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Pace Calculator</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🏃</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Pace Calculator</h1>
+          <p class="text-blue-100 text-sm">Pace, time and distance for runners</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-5">
+          <label class="block text-sm font-semibold text-gray-700 mb-3">Calculate</label>
+          <div class="grid grid-cols-3 gap-3">
+            <label class="flex items-center justify-center border border-gray-200 rounded-xl py-3 cursor-pointer text-sm font-medium text-gray-700 hover:border-blue-400 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition">
+              <input type="radio" name="calc_for" value="pace" checked class="sr-only"> Pace
+            </label>
+            <label class="flex items-center justify-center border border-gray-200 rounded-xl py-3 cursor-pointer text-sm font-medium text-gray-700 hover:border-blue-400 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition">
+              <input type="radio" name="calc_for" value="time" class="sr-only"> Finish Time
+            </label>
+            <label class="flex items-center justify-center border border-gray-200 rounded-xl py-3 cursor-pointer text-sm font-medium text-gray-700 hover:border-blue-400 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition">
+              <input type="radio" name="calc_for" value="distance" class="sr-only"> Distance
+            </label>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Distance (km)</label>
+            <input type="number" name="distance" step="0.01" placeholder="e.g. 10" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Time (H / M / S)</label>
+            <div class="flex gap-1">
+              <input type="number" name="hours" placeholder="0" min="0" class="w-1/3 border border-gray-200 rounded-xl px-2 py-3 text-gray-800 text-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+              <input type="number" name="minutes" placeholder="45" min="0" max="59" class="w-1/3 border border-gray-200 rounded-xl px-2 py-3 text-gray-800 text-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+              <input type="number" name="seconds" placeholder="0" min="0" max="59" class="w-1/3 border border-gray-200 rounded-xl px-2 py-3 text-gray-800 text-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Pace (min:sec / km)</label>
+            <div class="flex gap-2">
+              <input type="number" name="pace_min" placeholder="5" min="0" class="w-1/2 border border-gray-200 rounded-xl px-3 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+              <input type="number" name="pace_sec" placeholder="30" min="0" max="59" class="w-1/2 border border-gray-200 rounded-xl px-3 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Calculate</button>
+      </form>
+      {% if result %}
+      <div class="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-2xl text-center">
+        <p class="text-sm text-gray-500 uppercase tracking-wide mb-1">{{ result.label }}</p>
+        <p class="text-5xl font-extrabold text-blue-600">{{ result.value }}</p>
+        {% if result.unit %}<p class="text-sm text-gray-400 mt-1">{{ result.unit }}</p>{% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

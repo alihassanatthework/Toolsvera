@@ -368,3 +368,160 @@ def calorie_calculator(request):
         except (ValueError, ZeroDivisionError):
             pass
     return render(request, 'calculators/calorie.html', {'result': result})
+
+
+def body_fat_calculator(request):
+    result = None
+    if request.method == 'POST':
+        try:
+            import math
+            gender = request.POST['gender']
+            height = float(request.POST['height'])
+            waist = float(request.POST['waist'])
+            neck = float(request.POST['neck'])
+            if gender == 'male':
+                bf = 495 / (1.0324 - 0.19077 * math.log10(waist - neck) + 0.15456 * math.log10(height)) - 450
+            else:
+                hip = float(request.POST['hip'])
+                bf = 495 / (1.29579 - 0.35004 * math.log10(waist + hip - neck) + 0.22100 * math.log10(height)) - 450
+            bf = round(bf, 1)
+            if gender == 'male':
+                category = 'Essential' if bf < 6 else 'Athlete' if bf < 14 else 'Fitness' if bf < 18 else 'Average' if bf < 25 else 'Obese'
+            else:
+                category = 'Essential' if bf < 14 else 'Athlete' if bf < 21 else 'Fitness' if bf < 25 else 'Average' if bf < 32 else 'Obese'
+            result = {'bf': bf, 'category': category}
+        except (ValueError, ZeroDivisionError):
+            pass
+    return render(request, 'calculators/body_fat.html', {'result': result})
+
+
+def fuel_cost_calculator(request):
+    result = None
+    if request.method == 'POST':
+        try:
+            distance = float(request.POST['distance'])
+            efficiency = float(request.POST['efficiency'])
+            price = float(request.POST['price'])
+            fuel_used = distance / efficiency
+            total_cost = round(fuel_used * price, 2)
+            result = {'fuel': round(fuel_used, 2), 'cost': total_cost}
+        except (ValueError, ZeroDivisionError):
+            pass
+    return render(request, 'calculators/fuel_cost.html', {'result': result})
+
+
+def discount_calculator(request):
+    result = None
+    if request.method == 'POST':
+        try:
+            price = float(request.POST['price'])
+            discount = float(request.POST['discount'])
+            saved = round(price * discount / 100, 2)
+            final = round(price - saved, 2)
+            result = {'saved': saved, 'final': final, 'original': price}
+        except (ValueError, ZeroDivisionError):
+            pass
+    return render(request, 'calculators/discount.html', {'result': result})
+
+
+def pregnancy_calculator(request):
+    result = None
+    if request.method == 'POST':
+        try:
+            lmp = datetime.strptime(request.POST['lmp'], '%Y-%m-%d').date()
+            from datetime import timedelta
+            due_date = lmp + timedelta(days=280)
+            today = date.today()
+            days_pregnant = (today - lmp).days
+            weeks = days_pregnant // 7
+            days_rem = days_pregnant % 7
+            trimester = 1 if weeks < 13 else 2 if weeks < 27 else 3
+            days_left = (due_date - today).days
+            result = {
+                'due_date': due_date.strftime('%B %d, %Y'),
+                'weeks': weeks,
+                'days': days_rem,
+                'trimester': trimester,
+                'days_left': max(0, days_left),
+            }
+        except (ValueError, TypeError):
+            pass
+    return render(request, 'calculators/pregnancy.html', {'result': result})
+
+
+def random_number(request):
+    result = None
+    if request.method == 'POST':
+        try:
+            import random
+            min_val = int(request.POST['min'])
+            max_val = int(request.POST['max'])
+            count = min(int(request.POST.get('count', 1)), 20)
+            result = [random.randint(min_val, max_val) for _ in range(count)]
+        except (ValueError, TypeError):
+            pass
+    return render(request, 'calculators/random_number.html', {'result': result})
+
+
+def pace_calculator(request):
+    result = None
+    if request.method == 'POST':
+        try:
+            calc_for = request.POST['calc_for']
+            if calc_for == 'pace':
+                hours = int(request.POST.get('hours', 0))
+                minutes = int(request.POST['minutes'])
+                seconds = int(request.POST.get('seconds', 0))
+                distance = float(request.POST['distance'])
+                total_secs = hours * 3600 + minutes * 60 + seconds
+                pace_secs = total_secs / distance
+                pm = int(pace_secs // 60)
+                ps = int(pace_secs % 60)
+                result = {'label': 'Pace', 'value': f"{pm}:{ps:02d}", 'unit': 'min/km'}
+            elif calc_for == 'time':
+                pace_min = int(request.POST['pace_min'])
+                pace_sec = int(request.POST.get('pace_sec', 0))
+                distance = float(request.POST['distance'])
+                total = (pace_min * 60 + pace_sec) * distance
+                h = int(total // 3600)
+                m = int((total % 3600) // 60)
+                s = int(total % 60)
+                result = {'label': 'Finish Time', 'value': f"{h}:{m:02d}:{s:02d}", 'unit': ''}
+            elif calc_for == 'distance':
+                hours = int(request.POST.get('hours', 0))
+                minutes = int(request.POST['minutes'])
+                seconds = int(request.POST.get('seconds', 0))
+                pace_min = int(request.POST['pace_min'])
+                pace_sec = int(request.POST.get('pace_sec', 0))
+                total_secs = hours * 3600 + minutes * 60 + seconds
+                pace_secs = pace_min * 60 + pace_sec
+                dist = round(total_secs / pace_secs, 2)
+                result = {'label': 'Distance', 'value': dist, 'unit': 'km'}
+        except (ValueError, ZeroDivisionError):
+            pass
+    return render(request, 'calculators/pace.html', {'result': result})
+
+
+def retirement_calculator(request):
+    result = None
+    if request.method == 'POST':
+        try:
+            current_age = int(request.POST['current_age'])
+            retirement_age = int(request.POST['retirement_age'])
+            savings = float(request.POST['savings'])
+            monthly = float(request.POST['monthly'])
+            rate = float(request.POST['rate']) / 100 / 12
+            years = retirement_age - current_age
+            months = years * 12
+            if rate > 0:
+                future = savings * (1 + rate) ** months + monthly * (((1 + rate) ** months - 1) / rate)
+            else:
+                future = savings + monthly * months
+            result = {
+                'future': round(future, 2),
+                'years': years,
+                'contributed': round(monthly * months, 2),
+            }
+        except (ValueError, ZeroDivisionError):
+            pass
+    return render(request, 'calculators/retirement.html', {'result': result})

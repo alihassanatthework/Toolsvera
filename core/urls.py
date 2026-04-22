@@ -10,6 +10,7 @@ urlpatterns = [
     path('pdf/', include('pdftools.urls')),
     path('files/', include('filetools.urls')),
     path('images/', include('imagetools.urls')),
+    path('text/', include('texttools.urls')),
     path('sitemap.xml', TemplateView.as_view(
         template_name='sitemap.xml',
         content_type='application/xml'

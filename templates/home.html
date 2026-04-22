@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}ToolsVera — Free Online Tools: Calculators, PDF & Image Tools{% endblock %}
-{% block meta_description %}ToolsVera offers 50+ free online tools including calculators, PDF tools, file converters and image editors. No signup required. 100% free forever.{% endblock %}
+{% block title %}ToolsVera — Free Online Tools: Calculators, PDF, Image & Text Tools{% endblock %}
+{% block meta_description %}ToolsVera offers 60+ free online tools including calculators, PDF tools, image editors and text utilities. No signup required. 100% free forever.{% endblock %}
 {% block meta_keywords %}free online tools, calculators, pdf tools, image converter, file converter, bmi calculator, pdf merger{% endblock %}
 {% block canonical_path %}/{% endblock %}
 
@@ -247,6 +247,79 @@
         <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📐</div>
         <div class="font-semibold text-gray-800 text-sm">Area Calculator</div>
         <div class="text-xs text-gray-400 mt-1">Rectangle, circle, triangle</div>
+      </a>
+      <a href="/calculators/body-fat/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">💪</div>
+        <div class="font-semibold text-gray-800 text-sm">Body Fat Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Estimate body fat %</div>
+      </a>
+      <a href="/calculators/fuel-cost/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">⛽</div>
+        <div class="font-semibold text-gray-800 text-sm">Fuel Cost Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Trip fuel cost estimator</div>
+      </a>
+      <a href="/calculators/discount/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🏷️</div>
+        <div class="font-semibold text-gray-800 text-sm">Discount Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Final price after discount</div>
+      </a>
+      <a href="/calculators/pregnancy/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🤰</div>
+        <div class="font-semibold text-gray-800 text-sm">Pregnancy Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Due date & weeks pregnant</div>
+      </a>
+      <a href="/calculators/random-number/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🎲</div>
+        <div class="font-semibold text-gray-800 text-sm">Random Number</div>
+        <div class="text-xs text-gray-400 mt-1">Generate random numbers</div>
+      </a>
+      <a href="/calculators/pace/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🏃</div>
+        <div class="font-semibold text-gray-800 text-sm">Pace Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Running pace & finish time</div>
+      </a>
+      <a href="/calculators/retirement/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🏖️</div>
+        <div class="font-semibold text-gray-800 text-sm">Retirement Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Estimate retirement savings</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Text Tools -->
+  <div class="mb-14">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-xl">✍️</div>
+      <div>
+        <h2 class="text-xl font-bold text-gray-900">Text Tools</h2>
+        <p class="text-sm text-gray-400">Free online text utilities</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <a href="/text/word-counter/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📝</div>
+        <div class="font-semibold text-gray-800 text-sm">Word Counter</div>
+        <div class="text-xs text-gray-400 mt-1">Count words & characters</div>
+      </a>
+      <a href="/text/password-generator/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔐</div>
+        <div class="font-semibold text-gray-800 text-sm">Password Generator</div>
+        <div class="text-xs text-gray-400 mt-1">Strong random passwords</div>
+      </a>
+      <a href="/text/text-case/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔡</div>
+        <div class="font-semibold text-gray-800 text-sm">Text Case Converter</div>
+        <div class="text-xs text-gray-400 mt-1">Uppercase, lowercase, title</div>
+      </a>
+      <a href="/text/lorem-ipsum/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📄</div>
+        <div class="font-semibold text-gray-800 text-sm">Lorem Ipsum Generator</div>
+        <div class="text-xs text-gray-400 mt-1">Placeholder text for designs</div>
+      </a>
+      <a href="/text/base64/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔢</div>
+        <div class="font-semibold text-gray-800 text-sm">Base64 Encoder/Decoder</div>
+        <div class="text-xs text-gray-400 mt-1">Encode or decode Base64</div>
       </a>
     </div>
   </div>

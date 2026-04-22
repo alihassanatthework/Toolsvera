@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Random Number Generator — Free Online | ToolsVera{% endblock %}
+{% block meta_description %}Generate random numbers between any range online for free. Generate up to 20 numbers at once. No signup required.{% endblock %}
+{% block meta_keywords %}random number generator, generate random numbers, random picker, number randomizer{% endblock %}
+{% block canonical_path %}/calculators/random-number/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/calculators/" class="hover:text-blue-600 transition">Calculators</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Random Number Generator</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🎲</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Random Number Generator</h1>
+          <p class="text-blue-100 text-sm">Generate random numbers in any range</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post">
+        {% csrf_token %}
+        <div class="grid grid-cols-3 gap-4 mb-6">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Min</label>
+            <input type="number" name="min" value="1" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Max</label>
+            <input type="number" name="max" value="100" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Count</label>
+            <input type="number" name="count" value="1" min="1" max="20" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Generate</button>
+      </form>
+      {% if result %}
+      <div class="mt-8">
+        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide text-center mb-4">Your Numbers</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {% for n in result %}
+          <span class="text-3xl font-extrabold text-blue-600 bg-blue-50 border border-blue-100 rounded-2xl px-6 py-3">{{ n }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

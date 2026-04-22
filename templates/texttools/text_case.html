@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Text Case Converter — Uppercase, Lowercase, Title Case Free | ToolsVera{% endblock %}
+{% block meta_description %}Convert text to uppercase, lowercase, title case, sentence case or alternating case online for free. No signup required.{% endblock %}
+{% block meta_keywords %}text case converter, uppercase converter, lowercase converter, title case, sentence case{% endblock %}
+{% block canonical_path %}/text/text-case/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/text/" class="hover:text-blue-600 transition">Text Tools</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Text Case Converter</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🔡</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Text Case Converter</h1>
+          <p class="text-blue-100 text-sm">Convert text to any case format instantly</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-5">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Your Text</label>
+          <textarea name="text" rows="6" placeholder="Paste your text here..." class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition resize-none">{{ request.POST.text }}</textarea>
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-gray-700 mb-3">Convert To</label>
+          <div class="grid grid-cols-2 gap-3">
+            {% for val, label in cases %}
+            <label class="flex items-center justify-center border border-gray-200 rounded-xl py-3 cursor-pointer text-sm font-medium text-gray-700 hover:border-blue-400 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition">
+              <input type="radio" name="case" value="{{ val }}" {% if request.POST.case == val %}checked{% elif not request.POST.case and forloop.first %}checked{% endif %} class="sr-only"> {{ label }}
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Convert</button>
+      </form>
+      {% if result %}
+      <div class="mt-8 p-5 bg-blue-50 border border-blue-100 rounded-2xl">
+        <div class="flex items-start justify-between gap-3">
+          <p class="text-gray-800 font-medium whitespace-pre-wrap flex-1">{{ result }}</p>
+          <button onclick="navigator.clipboard.writeText(this.dataset.text)" data-text="{{ result }}" class="text-xs bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition shrink-0">Copy</button>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

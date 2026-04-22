@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Body Fat Calculator — Free Online | ToolsVera{% endblock %}
+{% block meta_description %}Calculate your body fat percentage using the US Navy method. Free online body fat calculator for men and women. No signup required.{% endblock %}
+{% block meta_keywords %}body fat calculator, body fat percentage, navy body fat, fat percentage calculator{% endblock %}
+{% block canonical_path %}/calculators/body-fat/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/calculators/" class="hover:text-blue-600 transition">Calculators</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Body Fat Calculator</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">💪</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Body Fat Calculator</h1>
+          <p class="text-blue-100 text-sm">US Navy method — accurate & free</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post" id="bfForm">
+        {% csrf_token %}
+        <div class="mb-5">
+          <label class="block text-sm font-semibold text-gray-700 mb-3">Gender</label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 cursor-pointer hover:border-blue-400 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition">
+              <input type="radio" name="gender" value="male" checked onchange="document.getElementById('hipRow').classList.add('hidden')"> <span class="text-sm font-medium">Male</span>
+            </label>
+            <label class="flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 cursor-pointer hover:border-blue-400 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition">
+              <input type="radio" name="gender" value="female" onchange="document.getElementById('hipRow').classList.remove('hidden')"> <span class="text-sm font-medium">Female</span>
+            </label>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-5">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Height (cm)</label>
+            <input type="number" name="height" step="0.1" placeholder="e.g. 175" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Waist (cm)</label>
+            <input type="number" name="waist" step="0.1" placeholder="e.g. 85" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Neck (cm)</label>
+            <input type="number" name="neck" step="0.1" placeholder="e.g. 38" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div id="hipRow" class="hidden">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Hip (cm)</label>
+            <input type="number" name="hip" step="0.1" placeholder="e.g. 95" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Calculate Body Fat</button>
+      </form>
+      {% if result %}
+      <div class="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-2xl text-center">
+        <p class="text-sm text-gray-500 uppercase tracking-wide mb-1">Body Fat</p>
+        <p class="text-6xl font-extrabold text-blue-600">{{ result.bf }}%</p>
+        <span class="inline-block mt-3 px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-100 text-blue-700">{{ result.category }}</span>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

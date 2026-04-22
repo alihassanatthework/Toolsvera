@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'filetools',
     'pdftools',
     'imagetools',
+    'texttools',
     'rest_framework',
 ]
 

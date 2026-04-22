@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Retirement Calculator — Retirement Savings Estimator Free | ToolsVera{% endblock %}
+{% block meta_description %}Calculate how much you'll have saved by retirement. Free online retirement savings calculator. No signup required.{% endblock %}
+{% block meta_keywords %}retirement calculator, retirement savings, 401k calculator, retirement planning, savings calculator{% endblock %}
+{% block canonical_path %}/calculators/retirement/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/calculators/" class="hover:text-blue-600 transition">Calculators</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Retirement Calculator</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🏖️</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Retirement Calculator</h1>
+          <p class="text-blue-100 text-sm">Estimate your retirement savings</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post">
+        {% csrf_token %}
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Current Age</label>
+            <input type="number" name="current_age" placeholder="e.g. 30" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Retirement Age</label>
+            <input type="number" name="retirement_age" placeholder="e.g. 65" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Current Savings ($)</label>
+            <input type="number" name="savings" step="0.01" placeholder="e.g. 10000" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Monthly Contribution ($)</label>
+            <input type="number" name="monthly" step="0.01" placeholder="e.g. 500" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Annual Return Rate (%)</label>
+            <input type="number" name="rate" step="0.1" placeholder="e.g. 7" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Calculate</button>
+      </form>
+      {% if result %}
+      <div class="mt-8 space-y-3">
+        <div class="p-5 bg-green-50 border border-green-100 rounded-2xl text-center">
+          <p class="text-sm text-gray-500 uppercase tracking-wide mb-1">Retirement Savings at Age {{ request.POST.retirement_age }}</p>
+          <p class="text-4xl font-extrabold text-green-600">${{ result.future|floatformat:0 }}</p>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-4 bg-blue-50 border border-blue-100 rounded-2xl text-center">
+            <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Years to Retire</p>
+            <p class="text-2xl font-extrabold text-blue-600">{{ result.years }}</p>
+          </div>
+          <div class="p-4 bg-gray-50 border border-gray-100 rounded-2xl text-center">
+            <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Total Contributed</p>
+            <p class="text-2xl font-extrabold text-gray-700">${{ result.contributed|floatformat:0 }}</p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

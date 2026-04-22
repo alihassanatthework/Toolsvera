@@ -23,4 +23,11 @@ urlpatterns = [
     path('calculators/speed/', views.speed_calculator, name='speed'),
     path('calculators/area/', views.area_calculator, name='area'),
     path('calculators/calorie/', views.calorie_calculator, name='calorie'),
+    path('calculators/body-fat/', views.body_fat_calculator, name='body_fat'),
+    path('calculators/fuel-cost/', views.fuel_cost_calculator, name='fuel_cost'),
+    path('calculators/discount/', views.discount_calculator, name='discount'),
+    path('calculators/pregnancy/', views.pregnancy_calculator, name='pregnancy'),
+    path('calculators/random-number/', views.random_number, name='random_number'),
+    path('calculators/pace/', views.pace_calculator, name='pace'),
+    path('calculators/retirement/', views.retirement_calculator, name='retirement'),
 ]
