@@ -4,11 +4,14 @@ from pypdf import PdfWriter, PdfReader
 import uuid
 import os
 import io
+import tempfile
 from django.conf import settings
 
 
 def _tmp():
-    tmp = os.path.join(settings.MEDIA_ROOT, 'tmp')
+    # Use /tmp on Vercel (read-only filesystem elsewhere) and OS temp elsewhere.
+    base = '/tmp' if os.environ.get('VERCEL') else tempfile.gettempdir()
+    tmp = os.path.join(base, 'toolsvera')
     os.makedirs(tmp, exist_ok=True)
     return tmp
 
@@ -17,16 +20,26 @@ def pdf_merge(request):
     if request.method == 'POST':
         try:
             files = request.FILES.getlist('pdfs')
+            if not files:
+                return render(request, 'pdftools/merge.html', {'error': 'Please select at least two PDF files to merge.'})
             writer = PdfWriter()
+            saved_paths = []
             for f in files:
-                reader = PdfReader(f)
-                for page in reader.pages:
-                    writer.add_page(page)
+                # Save each upload to /tmp so pypdf can stream it reliably
+                p = os.path.join(_tmp(), f'{uuid.uuid4()}_{f.name}')
+                with open(p, 'wb') as out:
+                    for chunk in f.chunks():
+                        out.write(chunk)
+                saved_paths.append(p)
+                writer.append(p)
             uid = str(uuid.uuid4())
             output_path = os.path.join(_tmp(), f'{uid}_merged.pdf')
             with open(output_path, 'wb') as out:
                 writer.write(out)
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='merged.pdf')
+            writer.close()
+            response = FileResponse(open(output_path, 'rb'), as_attachment=True, filename='merged.pdf', content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="merged.pdf"'
+            return response
         except Exception as e:
             return render(request, 'pdftools/merge.html', {'error': str(e)})
     return render(request, 'pdftools/merge.html')
@@ -82,7 +95,14 @@ def pdf_to_word(request):
             cv = Converter(pdf_path)
             cv.convert(docx_path)
             cv.close()
-            return FileResponse(open(docx_path, 'rb'), as_attachment=True, filename='converted.docx')
+            response = FileResponse(
+                open(docx_path, 'rb'),
+                as_attachment=True,
+                filename='converted.docx',
+                content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            )
+            response['Content-Disposition'] = 'attachment; filename="converted.docx"'
+            return response
         except Exception as e:
             return render(request, 'pdftools/to_word.html', {'error': str(e)})
     return render(request, 'pdftools/to_word.html')
@@ -127,7 +147,9 @@ def pdf_to_jpg(request):
                     img_path = os.path.join(_tmp(), f'{uid}_page_{i+1}.jpg')
                     pix.save(img_path)
                     zf.write(img_path, f'page_{i+1}.jpg')
-            return FileResponse(open(zip_path, 'rb'), as_attachment=True, filename='pdf_pages.zip')
+            response = FileResponse(open(zip_path, 'rb'), as_attachment=True, filename='pdf_pages.zip', content_type='application/zip')
+            response['Content-Disposition'] = 'attachment; filename="pdf_pages.zip"'
+            return response
         except Exception as e:
             return render(request, 'pdftools/to_jpg.html', {'error': str(e)})
     return render(request, 'pdftools/to_jpg.html')

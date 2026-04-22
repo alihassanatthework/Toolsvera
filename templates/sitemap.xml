@@ -3,67 +3,67 @@
   <url><loc>https://toolsvera.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
   <!-- Calculators -->
   <url><loc>https://toolsvera.com/calculators/</loc><priority>0.9</priority></url>
-  <url><loc>https://toolsvera.com/calculators/bmi/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/age/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/mortgage/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/loan/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/compound-interest/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/percentage/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/tip/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/tax/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/calorie/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/gpa/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/grade/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/scientific/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/fraction/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/bmi-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/age-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/mortgage-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/loan-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/compound-interest-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/percentage-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/tip-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/tax-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/calorie-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/gpa-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/grade-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/scientific-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/fraction-calculator/</loc><priority>0.8</priority></url>
   <url><loc>https://toolsvera.com/calculators/unit-converter/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/area/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/speed/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/date/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/body-fat/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/fuel-cost/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/discount/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/pregnancy/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/random-number/</loc><priority>0.7</priority></url>
-  <url><loc>https://toolsvera.com/calculators/pace/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/retirement/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/average/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/sleep/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/water-intake/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/calculators/percentage-change/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/area-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/speed-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/date-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/body-fat-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/fuel-cost-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/discount-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/pregnancy-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/random-number-generator/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolsvera.com/calculators/pace-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/retirement-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/average-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/sleep-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/water-intake-calculator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/calculators/percentage-change-calculator/</loc><priority>0.8</priority></url>
   <!-- Text Tools -->
   <url><loc>https://toolsvera.com/text/</loc><priority>0.9</priority></url>
   <url><loc>https://toolsvera.com/text/word-counter/</loc><priority>0.8</priority></url>
   <url><loc>https://toolsvera.com/text/password-generator/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/text/text-case/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/text/lorem-ipsum/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/text/base64/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/text/text-case-converter/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/text/lorem-ipsum-generator/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/text/base64-encoder-decoder/</loc><priority>0.8</priority></url>
   <url><loc>https://toolsvera.com/text/json-formatter/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/text/url-encoder/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/text/remove-duplicates/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/text/url-encoder-decoder/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/text/remove-duplicate-lines/</loc><priority>0.8</priority></url>
   <!-- PDF Tools -->
-  <url><loc>https://toolsvera.com/pdf/merge/</loc><priority>0.9</priority></url>
-  <url><loc>https://toolsvera.com/pdf/split/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/pdf/compress/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/pdf/to-word/</loc><priority>0.9</priority></url>
-  <url><loc>https://toolsvera.com/pdf/to-jpg/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-merge/</loc><priority>0.9</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-split/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/pdf/compress-pdf/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-to-word/</loc><priority>0.9</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-to-jpg/</loc><priority>0.8</priority></url>
   <url><loc>https://toolsvera.com/pdf/jpg-to-pdf/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/pdf/rotate/</loc><priority>0.7</priority></url>
-  <url><loc>https://toolsvera.com/pdf/remove-pages/</loc><priority>0.7</priority></url>
-  <url><loc>https://toolsvera.com/pdf/extract-pages/</loc><priority>0.7</priority></url>
-  <url><loc>https://toolsvera.com/pdf/add-page-numbers/</loc><priority>0.7</priority></url>
-  <url><loc>https://toolsvera.com/pdf/watermark/</loc><priority>0.7</priority></url>
-  <url><loc>https://toolsvera.com/pdf/protect/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/pdf/unlock/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/pdf/organize/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-rotate/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-remove-pages/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-extract-pages/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-add-page-numbers/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-watermark/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-protection/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-unlock/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/pdf/pdf-organize/</loc><priority>0.7</priority></url>
   <!-- File Tools -->
   <url><loc>https://toolsvera.com/files/word-to-pdf/</loc><priority>0.9</priority></url>
   <!-- Image Tools -->
-  <url><loc>https://toolsvera.com/images/convert/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/images/resize/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/images/compress/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/images/rotate/</loc><priority>0.7</priority></url>
-  <url><loc>https://toolsvera.com/images/crop/</loc><priority>0.7</priority></url>
-  <url><loc>https://toolsvera.com/images/to-pdf/</loc><priority>0.8</priority></url>
-  <url><loc>https://toolsvera.com/images/watermark/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolsvera.com/images/image-converter/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/images/resize-image/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/images/compress-image/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/images/rotate-image/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolsvera.com/images/crop-image/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolsvera.com/images/image-to-pdf/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolsvera.com/images/watermark-image/</loc><priority>0.7</priority></url>
 </urlset>

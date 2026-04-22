@@ -379,11 +379,21 @@ def body_fat_calculator(request):
             height = float(request.POST['height'])
             waist = float(request.POST['waist'])
             neck = float(request.POST['neck'])
+            if height <= 0:
+                raise ValueError('invalid height')
             if gender == 'male':
-                bf = 495 / (1.0324 - 0.19077 * math.log10(waist - neck) + 0.15456 * math.log10(height)) - 450
+                diff = waist - neck
+                if diff <= 0:
+                    raise ValueError('waist must be greater than neck')
+                bf = 495 / (1.0324 - 0.19077 * math.log10(diff) + 0.15456 * math.log10(height)) - 450
             else:
                 hip = float(request.POST['hip'])
-                bf = 495 / (1.29579 - 0.35004 * math.log10(waist + hip - neck) + 0.22100 * math.log10(height)) - 450
+                diff = waist + hip - neck
+                if diff <= 0:
+                    raise ValueError('invalid measurements')
+                bf = 495 / (1.29579 - 0.35004 * math.log10(diff) + 0.22100 * math.log10(height)) - 450
+            # Clamp to realistic range
+            bf = max(2.0, min(60.0, bf))
             bf = round(bf, 1)
             if gender == 'male':
                 category = 'Essential' if bf < 6 else 'Athlete' if bf < 14 else 'Fitness' if bf < 18 else 'Average' if bf < 25 else 'Obese'

@@ -2,7 +2,7 @@
 {% block title %}Merge PDF Files Online Free — Combine PDFs Instantly{% endblock %}
 {% block meta_description %}Merge multiple PDF files into one document online for free. No signup required. Fast and secure PDF merger tool.{% endblock %}
 {% block meta_keywords %}merge pdf, combine pdf, join pdf files, pdf merger online free{% endblock %}
-{% block canonical_path %}/pdf/merge/{% endblock %}
+{% block canonical_path %}/pdf/pdf-merge/{% endblock %}
 {% block og_title %}Merge PDF Files Free — ToolsVera{% endblock %}
 {% block og_description %}Combine multiple PDFs into one file instantly. Free, no signup, no watermark.{% endblock %}
 {% block twitter_title %}Merge PDF Files Free — ToolsVera{% endblock %}
@@ -39,21 +39,64 @@
       </div>
     </div>
     <div class="px-8 py-8">
-      <form method="post" enctype="multipart/form-data">
+      {% if error %}
+        <div class="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700">{{ error }}</div>
+      {% endif %}
+      <form method="post" enctype="multipart/form-data" id="mergeForm">
         {% csrf_token %}
-        <div class="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center mb-6 hover:border-red-300 transition">
+        <div class="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center mb-4 hover:border-red-300 transition">
           <div class="text-4xl mb-3">📂</div>
           <p class="text-gray-600 font-medium mb-1">Select PDF files to merge</p>
           <p class="text-sm text-gray-400 mb-4">Select 2 or more PDF files</p>
-          <input type="file" name="pdfs" multiple accept=".pdf" required
+          <input type="file" id="pdfInput" name="pdfs" multiple accept=".pdf" required
                  class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-red-50 file:text-red-700 file:font-medium hover:file:bg-red-100 transition">
         </div>
-        <button type="submit"
-                class="w-full bg-red-600 text-white py-3 rounded-xl font-semibold hover:bg-red-700 transition shadow-sm text-base">
+        <ul id="fileList" class="mb-4 space-y-1.5 text-sm"></ul>
+        <div id="progressWrap" class="hidden mb-4">
+          <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div id="progressBar" class="h-full bg-gradient-to-r from-red-500 to-red-600 rounded-full" style="width:0%;transition:width .3s ease;"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-2 text-center" id="progressLabel">Uploading and merging PDFs...</p>
+        </div>
+        <button type="submit" id="mergeBtn"
+                class="w-full bg-red-600 text-white py-3 rounded-xl font-semibold hover:bg-red-700 transition shadow-sm text-base disabled:opacity-60 disabled:cursor-not-allowed">
           Merge & Download PDF
         </button>
       </form>
     </div>
   </div>
 </div>
+<script>
+(function(){
+  const input = document.getElementById('pdfInput');
+  const list = document.getElementById('fileList');
+  const form = document.getElementById('mergeForm');
+  const btn = document.getElementById('mergeBtn');
+  const wrap = document.getElementById('progressWrap');
+  const bar = document.getElementById('progressBar');
+  function fmt(n){ if(n<1024) return n+' B'; if(n<1048576) return (n/1024).toFixed(1)+' KB'; return (n/1048576).toFixed(2)+' MB'; }
+  input.addEventListener('change', function(){
+    list.innerHTML = '';
+    Array.from(input.files).forEach((f,i)=>{
+      const li = document.createElement('li');
+      li.className = 'flex items-center justify-between bg-gray-50 border border-gray-100 rounded-lg px-3 py-2';
+      li.innerHTML = '<span class="flex items-center gap-2 truncate"><span class="text-red-500">📄</span><span class="truncate text-gray-700">'+(i+1)+'. '+f.name.replace(/[<>&"]/g,'')+'</span></span><span class="text-xs text-gray-400 ml-2 flex-shrink-0">'+fmt(f.size)+'</span>';
+      list.appendChild(li);
+    });
+  });
+  form.addEventListener('submit', function(){
+    if(!input.files.length) return;
+    btn.disabled = true;
+    btn.textContent = 'Merging...';
+    wrap.classList.remove('hidden');
+    let pct = 5;
+    bar.style.width = pct+'%';
+    const t = setInterval(()=>{
+      pct = Math.min(90, pct + Math.random()*8);
+      bar.style.width = pct+'%';
+    }, 400);
+    window.addEventListener('pagehide', ()=>clearInterval(t));
+  });
+})();
+</script>
 {% endblock %}
