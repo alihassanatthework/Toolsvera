@@ -4,16 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>{% block title %}ToolsVera — Free Online Tools{% endblock %}</title>
-  <meta name="description" content="{% block meta_description %}ToolsVera offers 60+ free online tools including calculators, PDF tools, image editors and text utilities. No signup required.{% endblock %}">
+  <meta name="description" content="{% block meta_description %}ToolsVera offers 70+ free online tools including calculators, PDF tools, image editors and text utilities. No signup required.{% endblock %}">
   <meta name="keywords" content="{% block meta_keywords %}free online tools, calculators, pdf converter, image converter, text tools{% endblock %}">
   <meta name="author" content="ToolsVera">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://toolsvera.com{% block canonical_path %}/{% endblock %}">
-
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232563eb'/><text x='32' y='46' font-family='Arial' font-size='38' font-weight='900' fill='white' text-anchor='middle'>T</text></svg>">
-
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ToolsVera">
   <meta property="og:title" content="{% block og_title %}ToolsVera — Free Online Tools{% endblock %}">
@@ -22,192 +19,359 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{% block twitter_title %}ToolsVera — Free Online Tools{% endblock %}">
   <meta name="twitter:description" content="{% block twitter_description %}Free online calculators, PDF tools, image editors and text utilities.{% endblock %}">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "ToolsVera",
-    "url": "https://toolsvera.com",
-    "description": "Free online tools including calculators, PDF tools, image editors and text utilities",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://toolsvera.com/?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"ToolsVera","url":"https://toolsvera.com","description":"Free online tools including calculators, PDF tools, image editors and text utilities"}</script>
   {% block extra_schema %}{% endblock %}
-
   {% if not debug %}
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CNKXT3MW19"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-CNKXT3MW19');
-  </script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CNKXT3MW19');</script>
   {% endif %}
-
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { brand: '#2563eb' },
-          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
-        }
-      }
-    }
-  </script>
+  <script>tailwind.config={theme:{extend:{colors:{brand:'#2563eb'},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    body { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
-    .tool-card { transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
-    .tool-card:hover { transform: translateY(-2px); }
-    .hero-bg { background: linear-gradient(160deg, #f0f6ff 0%, #f8faff 60%, #ffffff 100%); }
-    .nav-link { position: relative; }
-    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 50%; right: 50%; height: 2px; background: #2563eb; transition: left 0.2s ease, right 0.2s ease; border-radius: 2px; }
-    .nav-link:hover::after, .nav-link.active::after { left: 0; right: 0; }
-    #mobile-menu { transition: max-height 0.3s ease, opacity 0.3s ease; max-height: 0; opacity: 0; overflow: hidden; }
-    #mobile-menu.open { max-height: 400px; opacity: 1; }
+    *,*::before,*::after{box-sizing:border-box}
+    body{font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#111827}
+
+    /* ── Dropdown nav ── */
+    .nav-item{position:relative}
+    .nav-item>.nav-trigger{display:flex;align-items:center;gap:4px;padding:8px 12px;font-size:.875rem;font-weight:500;color:#4b5563;border-radius:8px;cursor:pointer;transition:color .15s,background .15s;white-space:nowrap;border:none;background:none}
+    .nav-item>.nav-trigger:hover{color:#2563eb;background:#eff6ff}
+    .nav-item>.nav-trigger .chevron{width:14px;height:14px;transition:transform .2s;flex-shrink:0}
+    .nav-item:hover>.nav-trigger .chevron{transform:rotate(180deg)}
+    .nav-item:hover>.nav-trigger{color:#2563eb;background:#eff6ff}
+
+    .dropdown{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 20px 60px -10px rgba(0,0,0,.15),0 4px 16px rgba(0,0,0,.06);padding:20px;min-width:520px;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;transform:translateX(-50%) translateY(-6px);z-index:200}
+    .nav-item:hover>.dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+    .dropdown-sm{min-width:220px}
+    .dropdown-grid{display:grid;gap:4px}
+    .dropdown-cols-2{grid-template-columns:repeat(2,1fr)}
+    .dropdown-cols-3{grid-template-columns:repeat(3,1fr)}
+    .dd-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;text-decoration:none;transition:background .13s,color .13s;color:#374151;font-size:.8125rem;font-weight:500}
+    .dd-link:hover{background:#eff6ff;color:#2563eb}
+    .dd-link:hover .dd-icon{transform:scale(1.1)}
+    .dd-icon{font-size:1.1rem;flex-shrink:0;transition:transform .15s}
+    .dd-label{line-height:1.3}
+    .dd-sub{font-size:.7rem;color:#9ca3af;font-weight:400;display:block;margin-top:1px}
+    .dd-link:hover .dd-sub{color:#93c5fd}
+    .dd-footer{margin-top:12px;padding-top:12px;border-top:1px solid #f3f4f6;display:flex;justify-content:flex-end}
+    .dd-all{font-size:.75rem;font-weight:600;color:#2563eb;text-decoration:none;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;transition:background .13s}
+    .dd-all:hover{background:#eff6ff}
+    .dd-section-title{font-size:.65rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;padding:0 12px 6px;margin-top:4px}
+
+    /* ── Tool cards ── */
+    .tool-card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+    .tool-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px -8px rgba(37,99,235,.18)}
+
+    /* ── Fade-in on scroll ── */
+    .fade-in{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+    .fade-in.visible{opacity:1;transform:none}
+
+    /* ── Hero ── */
+    .hero-bg{background:linear-gradient(150deg,#eef3ff 0%,#f6f9ff 40%,#fff 80%)}
+
+    /* ── Mobile menu ── */
+    #mobile-menu{max-height:0;opacity:0;overflow:hidden;transition:max-height .35s ease,opacity .25s ease}
+    #mobile-menu.open{max-height:600px;opacity:1}
+    .mob-section{border-bottom:1px solid #f3f4f6}
+    .mob-section-toggle{display:flex;justify-content:space-between;align-items:center;width:100%;padding:11px 12px;font-size:.875rem;font-weight:600;color:#374151;border:none;background:none;cursor:pointer;border-radius:8px;transition:background .13s}
+    .mob-section-toggle:hover{background:#f9fafb}
+    .mob-section-toggle .mob-chevron{width:14px;height:14px;transition:transform .2s;color:#6b7280}
+    .mob-section-toggle.open .mob-chevron{transform:rotate(180deg)}
+    .mob-links{max-height:0;overflow:hidden;transition:max-height .3s ease}
+    .mob-links.open{max-height:500px}
+    .mob-link{display:block;padding:8px 12px 8px 20px;font-size:.8125rem;color:#6b7280;text-decoration:none;border-radius:6px;transition:color .13s,background .13s}
+    .mob-link:hover{color:#2563eb;background:#eff6ff}
   </style>
   {% block extra_head %}{% endblock %}
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
-  <!-- Navbar -->
-  <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-5">
-      <div class="flex items-center justify-between h-16">
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav class="bg-white border-b border-gray-100 sticky top-0 z-50 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="flex items-center justify-between h-16">
 
-        <!-- Logo -->
-        <a href="/" class="flex items-center shrink-0">
-          <span class="text-xl font-extrabold text-blue-600 tracking-tight">Tools</span><span class="text-xl font-extrabold text-gray-900 tracking-tight">Vera</span>
-        </a>
+      <!-- Logo -->
+      <a href="/" class="flex items-center shrink-0 mr-6">
+        <span class="text-xl font-extrabold text-blue-600 tracking-tight">Tools</span><span class="text-xl font-extrabold text-gray-900 tracking-tight">Vera</span>
+      </a>
 
-        <!-- Desktop Nav -->
-        <div class="hidden md:flex items-center gap-1">
-          <a href="/calculators/" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 rounded-lg transition-colors">Calculators</a>
-          <a href="/pdf/merge/" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 rounded-lg transition-colors">PDF Tools</a>
-          <a href="/images/convert/" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 rounded-lg transition-colors">Image Tools</a>
-          <a href="/text/" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 rounded-lg transition-colors">Text Tools</a>
-          <a href="/files/word-to-pdf/" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 rounded-lg transition-colors">File Tools</a>
-        </div>
-
-        <!-- Mobile Hamburger -->
-        <button id="nav-toggle" aria-label="Open menu" class="md:hidden flex flex-col justify-center items-center w-9 h-9 rounded-lg hover:bg-gray-100 transition gap-1.5">
-          <span class="hamburger-line block w-5 h-0.5 bg-gray-700 transition-all duration-200 origin-center"></span>
-          <span class="hamburger-line block w-5 h-0.5 bg-gray-700 transition-all duration-200"></span>
-          <span class="hamburger-line block w-5 h-0.5 bg-gray-700 transition-all duration-200 origin-center"></span>
-        </button>
-      </div>
-
-      <!-- Mobile Menu -->
-      <div id="mobile-menu">
-        <div class="pb-4 pt-1 border-t border-gray-100 flex flex-col gap-1">
-          <a href="/calculators/" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">Calculators</a>
-          <a href="/pdf/merge/" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">PDF Tools</a>
-          <a href="/images/convert/" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">Image Tools</a>
-          <a href="/text/" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">Text Tools</a>
-          <a href="/files/word-to-pdf/" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">File Tools</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Main -->
-  <main class="flex-grow">
-    {% block content %}{% endblock %}
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-gray-950 text-gray-400 mt-20">
-    <div class="max-w-7xl mx-auto px-6 py-14">
-      <div class="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
-
-        <!-- Brand — spans 2 cols on md -->
-        <div class="col-span-2 md:col-span-2">
-          <div class="mb-4">
-            <span class="text-xl font-extrabold text-blue-400 tracking-tight">Tools</span><span class="text-xl font-extrabold text-white tracking-tight">Vera</span>
-          </div>
-          <p class="text-sm text-gray-500 leading-relaxed mb-5">Free online tools for everyone. No signup, no ads, no limits. 60+ tools across calculators, PDF, image, and text.</p>
-          <div class="flex flex-wrap gap-3 text-xs text-gray-600">
-            <span class="bg-gray-800 px-3 py-1.5 rounded-full">⚡ Instant Results</span>
-            <span class="bg-gray-800 px-3 py-1.5 rounded-full">🔒 No Data Stored</span>
-            <span class="bg-gray-800 px-3 py-1.5 rounded-full">🆓 Always Free</span>
-          </div>
-        </div>
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-0.5 flex-1">
 
         <!-- Calculators -->
-        <div>
-          <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">Calculators</h4>
-          <ul class="space-y-2.5 text-sm">
-            <li><a href="/calculators/bmi/" class="hover:text-white transition-colors">BMI Calculator</a></li>
-            <li><a href="/calculators/mortgage/" class="hover:text-white transition-colors">Mortgage</a></li>
-            <li><a href="/calculators/loan/" class="hover:text-white transition-colors">Loan Calculator</a></li>
-            <li><a href="/calculators/retirement/" class="hover:text-white transition-colors">Retirement</a></li>
-            <li><a href="/calculators/age/" class="hover:text-white transition-colors">Age Calculator</a></li>
-            <li><a href="/calculators/" class="text-blue-500 hover:text-blue-400 transition-colors text-xs">All calculators →</a></li>
-          </ul>
+        <div class="nav-item">
+          <button class="nav-trigger">
+            Calculators
+            <svg class="chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+          </button>
+          <div class="dropdown">
+            <div class="dd-section-title">Health & Lifestyle</div>
+            <div class="dropdown-grid dropdown-cols-2">
+              <a href="/calculators/bmi/" class="dd-link"><span class="dd-icon">⚖️</span><span class="dd-label">BMI Calculator<span class="dd-sub">Body mass index</span></span></a>
+              <a href="/calculators/calorie/" class="dd-link"><span class="dd-icon">🔥</span><span class="dd-label">Calorie Calculator<span class="dd-sub">Daily calorie needs</span></span></a>
+              <a href="/calculators/body-fat/" class="dd-link"><span class="dd-icon">💪</span><span class="dd-label">Body Fat<span class="dd-sub">Estimate body fat %</span></span></a>
+              <a href="/calculators/sleep/" class="dd-link"><span class="dd-icon">😴</span><span class="dd-label">Sleep Calculator<span class="dd-sub">Best bedtime</span></span></a>
+              <a href="/calculators/water-intake/" class="dd-link"><span class="dd-icon">💧</span><span class="dd-label">Water Intake<span class="dd-sub">Daily hydration</span></span></a>
+              <a href="/calculators/pregnancy/" class="dd-link"><span class="dd-icon">🤰</span><span class="dd-label">Pregnancy<span class="dd-sub">Due date & weeks</span></span></a>
+            </div>
+            <div class="dd-section-title" style="margin-top:12px">Finance</div>
+            <div class="dropdown-grid dropdown-cols-2">
+              <a href="/calculators/mortgage/" class="dd-link"><span class="dd-icon">🏦</span><span class="dd-label">Mortgage<span class="dd-sub">Monthly payment</span></span></a>
+              <a href="/calculators/loan/" class="dd-link"><span class="dd-icon">💳</span><span class="dd-label">Loan Calculator<span class="dd-sub">EMI & interest</span></span></a>
+              <a href="/calculators/retirement/" class="dd-link"><span class="dd-icon">🏖️</span><span class="dd-label">Retirement<span class="dd-sub">Savings estimate</span></span></a>
+              <a href="/calculators/compound-interest/" class="dd-link"><span class="dd-icon">📈</span><span class="dd-label">Compound Interest<span class="dd-sub">Investment growth</span></span></a>
+            </div>
+            <div class="dd-footer"><a href="/calculators/" class="dd-all">All 30+ Calculators →</a></div>
+          </div>
         </div>
 
         <!-- PDF Tools -->
-        <div>
-          <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">PDF Tools</h4>
-          <ul class="space-y-2.5 text-sm">
-            <li><a href="/pdf/merge/" class="hover:text-white transition-colors">Merge PDF</a></li>
-            <li><a href="/pdf/split/" class="hover:text-white transition-colors">Split PDF</a></li>
-            <li><a href="/pdf/to-word/" class="hover:text-white transition-colors">PDF to Word</a></li>
-            <li><a href="/pdf/compress/" class="hover:text-white transition-colors">Compress PDF</a></li>
-            <li><a href="/pdf/protect/" class="hover:text-white transition-colors">Protect PDF</a></li>
-          </ul>
+        <div class="nav-item">
+          <button class="nav-trigger">
+            PDF Tools
+            <svg class="chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+          </button>
+          <div class="dropdown dropdown-sm" style="min-width:260px">
+            <div class="dropdown-grid" style="grid-template-columns:1fr">
+              <a href="/pdf/merge/" class="dd-link"><span class="dd-icon">📎</span><span class="dd-label">Merge PDF<span class="dd-sub">Combine multiple PDFs</span></span></a>
+              <a href="/pdf/split/" class="dd-link"><span class="dd-icon">✂️</span><span class="dd-label">Split PDF<span class="dd-sub">Extract specific pages</span></span></a>
+              <a href="/pdf/compress/" class="dd-link"><span class="dd-icon">🗜️</span><span class="dd-label">Compress PDF<span class="dd-sub">Reduce file size</span></span></a>
+              <a href="/pdf/to-word/" class="dd-link"><span class="dd-icon">📝</span><span class="dd-label">PDF to Word<span class="dd-sub">Convert to DOCX</span></span></a>
+              <a href="/pdf/to-jpg/" class="dd-link"><span class="dd-icon">🖼️</span><span class="dd-label">PDF to JPG<span class="dd-sub">Pages to images</span></span></a>
+              <a href="/pdf/protect/" class="dd-link"><span class="dd-icon">🔐</span><span class="dd-label">Protect PDF<span class="dd-sub">Password lock</span></span></a>
+              <a href="/pdf/watermark/" class="dd-link"><span class="dd-icon">💧</span><span class="dd-label">Watermark PDF<span class="dd-sub">Stamp text on pages</span></span></a>
+            </div>
+          </div>
         </div>
 
-        <!-- Image & File Tools -->
-        <div>
-          <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">Image & File</h4>
-          <ul class="space-y-2.5 text-sm">
-            <li><a href="/images/convert/" class="hover:text-white transition-colors">Convert Image</a></li>
-            <li><a href="/images/resize/" class="hover:text-white transition-colors">Resize Image</a></li>
-            <li><a href="/images/compress/" class="hover:text-white transition-colors">Compress Image</a></li>
-            <li><a href="/images/crop/" class="hover:text-white transition-colors">Crop Image</a></li>
-            <li><a href="/files/word-to-pdf/" class="hover:text-white transition-colors">Word to PDF</a></li>
-          </ul>
+        <!-- Image Tools -->
+        <div class="nav-item">
+          <button class="nav-trigger">
+            Image Tools
+            <svg class="chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+          </button>
+          <div class="dropdown dropdown-sm" style="min-width:260px">
+            <div class="dropdown-grid" style="grid-template-columns:1fr">
+              <a href="/images/convert/" class="dd-link"><span class="dd-icon">🔀</span><span class="dd-label">Convert Image<span class="dd-sub">JPG, PNG, WEBP, BMP</span></span></a>
+              <a href="/images/resize/" class="dd-link"><span class="dd-icon">📐</span><span class="dd-label">Resize Image<span class="dd-sub">Change dimensions</span></span></a>
+              <a href="/images/compress/" class="dd-link"><span class="dd-icon">🗜️</span><span class="dd-label">Compress Image<span class="dd-sub">Reduce file size</span></span></a>
+              <a href="/images/crop/" class="dd-link"><span class="dd-icon">✂️</span><span class="dd-label">Crop Image<span class="dd-sub">Trim to size</span></span></a>
+              <a href="/images/rotate/" class="dd-link"><span class="dd-icon">🔄</span><span class="dd-label">Rotate & Flip<span class="dd-sub">Rotate or mirror</span></span></a>
+              <a href="/images/to-pdf/" class="dd-link"><span class="dd-icon">📄</span><span class="dd-label">Image to PDF<span class="dd-sub">Combine into PDF</span></span></a>
+              <a href="/images/watermark/" class="dd-link"><span class="dd-icon">💧</span><span class="dd-label">Watermark Image<span class="dd-sub">Stamp text on image</span></span></a>
+            </div>
+          </div>
         </div>
 
         <!-- Text Tools -->
-        <div>
-          <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">Text Tools</h4>
-          <ul class="space-y-2.5 text-sm">
-            <li><a href="/text/word-counter/" class="hover:text-white transition-colors">Word Counter</a></li>
-            <li><a href="/text/password-generator/" class="hover:text-white transition-colors">Password Generator</a></li>
-            <li><a href="/text/text-case/" class="hover:text-white transition-colors">Case Converter</a></li>
-            <li><a href="/text/base64/" class="hover:text-white transition-colors">Base64 Tool</a></li>
-            <li><a href="/text/lorem-ipsum/" class="hover:text-white transition-colors">Lorem Ipsum</a></li>
-            <li><a href="/text/" class="text-blue-500 hover:text-blue-400 transition-colors text-xs">All text tools →</a></li>
-          </ul>
+        <div class="nav-item">
+          <button class="nav-trigger">
+            Text Tools
+            <svg class="chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+          </button>
+          <div class="dropdown dropdown-sm" style="min-width:280px">
+            <div class="dropdown-grid" style="grid-template-columns:1fr">
+              <a href="/text/word-counter/" class="dd-link"><span class="dd-icon">📝</span><span class="dd-label">Word Counter<span class="dd-sub">Words, chars, sentences</span></span></a>
+              <a href="/text/password-generator/" class="dd-link"><span class="dd-icon">🔐</span><span class="dd-label">Password Generator<span class="dd-sub">Strong random passwords</span></span></a>
+              <a href="/text/text-case/" class="dd-link"><span class="dd-icon">🔡</span><span class="dd-label">Case Converter<span class="dd-sub">Upper, lower, title</span></span></a>
+              <a href="/text/json-formatter/" class="dd-link"><span class="dd-icon">🗂️</span><span class="dd-label">JSON Formatter<span class="dd-sub">Beautify & validate</span></span></a>
+              <a href="/text/base64/" class="dd-link"><span class="dd-icon">🔢</span><span class="dd-label">Base64 Tool<span class="dd-sub">Encode or decode</span></span></a>
+              <a href="/text/url-encoder/" class="dd-link"><span class="dd-icon">🔗</span><span class="dd-label">URL Encoder<span class="dd-sub">Encode or decode URLs</span></span></a>
+              <a href="/text/lorem-ipsum/" class="dd-link"><span class="dd-icon">📄</span><span class="dd-label">Lorem Ipsum<span class="dd-sub">Placeholder text</span></span></a>
+            </div>
+            <div class="dd-footer"><a href="/text/" class="dd-all">All Text Tools →</a></div>
+          </div>
         </div>
 
-      </div>
-      <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p class="text-sm text-gray-600">© 2025 ToolsVera. All rights reserved.</p>
-        <p class="text-xs text-gray-700">Free tools. No data stored. No account needed.</p>
-      </div>
-    </div>
-  </footer>
+        <!-- File Tools (single link) -->
+        <a href="/files/word-to-pdf/" class="nav-trigger" style="text-decoration:none;border-radius:8px">File Tools</a>
 
-  <script>
-    const toggle = document.getElementById('nav-toggle');
-    const menu = document.getElementById('mobile-menu');
-    const lines = toggle.querySelectorAll('.hamburger-line');
-    toggle.addEventListener('click', () => {
-      const open = menu.classList.toggle('open');
-      lines[0].style.transform = open ? 'translateY(6px) rotate(45deg)' : '';
-      lines[1].style.opacity = open ? '0' : '1';
-      lines[2].style.transform = open ? 'translateY(-6px) rotate(-45deg)' : '';
-    });
-  </script>
+      </div><!-- end desktop nav -->
+
+      <!-- Mobile hamburger -->
+      <button id="nav-toggle" aria-label="Toggle menu" class="md:hidden flex flex-col justify-center items-center w-9 h-9 rounded-lg hover:bg-gray-100 transition-colors gap-1.5 shrink-0">
+        <span class="hline block w-5 h-0.5 bg-gray-700 transition-all duration-200 origin-center rounded"></span>
+        <span class="hline block w-5 h-0.5 bg-gray-700 transition-all duration-200 rounded"></span>
+        <span class="hline block w-5 h-0.5 bg-gray-700 transition-all duration-200 origin-center rounded"></span>
+      </button>
+    </div><!-- end flex row -->
+
+    <!-- ── Mobile Menu ── -->
+    <div id="mobile-menu">
+      <div class="pb-3 pt-1">
+
+        <!-- Calculators accordion -->
+        <div class="mob-section">
+          <button class="mob-section-toggle" onclick="toggleMob(this)">
+            <span>Calculators</span>
+            <svg class="mob-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+          </button>
+          <div class="mob-links">
+            <a href="/calculators/bmi/" class="mob-link">BMI Calculator</a>
+            <a href="/calculators/calorie/" class="mob-link">Calorie Calculator</a>
+            <a href="/calculators/mortgage/" class="mob-link">Mortgage Calculator</a>
+            <a href="/calculators/loan/" class="mob-link">Loan Calculator</a>
+            <a href="/calculators/retirement/" class="mob-link">Retirement Calculator</a>
+            <a href="/calculators/sleep/" class="mob-link">Sleep Calculator</a>
+            <a href="/calculators/water-intake/" class="mob-link">Water Intake</a>
+            <a href="/calculators/" class="mob-link font-semibold text-blue-600">All Calculators →</a>
+          </div>
+        </div>
+
+        <!-- PDF Tools accordion -->
+        <div class="mob-section">
+          <button class="mob-section-toggle" onclick="toggleMob(this)">
+            <span>PDF Tools</span>
+            <svg class="mob-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+          </button>
+          <div class="mob-links">
+            <a href="/pdf/merge/" class="mob-link">Merge PDF</a>
+            <a href="/pdf/split/" class="mob-link">Split PDF</a>
+            <a href="/pdf/compress/" class="mob-link">Compress PDF</a>
+            <a href="/pdf/to-word/" class="mob-link">PDF to Word</a>
+            <a href="/pdf/protect/" class="mob-link">Protect PDF</a>
+          </div>
+        </div>
+
+        <!-- Image Tools accordion -->
+        <div class="mob-section">
+          <button class="mob-section-toggle" onclick="toggleMob(this)">
+            <span>Image Tools</span>
+            <svg class="mob-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+          </button>
+          <div class="mob-links">
+            <a href="/images/convert/" class="mob-link">Convert Image</a>
+            <a href="/images/resize/" class="mob-link">Resize Image</a>
+            <a href="/images/compress/" class="mob-link">Compress Image</a>
+            <a href="/images/crop/" class="mob-link">Crop Image</a>
+          </div>
+        </div>
+
+        <!-- Text Tools accordion -->
+        <div class="mob-section">
+          <button class="mob-section-toggle" onclick="toggleMob(this)">
+            <span>Text Tools</span>
+            <svg class="mob-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+          </button>
+          <div class="mob-links">
+            <a href="/text/word-counter/" class="mob-link">Word Counter</a>
+            <a href="/text/password-generator/" class="mob-link">Password Generator</a>
+            <a href="/text/json-formatter/" class="mob-link">JSON Formatter</a>
+            <a href="/text/base64/" class="mob-link">Base64 Tool</a>
+            <a href="/text/" class="mob-link font-semibold text-blue-600">All Text Tools →</a>
+          </div>
+        </div>
+
+        <div class="pt-2 px-1">
+          <a href="/files/word-to-pdf/" class="mob-link">File Tools</a>
+        </div>
+      </div>
+    </div><!-- end mobile menu -->
+  </div><!-- end container -->
+</nav>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<main class="flex-grow">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="bg-gray-950 text-gray-400 mt-20">
+  <div class="max-w-7xl mx-auto px-6 py-14">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
+
+      <div class="col-span-2">
+        <a href="/" class="inline-flex items-center mb-4">
+          <span class="text-xl font-extrabold text-blue-400 tracking-tight">Tools</span><span class="text-xl font-extrabold text-white tracking-tight">Vera</span>
+        </a>
+        <p class="text-sm text-gray-500 leading-relaxed mb-5">Free online tools for everyone. No signup, no ads, no limits. 70+ tools across calculators, PDF, image, and text.</p>
+        <div class="flex flex-wrap gap-2 text-xs text-gray-500">
+          <span class="bg-gray-800/60 border border-gray-700/50 px-3 py-1.5 rounded-full">⚡ Instant</span>
+          <span class="bg-gray-800/60 border border-gray-700/50 px-3 py-1.5 rounded-full">🔒 Private</span>
+          <span class="bg-gray-800/60 border border-gray-700/50 px-3 py-1.5 rounded-full">🆓 Free Forever</span>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">Calculators</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="/calculators/bmi/" class="hover:text-white transition-colors">BMI Calculator</a></li>
+          <li><a href="/calculators/mortgage/" class="hover:text-white transition-colors">Mortgage</a></li>
+          <li><a href="/calculators/loan/" class="hover:text-white transition-colors">Loan Calculator</a></li>
+          <li><a href="/calculators/retirement/" class="hover:text-white transition-colors">Retirement</a></li>
+          <li><a href="/calculators/sleep/" class="hover:text-white transition-colors">Sleep Calculator</a></li>
+          <li><a href="/calculators/" class="text-blue-500 hover:text-blue-400 text-xs transition-colors">All calculators →</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">PDF Tools</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="/pdf/merge/" class="hover:text-white transition-colors">Merge PDF</a></li>
+          <li><a href="/pdf/split/" class="hover:text-white transition-colors">Split PDF</a></li>
+          <li><a href="/pdf/to-word/" class="hover:text-white transition-colors">PDF to Word</a></li>
+          <li><a href="/pdf/compress/" class="hover:text-white transition-colors">Compress PDF</a></li>
+          <li><a href="/pdf/protect/" class="hover:text-white transition-colors">Protect PDF</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">Image & File</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="/images/convert/" class="hover:text-white transition-colors">Convert Image</a></li>
+          <li><a href="/images/resize/" class="hover:text-white transition-colors">Resize Image</a></li>
+          <li><a href="/images/compress/" class="hover:text-white transition-colors">Compress Image</a></li>
+          <li><a href="/images/crop/" class="hover:text-white transition-colors">Crop Image</a></li>
+          <li><a href="/files/word-to-pdf/" class="hover:text-white transition-colors">Word to PDF</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">Text Tools</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="/text/word-counter/" class="hover:text-white transition-colors">Word Counter</a></li>
+          <li><a href="/text/password-generator/" class="hover:text-white transition-colors">Password Generator</a></li>
+          <li><a href="/text/text-case/" class="hover:text-white transition-colors">Case Converter</a></li>
+          <li><a href="/text/json-formatter/" class="hover:text-white transition-colors">JSON Formatter</a></li>
+          <li><a href="/text/base64/" class="hover:text-white transition-colors">Base64 Tool</a></li>
+          <li><a href="/text/" class="text-blue-500 hover:text-blue-400 text-xs transition-colors">All text tools →</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-sm text-gray-600">© 2025 ToolsVera. All rights reserved.</p>
+      <p class="text-xs text-gray-700">Free tools · No data stored · No account needed</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════ SCRIPTS ══════════════ -->
+<script>
+  // Hamburger toggle
+  const navToggle = document.getElementById('nav-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hlines = navToggle.querySelectorAll('.hline');
+  navToggle.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hlines[0].style.transform = open ? 'translateY(6px) rotate(45deg)' : '';
+    hlines[1].style.opacity  = open ? '0' : '1';
+    hlines[2].style.transform = open ? 'translateY(-6px) rotate(-45deg)' : '';
+  });
+
+  // Mobile accordion sections
+  function toggleMob(btn) {
+    const links = btn.nextElementSibling;
+    const isOpen = links.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+  }
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
