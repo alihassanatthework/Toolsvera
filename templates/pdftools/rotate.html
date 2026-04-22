@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Rotate PDF — Rotate PDF Pages Free Online | ToolsVera{% endblock %}
+{% block meta_description %}Rotate PDF pages online for free. Rotate all pages 90°, 180° or 270°. No signup, instant download.{% endblock %}
+{% block meta_keywords %}rotate pdf, rotate pdf pages, flip pdf, pdf rotation tool, free pdf editor{% endblock %}
+{% block canonical_path %}/pdf/rotate/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/pdf/merge/" class="hover:text-blue-600 transition">PDF Tools</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Rotate PDF</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🔄</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Rotate PDF</h1>
+          <p class="text-blue-100 text-sm">Rotate all pages in your PDF</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      {% if error %}<div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">{{ error }}</div>{% endif %}
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Upload PDF</label>
+          <input type="file" name="pdf" accept=".pdf" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-gray-700 mb-3">Rotation Angle</label>
+          <div class="grid grid-cols-3 gap-3">
+            <label class="flex items-center gap-2 border border-gray-200 rounded-xl px-4 py-3 cursor-pointer hover:border-blue-400 transition has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+              <input type="radio" name="angle" value="90" checked class="text-blue-600"> <span class="text-sm font-medium text-gray-700">90° Clockwise</span>
+            </label>
+            <label class="flex items-center gap-2 border border-gray-200 rounded-xl px-4 py-3 cursor-pointer hover:border-blue-400 transition has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+              <input type="radio" name="angle" value="180" class="text-blue-600"> <span class="text-sm font-medium text-gray-700">180°</span>
+            </label>
+            <label class="flex items-center gap-2 border border-gray-200 rounded-xl px-4 py-3 cursor-pointer hover:border-blue-400 transition has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+              <input type="radio" name="angle" value="270" class="text-blue-600"> <span class="text-sm font-medium text-gray-700">270° Clockwise</span>
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Rotate PDF</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

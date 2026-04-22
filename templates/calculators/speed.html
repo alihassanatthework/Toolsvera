@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Speed Distance Time Calculator — Free Online | ToolsVera{% endblock %}
+{% block meta_description %}Calculate speed, distance or time online for free. Enter any two values to find the third. Instant results, no signup required.{% endblock %}
+{% block meta_keywords %}speed calculator, distance calculator, time calculator, speed distance time, velocity calculator{% endblock %}
+{% block canonical_path %}/calculators/speed/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/calculators/" class="hover:text-blue-600 transition">Calculators</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Speed Calculator</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🚀</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Speed Calculator</h1>
+          <p class="text-blue-100 text-sm">Calculate speed, distance or time</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-5">
+          <label class="block text-sm font-semibold text-gray-700 mb-3">I want to calculate</label>
+          <div class="grid grid-cols-3 gap-3">
+            <label class="flex items-center justify-center gap-2 border border-gray-200 rounded-xl px-4 py-3 cursor-pointer hover:border-blue-400 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition">
+              <input type="radio" name="calc_for" value="speed" checked> <span class="text-sm font-medium">Speed</span>
+            </label>
+            <label class="flex items-center justify-center gap-2 border border-gray-200 rounded-xl px-4 py-3 cursor-pointer hover:border-blue-400 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition">
+              <input type="radio" name="calc_for" value="distance"> <span class="text-sm font-medium">Distance</span>
+            </label>
+            <label class="flex items-center justify-center gap-2 border border-gray-200 rounded-xl px-4 py-3 cursor-pointer hover:border-blue-400 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition">
+              <input type="radio" name="calc_for" value="time"> <span class="text-sm font-medium">Time</span>
+            </label>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Distance (km)</label>
+            <input type="number" name="distance" step="any" placeholder="e.g. 100" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Time (hours)</label>
+            <input type="number" name="time" step="any" placeholder="e.g. 2" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Speed (km/h)</label>
+            <input type="number" name="speed" step="any" placeholder="e.g. 50" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Calculate</button>
+      </form>
+      {% if result %}
+      <div class="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-2xl text-center">
+        <p class="text-sm text-gray-500 uppercase tracking-wide mb-1">{{ result.label }}</p>
+        <p class="text-5xl font-extrabold text-blue-600">{{ result.value }}</p>
+        <p class="text-sm text-gray-400 mt-1">{{ result.unit }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

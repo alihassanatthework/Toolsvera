@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-{% block title %}Free Online Tools — Calculators, PDF & Image Tools{% endblock %}
-{% block meta_description %}ToolsVera offers 100% free online tools. BMI calculator, mortgage calculator, PDF merger, PDF to Word, image converter and more. No signup needed.{% endblock %}
+{% block title %}ToolsVera — Free Online Tools: Calculators, PDF & Image Tools{% endblock %}
+{% block meta_description %}ToolsVera offers 50+ free online tools including calculators, PDF tools, file converters and image editors. No signup required. 100% free forever.{% endblock %}
+{% block meta_keywords %}free online tools, calculators, pdf tools, image converter, file converter, bmi calculator, pdf merger{% endblock %}
 {% block canonical_path %}/{% endblock %}
 
 {% block content %}
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section class="gradient-hero py-20 px-6 text-center border-b border-gray-100">
   <div class="max-w-3xl mx-auto">
     <span class="inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wide">100% Free — No Signup Required</span>
@@ -22,27 +23,137 @@
 
 <div class="max-w-6xl mx-auto px-6 py-14">
 
-  <!-- Stats Bar -->
+  <!-- Stats -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
     <div class="bg-white rounded-2xl p-5 text-center shadow-sm border border-gray-100">
-      <div class="text-3xl font-extrabold text-blue-600">10+</div>
+      <div class="text-3xl font-extrabold text-blue-600">50+</div>
       <div class="text-sm text-gray-500 mt-1">Free Tools</div>
     </div>
     <div class="bg-white rounded-2xl p-5 text-center shadow-sm border border-gray-100">
-      <div class="text-3xl font-extrabold text-green-600">0</div>
+      <div class="text-3xl font-extrabold text-blue-600">0</div>
       <div class="text-sm text-gray-500 mt-1">Signups Needed</div>
     </div>
     <div class="bg-white rounded-2xl p-5 text-center shadow-sm border border-gray-100">
-      <div class="text-3xl font-extrabold text-purple-600">100%</div>
+      <div class="text-3xl font-extrabold text-blue-600">100%</div>
       <div class="text-sm text-gray-500 mt-1">Free Forever</div>
     </div>
     <div class="bg-white rounded-2xl p-5 text-center shadow-sm border border-gray-100">
-      <div class="text-3xl font-extrabold text-red-500">0</div>
+      <div class="text-3xl font-extrabold text-blue-600">0</div>
       <div class="text-sm text-gray-500 mt-1">Ads</div>
     </div>
   </div>
 
-  <!-- Calculators Section -->
+  <!-- PDF Tools -->
+  <div class="mb-14">
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-xl">📄</div>
+        <div>
+          <h2 class="text-xl font-bold text-gray-900">PDF Tools</h2>
+          <p class="text-sm text-gray-400">Edit, convert and manage PDF files</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <a href="/pdf/merge/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📎</div>
+        <div class="font-semibold text-gray-800 text-sm">Merge PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Combine multiple PDFs</div>
+      </a>
+      <a href="/pdf/split/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">✂️</div>
+        <div class="font-semibold text-gray-800 text-sm">Split PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Extract pages from PDF</div>
+      </a>
+      <a href="/pdf/compress/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🗜️</div>
+        <div class="font-semibold text-gray-800 text-sm">Compress PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Reduce PDF file size</div>
+      </a>
+      <a href="/pdf/to-word/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📝</div>
+        <div class="font-semibold text-gray-800 text-sm">PDF to Word</div>
+        <div class="text-xs text-gray-400 mt-1">Convert PDF to DOCX</div>
+      </a>
+      <a href="/pdf/to-jpg/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🖼️</div>
+        <div class="font-semibold text-gray-800 text-sm">PDF to JPG</div>
+        <div class="text-xs text-gray-400 mt-1">Convert pages to images</div>
+      </a>
+      <a href="/pdf/jpg-to-pdf/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📷</div>
+        <div class="font-semibold text-gray-800 text-sm">JPG to PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Images into a PDF</div>
+      </a>
+      <a href="/pdf/rotate/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔄</div>
+        <div class="font-semibold text-gray-800 text-sm">Rotate PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Rotate all pages</div>
+      </a>
+      <a href="/pdf/remove-pages/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🗑️</div>
+        <div class="font-semibold text-gray-800 text-sm">Remove Pages</div>
+        <div class="text-xs text-gray-400 mt-1">Delete specific pages</div>
+      </a>
+      <a href="/pdf/extract-pages/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📤</div>
+        <div class="font-semibold text-gray-800 text-sm">Extract Pages</div>
+        <div class="text-xs text-gray-400 mt-1">Save pages as new PDF</div>
+      </a>
+      <a href="/pdf/add-page-numbers/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔢</div>
+        <div class="font-semibold text-gray-800 text-sm">Add Page Numbers</div>
+        <div class="text-xs text-gray-400 mt-1">Number your PDF pages</div>
+      </a>
+      <a href="/pdf/watermark/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">💧</div>
+        <div class="font-semibold text-gray-800 text-sm">Watermark PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Stamp text on every page</div>
+      </a>
+      <a href="/pdf/protect/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔐</div>
+        <div class="font-semibold text-gray-800 text-sm">Protect PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Password lock your PDF</div>
+      </a>
+      <a href="/pdf/unlock/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔓</div>
+        <div class="font-semibold text-gray-800 text-sm">Unlock PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Remove PDF password</div>
+      </a>
+      <a href="/pdf/organize/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📋</div>
+        <div class="font-semibold text-gray-800 text-sm">Organize PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Reorder PDF pages</div>
+      </a>
+      <!-- Coming Soon -->
+      <a href="/pdf/to-powerpoint/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md relative opacity-60">
+        <div class="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📊</div>
+        <div class="font-semibold text-gray-600 text-sm">PDF to PowerPoint</div>
+        <div class="text-xs text-gray-400 mt-1">Convert to PPTX</div>
+        <span class="absolute top-2 right-2 bg-gray-100 text-gray-500 text-xs font-semibold px-2 py-0.5 rounded-full">Soon</span>
+      </a>
+      <a href="/pdf/to-excel/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md relative opacity-60">
+        <div class="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📊</div>
+        <div class="font-semibold text-gray-600 text-sm">PDF to Excel</div>
+        <div class="text-xs text-gray-400 mt-1">Extract tables to XLSX</div>
+        <span class="absolute top-2 right-2 bg-gray-100 text-gray-500 text-xs font-semibold px-2 py-0.5 rounded-full">Soon</span>
+      </a>
+      <a href="/pdf/ocr/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md relative opacity-60">
+        <div class="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔍</div>
+        <div class="font-semibold text-gray-600 text-sm">OCR PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Extract text from scans</div>
+        <span class="absolute top-2 right-2 bg-gray-100 text-gray-500 text-xs font-semibold px-2 py-0.5 rounded-full">Soon</span>
+      </a>
+      <a href="/pdf/sign/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md relative opacity-60">
+        <div class="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">✍️</div>
+        <div class="font-semibold text-gray-600 text-sm">Sign PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Digital signature</div>
+        <span class="absolute top-2 right-2 bg-gray-100 text-gray-500 text-xs font-semibold px-2 py-0.5 rounded-full">Soon</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Calculators -->
   <div class="mb-14">
     <div class="flex items-center gap-3 mb-6">
       <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-xl">🧮</div>
@@ -52,94 +163,156 @@
       </div>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <a href="/calculators/bmi/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-blue-200">
+      <a href="/calculators/bmi/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
         <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">⚖️</div>
         <div class="font-semibold text-gray-800 text-sm">BMI Calculator</div>
         <div class="text-xs text-gray-400 mt-1">Check your body mass index</div>
       </a>
-      <a href="/calculators/mortgage/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-blue-200">
+      <a href="/calculators/age/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🎂</div>
+        <div class="font-semibold text-gray-800 text-sm">Age Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Find your exact age</div>
+      </a>
+      <a href="/calculators/mortgage/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
         <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🏦</div>
         <div class="font-semibold text-gray-800 text-sm">Mortgage Calculator</div>
         <div class="text-xs text-gray-400 mt-1">Monthly payment estimator</div>
       </a>
-      <a href="/calculators/percentage/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-blue-200">
+      <a href="/calculators/loan/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">💳</div>
+        <div class="font-semibold text-gray-800 text-sm">Loan Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Monthly loan repayment</div>
+      </a>
+      <a href="/calculators/compound-interest/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📈</div>
+        <div class="font-semibold text-gray-800 text-sm">Compound Interest</div>
+        <div class="text-xs text-gray-400 mt-1">Investment growth calculator</div>
+      </a>
+      <a href="/calculators/tip/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🍽️</div>
+        <div class="font-semibold text-gray-800 text-sm">Tip Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Split the bill easily</div>
+      </a>
+      <a href="/calculators/tax/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🧾</div>
+        <div class="font-semibold text-gray-800 text-sm">Tax Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Estimate your tax owed</div>
+      </a>
+      <a href="/calculators/percentage/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
         <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">💯</div>
         <div class="font-semibold text-gray-800 text-sm">Percentage</div>
         <div class="text-xs text-gray-400 mt-1">Calculate percentages fast</div>
       </a>
-    </div>
-  </div>
-
-  <!-- PDF Tools Section -->
-  <div class="mb-14">
-    <div class="flex items-center gap-3 mb-6">
-      <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center text-xl">📄</div>
-      <div>
-        <h2 class="text-xl font-bold text-gray-900">PDF Tools</h2>
-        <p class="text-sm text-gray-400">Edit, convert and manage PDF files</p>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <a href="/pdf/merge/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-red-200">
-        <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📎</div>
-        <div class="font-semibold text-gray-800 text-sm">Merge PDFs</div>
-        <div class="text-xs text-gray-400 mt-1">Combine multiple PDFs</div>
+      <a href="/calculators/calorie/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔥</div>
+        <div class="font-semibold text-gray-800 text-sm">Calorie Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Daily calorie needs (TDEE)</div>
       </a>
-      <a href="/pdf/split/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-red-200">
-        <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">✂️</div>
-        <div class="font-semibold text-gray-800 text-sm">Split PDF</div>
-        <div class="text-xs text-gray-400 mt-1">Extract pages from PDF</div>
+      <a href="/calculators/date/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📅</div>
+        <div class="font-semibold text-gray-800 text-sm">Date Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Days between two dates</div>
       </a>
-      <a href="/pdf/to-word/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-red-200">
-        <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📝</div>
-        <div class="font-semibold text-gray-800 text-sm">PDF to Word</div>
-        <div class="text-xs text-gray-400 mt-1">Convert PDF to DOCX</div>
+      <a href="/calculators/unit-converter/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📏</div>
+        <div class="font-semibold text-gray-800 text-sm">Unit Converter</div>
+        <div class="text-xs text-gray-400 mt-1">Length, weight, temperature</div>
       </a>
-      <a href="/pdf/compress/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-red-200">
-        <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🗜️</div>
-        <div class="font-semibold text-gray-800 text-sm">Compress PDF</div>
-        <div class="text-xs text-gray-400 mt-1">Reduce PDF file size</div>
+      <a href="/calculators/scientific/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔬</div>
+        <div class="font-semibold text-gray-800 text-sm">Scientific Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Advanced math functions</div>
       </a>
-    </div>
-  </div>
-
-  <!-- File Tools Section -->
-  <div class="mb-14">
-    <div class="flex items-center gap-3 mb-6">
-      <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center text-xl">🔄</div>
-      <div>
-        <h2 class="text-xl font-bold text-gray-900">File Tools</h2>
-        <p class="text-sm text-gray-400">Convert files between formats</p>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <a href="/files/word-to-pdf/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-green-200">
-        <div class="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📋</div>
-        <div class="font-semibold text-gray-800 text-sm">Word to PDF</div>
-        <div class="text-xs text-gray-400 mt-1">Convert DOCX to PDF</div>
+      <a href="/calculators/fraction/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">½</div>
+        <div class="font-semibold text-gray-800 text-sm">Fraction Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Add, subtract, multiply fractions</div>
+      </a>
+      <a href="/calculators/gpa/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🎓</div>
+        <div class="font-semibold text-gray-800 text-sm">GPA Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Calculate grade point average</div>
+      </a>
+      <a href="/calculators/grade/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📝</div>
+        <div class="font-semibold text-gray-800 text-sm">Grade Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Weighted final grade</div>
+      </a>
+      <a href="/calculators/speed/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🚀</div>
+        <div class="font-semibold text-gray-800 text-sm">Speed Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Speed, distance & time</div>
+      </a>
+      <a href="/calculators/area/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📐</div>
+        <div class="font-semibold text-gray-800 text-sm">Area Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Rectangle, circle, triangle</div>
       </a>
     </div>
   </div>
 
-  <!-- Image Tools Section -->
+  <!-- Image Tools -->
   <div class="mb-14">
     <div class="flex items-center gap-3 mb-6">
-      <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center text-xl">🖼️</div>
+      <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-xl">🖼️</div>
       <div>
         <h2 class="text-xl font-bold text-gray-900">Image Tools</h2>
         <p class="text-sm text-gray-400">Edit and convert images online</p>
       </div>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <a href="/images/convert/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-purple-200">
-        <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔀</div>
+      <a href="/images/convert/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔀</div>
         <div class="font-semibold text-gray-800 text-sm">Convert Image</div>
         <div class="text-xs text-gray-400 mt-1">JPG, PNG, WEBP, BMP</div>
       </a>
-      <a href="/images/resize/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-purple-200">
-        <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📐</div>
+      <a href="/images/resize/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📐</div>
         <div class="font-semibold text-gray-800 text-sm">Resize Image</div>
         <div class="text-xs text-gray-400 mt-1">Change image dimensions</div>
+      </a>
+      <a href="/images/compress/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🗜️</div>
+        <div class="font-semibold text-gray-800 text-sm">Compress Image</div>
+        <div class="text-xs text-gray-400 mt-1">Reduce file size</div>
+      </a>
+      <a href="/images/rotate/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔄</div>
+        <div class="font-semibold text-gray-800 text-sm">Rotate & Flip</div>
+        <div class="text-xs text-gray-400 mt-1">Rotate or mirror image</div>
+      </a>
+      <a href="/images/crop/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">✂️</div>
+        <div class="font-semibold text-gray-800 text-sm">Crop Image</div>
+        <div class="text-xs text-gray-400 mt-1">Trim to exact dimensions</div>
+      </a>
+      <a href="/images/to-pdf/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📄</div>
+        <div class="font-semibold text-gray-800 text-sm">Image to PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Combine images into PDF</div>
+      </a>
+      <a href="/images/watermark/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">💧</div>
+        <div class="font-semibold text-gray-800 text-sm">Watermark Image</div>
+        <div class="text-xs text-gray-400 mt-1">Stamp text on image</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- File Tools -->
+  <div class="mb-14">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-xl">🔄</div>
+      <div>
+        <h2 class="text-xl font-bold text-gray-900">File Tools</h2>
+        <p class="text-sm text-gray-400">Convert files between formats</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <a href="/files/word-to-pdf/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📋</div>
+        <div class="font-semibold text-gray-800 text-sm">Word to PDF</div>
+        <div class="text-xs text-gray-400 mt-1">Convert DOCX to PDF</div>
       </a>
     </div>
   </div>

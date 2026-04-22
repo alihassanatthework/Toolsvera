@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Calorie Calculator — Daily Calorie Needs Free | ToolsVera{% endblock %}
+{% block meta_description %}Calculate your daily calorie needs (TDEE) based on age, weight, height and activity level. Free online calorie calculator. No signup required.{% endblock %}
+{% block meta_keywords %}calorie calculator, tdee calculator, daily calorie needs, bmr calculator, calorie intake{% endblock %}
+{% block canonical_path %}/calculators/calorie/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/calculators/" class="hover:text-blue-600 transition">Calculators</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Calorie Calculator</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🔥</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Calorie Calculator</h1>
+          <p class="text-blue-100 text-sm">Find your daily calorie needs (TDEE)</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post">
+        {% csrf_token %}
+        <div class="grid grid-cols-2 gap-4 mb-5">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Age (years)</label>
+            <input type="number" name="age" placeholder="e.g. 30" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Gender</label>
+            <select name="gender" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Weight (kg)</label>
+            <input type="number" name="weight" step="0.1" placeholder="e.g. 75" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Height (cm)</label>
+            <input type="number" name="height" step="0.1" placeholder="e.g. 175" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Activity Level</label>
+            <select name="activity" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+              <option value="1.2">Sedentary (little or no exercise)</option>
+              <option value="1.375">Lightly active (1-3 days/week)</option>
+              <option value="1.55" selected>Moderately active (3-5 days/week)</option>
+              <option value="1.725">Very active (6-7 days/week)</option>
+              <option value="1.9">Extra active (physical job)</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Calculate Calories</button>
+      </form>
+      {% if result %}
+      <div class="mt-8 space-y-3">
+        <div class="p-4 bg-blue-50 border border-blue-100 rounded-2xl flex justify-between items-center">
+          <div><p class="font-semibold text-gray-800">Basal Metabolic Rate (BMR)</p><p class="text-xs text-gray-400">Calories at complete rest</p></div>
+          <span class="text-2xl font-extrabold text-blue-600">{{ result.bmr|floatformat:0 }}</span>
+        </div>
+        <div class="p-4 bg-gray-50 border border-gray-100 rounded-2xl flex justify-between items-center">
+          <div><p class="font-semibold text-gray-800">Maintain Weight</p><p class="text-xs text-gray-400">Total Daily Energy Expenditure</p></div>
+          <span class="text-2xl font-extrabold text-gray-700">{{ result.tdee|floatformat:0 }}</span>
+        </div>
+        <div class="p-4 bg-red-50 border border-red-100 rounded-2xl flex justify-between items-center">
+          <div><p class="font-semibold text-gray-800">Lose Weight</p><p class="text-xs text-gray-400">~0.5 kg/week deficit</p></div>
+          <span class="text-2xl font-extrabold text-red-500">{{ result.lose|floatformat:0 }}</span>
+        </div>
+        <div class="p-4 bg-green-50 border border-green-100 rounded-2xl flex justify-between items-center">
+          <div><p class="font-semibold text-gray-800">Gain Weight</p><p class="text-xs text-gray-400">~0.5 kg/week surplus</p></div>
+          <span class="text-2xl font-extrabold text-green-600">{{ result.gain|floatformat:0 }}</span>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -33,6 +33,17 @@
 
   {% block extra_schema %}{% endblock %}
 
+  {% if not debug %}
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CNKXT3MW19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CNKXT3MW19');
+  </script>
+  {% endif %}
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {

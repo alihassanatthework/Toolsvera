@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}Scientific Calculator — Free Online | ToolsVera{% endblock %}
+{% block meta_description %}Free online scientific calculator with trigonometry, logarithms, powers and more. Works instantly in your browser. No signup required.{% endblock %}
+{% block meta_keywords %}scientific calculator, online calculator, trig calculator, math calculator, advanced calculator{% endblock %}
+{% block canonical_path %}/calculators/scientific/{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/calculators/" class="hover:text-blue-600 transition">Calculators</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Scientific Calculator</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🔬</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Scientific Calculator</h1>
+          <p class="text-blue-100 text-sm">Advanced math functions</p>
+        </div>
+      </div>
+    </div>
+    <div class="p-6">
+      <div id="display" class="bg-gray-900 text-white rounded-2xl p-4 mb-4 text-right min-h-[72px]">
+        <div id="expr" class="text-gray-400 text-sm min-h-[20px]"></div>
+        <div id="result" class="text-3xl font-bold">0</div>
+      </div>
+      <div class="grid grid-cols-5 gap-2">
+        {% for btn in 'DEG,RAD,sin,cos,tan,(',')','x²','√','%,7,8,9,÷,DEL,4,5,6,×,C,1,2,3,-,±,0,.,=,+' %}{% endfor %}
+        <!-- Row 1 -->
+        <button onclick="toggleAngle()" id="angleBtn" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold col-span-1">DEG</button>
+        <button onclick="press('Math.PI')" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold">π</button>
+        <button onclick="press('Math.E')" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold">e</button>
+        <button onclick="pressFn('Math.log10')" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold">log</button>
+        <button onclick="pressFn('Math.log')" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold">ln</button>
+        <!-- Row 2 -->
+        <button onclick="pressFn('sin')" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold">sin</button>
+        <button onclick="pressFn('cos')" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold">cos</button>
+        <button onclick="pressFn('tan')" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold">tan</button>
+        <button onclick="press('**2')" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold">x²</button>
+        <button onclick="pressFn('Math.sqrt')" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold">√</button>
+        <!-- Row 3 -->
+        <button onclick="press('(')" class="calc-btn bg-gray-100 text-gray-700 font-bold">(</button>
+        <button onclick="press(')')" class="calc-btn bg-gray-100 text-gray-700 font-bold">)</button>
+        <button onclick="press('**')" class="calc-btn bg-gray-100 text-gray-700 font-bold">xⁿ</button>
+        <button onclick="press('%')" class="calc-btn bg-gray-100 text-gray-700 font-bold">%</button>
+        <button onclick="del()" class="calc-btn bg-red-100 text-red-600 font-bold">⌫</button>
+        <!-- Row 4 -->
+        <button onclick="press('7')" class="calc-btn bg-white border border-gray-200 text-gray-800 font-semibold">7</button>
+        <button onclick="press('8')" class="calc-btn bg-white border border-gray-200 text-gray-800 font-semibold">8</button>
+        <button onclick="press('9')" class="calc-btn bg-white border border-gray-200 text-gray-800 font-semibold">9</button>
+        <button onclick="press('/')" class="calc-btn bg-blue-50 text-blue-700 font-bold">÷</button>
+        <button onclick="clear()" class="calc-btn bg-red-50 text-red-600 font-bold">C</button>
+        <!-- Row 5 -->
+        <button onclick="press('4')" class="calc-btn bg-white border border-gray-200 text-gray-800 font-semibold">4</button>
+        <button onclick="press('5')" class="calc-btn bg-white border border-gray-200 text-gray-800 font-semibold">5</button>
+        <button onclick="press('6')" class="calc-btn bg-white border border-gray-200 text-gray-800 font-semibold">6</button>
+        <button onclick="press('*')" class="calc-btn bg-blue-50 text-blue-700 font-bold">×</button>
+        <button onclick="press('1/(')" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold">1/x</button>
+        <!-- Row 6 -->
+        <button onclick="press('1')" class="calc-btn bg-white border border-gray-200 text-gray-800 font-semibold">1</button>
+        <button onclick="press('2')" class="calc-btn bg-white border border-gray-200 text-gray-800 font-semibold">2</button>
+        <button onclick="press('3')" class="calc-btn bg-white border border-gray-200 text-gray-800 font-semibold">3</button>
+        <button onclick="press('-')" class="calc-btn bg-blue-50 text-blue-700 font-bold">−</button>
+        <button onclick="press('Math.abs(')" class="calc-btn bg-gray-100 text-gray-700 text-xs font-bold">|x|</button>
+        <!-- Row 7 -->
+        <button onclick="press('0')" class="calc-btn bg-white border border-gray-200 text-gray-800 font-semibold col-span-2">0</button>
+        <button onclick="press('.')" class="calc-btn bg-white border border-gray-200 text-gray-800 font-semibold">.</button>
+        <button onclick="press('+')" class="calc-btn bg-blue-50 text-blue-700 font-bold">+</button>
+        <button onclick="calculate()" class="calc-btn bg-blue-600 text-white font-bold">=</button>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.calc-btn { @apply rounded-xl py-3 text-sm hover:opacity-80 active:scale-95 transition cursor-pointer; }
+</style>
+<script>
+let expr = '';
+let useDeg = true;
+function press(v) { expr += v; document.getElementById('expr').textContent = expr; }
+function pressFn(fn) { expr += fn + '('; document.getElementById('expr').textContent = expr; }
+function del() { expr = expr.slice(0,-1); document.getElementById('expr').textContent = expr; }
+function clear() { expr = ''; document.getElementById('expr').textContent = ''; document.getElementById('result').textContent = '0'; }
+function toggleAngle() { useDeg = !useDeg; document.getElementById('angleBtn').textContent = useDeg ? 'DEG' : 'RAD'; }
+function sin(x) { return Math.sin(useDeg ? x * Math.PI/180 : x); }
+function cos(x) { return Math.cos(useDeg ? x * Math.PI/180 : x); }
+function tan(x) { return Math.tan(useDeg ? x * Math.PI/180 : x); }
+function calculate() {
+  try {
+    let r = eval(expr);
+    document.getElementById('result').textContent = parseFloat(r.toFixed(10)).toString();
+  } catch(e) { document.getElementById('result').textContent = 'Error'; }
+}
+document.addEventListener('keydown', e => {
+  if ('0123456789.+-*/()'.includes(e.key)) press(e.key);
+  else if (e.key === 'Enter' || e.key === '=') calculate();
+  else if (e.key === 'Backspace') del();
+  else if (e.key === 'Escape') clear();
+});
+</script>
+{% endblock %}

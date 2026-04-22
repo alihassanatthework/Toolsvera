@@ -26,19 +26,19 @@
       </div>
     </div>
     <div class="px-8 py-8">
+      {% if error %}<div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">{{ error }}</div>{% endif %}
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center mb-6 hover:border-red-300 transition">
-          <div class="text-4xl mb-3">📂</div>
-          <p class="text-gray-600 font-medium mb-1">Select a PDF file</p>
-          <p class="text-sm text-gray-400 mb-4">Supports .pdf files</p>
-          <input type="file" name="pdf" accept=".pdf" required
-                 class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-red-50 file:text-red-700 file:font-medium hover:file:bg-red-100 transition">
+        <div class="mb-5">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Upload PDF</label>
+          <input type="file" name="pdf" accept=".pdf" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
         </div>
-        <button type="submit"
-                class="w-full bg-red-600 text-white py-3 rounded-xl font-semibold hover:bg-red-700 transition shadow-sm text-base">
-          Split & Download
-        </button>
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Pages to keep <span class="font-normal text-gray-400">(optional)</span></label>
+          <input type="text" name="pages" placeholder="e.g. 1-3, 5, 7 — leave blank for all pages" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          <p class="text-xs text-gray-400 mt-1">Use commas and hyphens to specify ranges. Leave blank to download all pages.</p>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Split & Download</button>
       </form>
     </div>
   </div>

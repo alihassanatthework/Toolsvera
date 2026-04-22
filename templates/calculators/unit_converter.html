@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% block title %}Unit Converter — Length, Weight, Temperature Free | ToolsVera{% endblock %}
+{% block meta_description %}Convert units of length, weight, temperature, area and speed online for free. Instant unit converter. No signup required.{% endblock %}
+{% block meta_keywords %}unit converter, length converter, weight converter, temperature converter, metric converter{% endblock %}
+{% block canonical_path %}/calculators/unit-converter/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/calculators/" class="hover:text-blue-600 transition">Calculators</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Unit Converter</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">📏</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Unit Converter</h1>
+          <p class="text-blue-100 text-sm">Length, weight, temperature, area & speed</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post" id="unitForm">
+        {% csrf_token %}
+        <div class="mb-5">
+          <label class="block text-sm font-semibold text-gray-700 mb-3">Category</label>
+          <div class="flex flex-wrap gap-2">
+            {% for cat in 'length,weight,temperature,area,speed'|split:',' %}{% endfor %}
+            <label class="cursor-pointer">
+              <input type="radio" name="category" value="length" {% if category == 'length' %}checked{% endif %} class="sr-only peer" onchange="this.form.submit()">
+              <span class="px-4 py-2 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:border-blue-400 transition">Length</span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="category" value="weight" {% if category == 'weight' %}checked{% endif %} class="sr-only peer" onchange="this.form.submit()">
+              <span class="px-4 py-2 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:border-blue-400 transition">Weight</span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="category" value="temperature" {% if category == 'temperature' %}checked{% endif %} class="sr-only peer" onchange="this.form.submit()">
+              <span class="px-4 py-2 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:border-blue-400 transition">Temperature</span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="category" value="area" {% if category == 'area' %}checked{% endif %} class="sr-only peer" onchange="this.form.submit()">
+              <span class="px-4 py-2 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:border-blue-400 transition">Area</span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="category" value="speed" {% if category == 'speed' %}checked{% endif %} class="sr-only peer" onchange="this.form.submit()">
+              <span class="px-4 py-2 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:border-blue-400 transition">Speed</span>
+            </label>
+          </div>
+        </div>
+
+        {% if category == 'length' %}
+        {% with units='meter,kilometer,centimeter,millimeter,mile,yard,foot,inch' %}
+        {% elif category == 'weight' %}
+        {% with units='kilogram,gram,milligram,pound,ounce,ton' %}
+        {% elif category == 'temperature' %}
+        {% with units='celsius,fahrenheit,kelvin' %}
+        {% elif category == 'area' %}
+        {% with units='sq_meter,sq_kilometer,sq_foot,sq_inch,acre,hectare' %}
+        {% elif category == 'speed' %}
+        {% with units='mps,kph,mph,knot' %}
+        {% endif %}
+
+        <div class="grid grid-cols-3 gap-4 mb-6 items-end">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Value</label>
+            <input type="number" name="value" value="{{ value }}" step="any" placeholder="Enter value" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">From</label>
+            <select name="from_unit" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+              {% if category == 'length' %}
+                <option value="meter" {% if from_unit == 'meter' %}selected{% endif %}>Meter</option>
+                <option value="kilometer" {% if from_unit == 'kilometer' %}selected{% endif %}>Kilometer</option>
+                <option value="centimeter" {% if from_unit == 'centimeter' %}selected{% endif %}>Centimeter</option>
+                <option value="millimeter" {% if from_unit == 'millimeter' %}selected{% endif %}>Millimeter</option>
+                <option value="mile" {% if from_unit == 'mile' %}selected{% endif %}>Mile</option>
+                <option value="yard" {% if from_unit == 'yard' %}selected{% endif %}>Yard</option>
+                <option value="foot" {% if from_unit == 'foot' %}selected{% endif %}>Foot</option>
+                <option value="inch" {% if from_unit == 'inch' %}selected{% endif %}>Inch</option>
+              {% elif category == 'weight' %}
+                <option value="kilogram" {% if from_unit == 'kilogram' %}selected{% endif %}>Kilogram</option>
+                <option value="gram" {% if from_unit == 'gram' %}selected{% endif %}>Gram</option>
+                <option value="milligram" {% if from_unit == 'milligram' %}selected{% endif %}>Milligram</option>
+                <option value="pound" {% if from_unit == 'pound' %}selected{% endif %}>Pound</option>
+                <option value="ounce" {% if from_unit == 'ounce' %}selected{% endif %}>Ounce</option>
+                <option value="ton" {% if from_unit == 'ton' %}selected{% endif %}>Metric Ton</option>
+              {% elif category == 'temperature' %}
+                <option value="celsius" {% if from_unit == 'celsius' %}selected{% endif %}>Celsius</option>
+                <option value="fahrenheit" {% if from_unit == 'fahrenheit' %}selected{% endif %}>Fahrenheit</option>
+                <option value="kelvin" {% if from_unit == 'kelvin' %}selected{% endif %}>Kelvin</option>
+              {% elif category == 'area' %}
+                <option value="sq_meter" {% if from_unit == 'sq_meter' %}selected{% endif %}>Sq Meter</option>
+                <option value="sq_kilometer" {% if from_unit == 'sq_kilometer' %}selected{% endif %}>Sq Kilometer</option>
+                <option value="sq_foot" {% if from_unit == 'sq_foot' %}selected{% endif %}>Sq Foot</option>
+                <option value="sq_inch" {% if from_unit == 'sq_inch' %}selected{% endif %}>Sq Inch</option>
+                <option value="acre" {% if from_unit == 'acre' %}selected{% endif %}>Acre</option>
+                <option value="hectare" {% if from_unit == 'hectare' %}selected{% endif %}>Hectare</option>
+              {% elif category == 'speed' %}
+                <option value="kph" {% if from_unit == 'kph' %}selected{% endif %}>km/h</option>
+                <option value="mph" {% if from_unit == 'mph' %}selected{% endif %}>mph</option>
+                <option value="mps" {% if from_unit == 'mps' %}selected{% endif %}>m/s</option>
+                <option value="knot" {% if from_unit == 'knot' %}selected{% endif %}>Knot</option>
+              {% endif %}
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">To</label>
+            <select name="to_unit" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+              {% if category == 'length' %}
+                <option value="meter" {% if to_unit == 'meter' %}selected{% endif %}>Meter</option>
+                <option value="kilometer" {% if to_unit == 'kilometer' %}selected{% endif %}>Kilometer</option>
+                <option value="centimeter" {% if to_unit == 'centimeter' %}selected{% endif %}>Centimeter</option>
+                <option value="millimeter" {% if to_unit == 'millimeter' %}selected{% endif %}>Millimeter</option>
+                <option value="mile" {% if to_unit == 'mile' %}selected{% endif %}>Mile</option>
+                <option value="yard" {% if to_unit == 'yard' %}selected{% endif %}>Yard</option>
+                <option value="foot" {% if to_unit == 'foot' %}selected{% endif %}>Foot</option>
+                <option value="inch" {% if to_unit == 'inch' %}selected{% endif %}>Inch</option>
+              {% elif category == 'weight' %}
+                <option value="kilogram" {% if to_unit == 'kilogram' %}selected{% endif %}>Kilogram</option>
+                <option value="gram" {% if to_unit == 'gram' %}selected{% endif %}>Gram</option>
+                <option value="milligram" {% if to_unit == 'milligram' %}selected{% endif %}>Milligram</option>
+                <option value="pound" {% if to_unit == 'pound' %}selected{% endif %}>Pound</option>
+                <option value="ounce" {% if to_unit == 'ounce' %}selected{% endif %}>Ounce</option>
+                <option value="ton" {% if to_unit == 'ton' %}selected{% endif %}>Metric Ton</option>
+              {% elif category == 'temperature' %}
+                <option value="celsius" {% if to_unit == 'celsius' %}selected{% endif %}>Celsius</option>
+                <option value="fahrenheit" {% if to_unit == 'fahrenheit' %}selected{% endif %}>Fahrenheit</option>
+                <option value="kelvin" {% if to_unit == 'kelvin' %}selected{% endif %}>Kelvin</option>
+              {% elif category == 'area' %}
+                <option value="sq_meter" {% if to_unit == 'sq_meter' %}selected{% endif %}>Sq Meter</option>
+                <option value="sq_kilometer" {% if to_unit == 'sq_kilometer' %}selected{% endif %}>Sq Kilometer</option>
+                <option value="sq_foot" {% if to_unit == 'sq_foot' %}selected{% endif %}>Sq Foot</option>
+                <option value="sq_inch" {% if to_unit == 'sq_inch' %}selected{% endif %}>Sq Inch</option>
+                <option value="acre" {% if to_unit == 'acre' %}selected{% endif %}>Acre</option>
+                <option value="hectare" {% if to_unit == 'hectare' %}selected{% endif %}>Hectare</option>
+              {% elif category == 'speed' %}
+                <option value="kph" {% if to_unit == 'kph' %}selected{% endif %}>km/h</option>
+                <option value="mph" {% if to_unit == 'mph' %}selected{% endif %}>mph</option>
+                <option value="mps" {% if to_unit == 'mps' %}selected{% endif %}>m/s</option>
+                <option value="knot" {% if to_unit == 'knot' %}selected{% endif %}>Knot</option>
+              {% endif %}
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Convert</button>
+      </form>
+      {% if result is not None %}
+      <div class="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-2xl text-center">
+        <p class="text-sm text-gray-500 mb-1">Result</p>
+        <p class="text-4xl font-extrabold text-blue-600">{{ result }}</p>
+        <p class="text-sm text-gray-400 mt-2">{{ value }} {{ from_unit }} = {{ result }} {{ to_unit }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

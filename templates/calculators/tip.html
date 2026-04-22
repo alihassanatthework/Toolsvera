@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Tip Calculator — Split Bill & Calculate Tip Free | ToolsVera{% endblock %}
+{% block meta_description %}Calculate tip amount and split the bill between people. Free online tip calculator. Instant results, no signup needed.{% endblock %}
+{% block meta_keywords %}tip calculator, bill splitter, gratuity calculator, split bill, restaurant tip{% endblock %}
+{% block canonical_path %}/calculators/tip/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/calculators/" class="hover:text-blue-600 transition">Calculators</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Tip Calculator</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🍽️</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Tip Calculator</h1>
+          <p class="text-blue-100 text-sm">Calculate tip and split the bill</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post">
+        {% csrf_token %}
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Bill Amount ($)</label>
+            <input type="number" name="bill" step="0.01" placeholder="e.g. 50.00" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Tip %</label>
+            <select name="tip" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+              <option value="10">10%</option>
+              <option value="15" selected>15%</option>
+              <option value="18">18%</option>
+              <option value="20">20%</option>
+              <option value="25">25%</option>
+            </select>
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Number of People</label>
+            <input type="number" name="people" value="1" min="1" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Calculate Tip</button>
+      </form>
+      {% if result %}
+      <div class="mt-8 grid grid-cols-3 gap-4">
+        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 text-center">
+          <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">Tip</div>
+          <div class="text-2xl font-extrabold text-blue-600">${{ result.tip }}</div>
+        </div>
+        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 text-center">
+          <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">Total</div>
+          <div class="text-2xl font-extrabold text-blue-600">${{ result.total }}</div>
+        </div>
+        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 text-center">
+          <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">Per Person</div>
+          <div class="text-2xl font-extrabold text-blue-600">${{ result.per_person }}</div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

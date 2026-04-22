@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Compress Image — Reduce Image File Size Free | ToolsVera{% endblock %}
+{% block meta_description %}Compress images online for free. Reduce JPG file size without losing quality. No signup, instant download.{% endblock %}
+{% block meta_keywords %}compress image, reduce image size, image compressor, jpg compressor, optimize image{% endblock %}
+{% block canonical_path %}/images/compress/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/images/convert/" class="hover:text-blue-600 transition">Image Tools</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Compress Image</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🗜️</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Compress Image</h1>
+          <p class="text-blue-100 text-sm">Reduce image file size with quality control</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      {% if error %}<div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">{{ error }}</div>{% endif %}
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-5">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Upload Image</label>
+          <input type="file" name="image" accept="image/*" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Quality: <span id="qval">70</span>%</label>
+          <input type="range" name="quality" id="quality" min="10" max="95" value="70" oninput="document.getElementById('qval').textContent=this.value" class="w-full accent-blue-600">
+          <div class="flex justify-between text-xs text-gray-400 mt-1"><span>Smaller file</span><span>Better quality</span></div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Compress Image</button>
+      </form>
+      <p class="text-xs text-gray-400 mt-4 text-center">Output format: JPG. Best for photos.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

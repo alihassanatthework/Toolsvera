@@ -1,40 +1,134 @@
 {% extends 'base.html' %}
-{% block title %}Free Online Calculators — BMI, Mortgage, Percentage & More{% endblock %}
-{% block meta_description %}ToolsVera free online calculators. BMI calculator, mortgage calculator, percentage calculator and more. No signup, instant results.{% endblock %}
-{% block meta_keywords %}free online calculators, bmi calculator, mortgage calculator, percentage calculator{% endblock %}
+{% block title %}Free Online Calculators — BMI, Age, Loan, GPA & More | ToolsVera{% endblock %}
+{% block meta_description %}Free online calculators including BMI, age, mortgage, loan, compound interest, tip, tax, GPA, grade, unit converter and more. No signup required.{% endblock %}
+{% block meta_keywords %}free online calculators, bmi calculator, age calculator, loan calculator, mortgage calculator, gpa calculator, unit converter{% endblock %}
 {% block canonical_path %}/calculators/{% endblock %}
 {% block og_title %}Free Online Calculators — ToolsVera{% endblock %}
-{% block og_description %}BMI, mortgage, percentage calculators and more. All free, no signup needed.{% endblock %}
-{% block twitter_title %}Free Online Calculators — ToolsVera{% endblock %}
-{% block twitter_description %}BMI, mortgage, percentage calculators and more. All free, no signup needed.{% endblock %}
+{% block og_description %}17+ free calculators. BMI, age, mortgage, loan, GPA, tip, tax and more. Instant results, no signup.{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto px-6 py-12">
-  <div class="text-sm text-gray-400 mb-6">
-    <a href="/" class="hover:text-blue-600 transition">Home</a>
-    <span class="mx-2">/</span>
+<div class="max-w-6xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-8">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
     <span class="text-gray-600">Calculators</span>
   </div>
-  <div class="text-center mb-10">
-    <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Free Online Calculators</h1>
-    <p class="text-gray-500">Instant results, no signup required</p>
+
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-extrabold text-gray-900 mb-3">Free Online Calculators</h1>
+    <p class="text-gray-500 text-lg">17+ calculators for health, finance, education and everyday life</p>
   </div>
-  <div class="grid grid-cols-2 md:grid-cols-3 gap-5">
-    <a href="/calculators/bmi/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-blue-200">
-      <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">⚖️</div>
-      <div class="font-semibold text-gray-800">BMI Calculator</div>
-      <div class="text-xs text-gray-400 mt-1">Body mass index</div>
-    </a>
-    <a href="/calculators/mortgage/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-blue-200">
-      <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🏦</div>
-      <div class="font-semibold text-gray-800">Mortgage Calculator</div>
-      <div class="text-xs text-gray-400 mt-1">Monthly payments</div>
-    </a>
-    <a href="/calculators/percentage/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md hover:border-blue-200">
-      <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">💯</div>
-      <div class="font-semibold text-gray-800">Percentage</div>
-      <div class="text-xs text-gray-400 mt-1">Calculate percentages</div>
-    </a>
+
+  <!-- Health -->
+  <div class="mb-12">
+    <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2"><span class="w-6 h-px bg-gray-200 inline-block"></span>Health<span class="flex-1 h-px bg-gray-100 inline-block"></span></h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <a href="/calculators/bmi/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">⚖️</div>
+        <div class="font-semibold text-gray-800 text-sm">BMI Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Body mass index</div>
+      </a>
+      <a href="/calculators/calorie/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔥</div>
+        <div class="font-semibold text-gray-800 text-sm">Calorie Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Daily calorie needs</div>
+      </a>
+      <a href="/calculators/age/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🎂</div>
+        <div class="font-semibold text-gray-800 text-sm">Age Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Exact age from birthday</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Finance -->
+  <div class="mb-12">
+    <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2"><span class="w-6 h-px bg-gray-200 inline-block"></span>Finance<span class="flex-1 h-px bg-gray-100 inline-block"></span></h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <a href="/calculators/mortgage/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🏦</div>
+        <div class="font-semibold text-gray-800 text-sm">Mortgage Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Monthly payment</div>
+      </a>
+      <a href="/calculators/loan/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">💳</div>
+        <div class="font-semibold text-gray-800 text-sm">Loan Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Monthly repayment</div>
+      </a>
+      <a href="/calculators/compound-interest/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📈</div>
+        <div class="font-semibold text-gray-800 text-sm">Compound Interest</div>
+        <div class="text-xs text-gray-400 mt-1">Investment growth</div>
+      </a>
+      <a href="/calculators/tip/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🍽️</div>
+        <div class="font-semibold text-gray-800 text-sm">Tip Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Split the bill</div>
+      </a>
+      <a href="/calculators/tax/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🧾</div>
+        <div class="font-semibold text-gray-800 text-sm">Tax Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Estimate tax owed</div>
+      </a>
+      <a href="/calculators/percentage/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">💯</div>
+        <div class="font-semibold text-gray-800 text-sm">Percentage</div>
+        <div class="text-xs text-gray-400 mt-1">Calculate percentages</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="mb-12">
+    <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2"><span class="w-6 h-px bg-gray-200 inline-block"></span>Education<span class="flex-1 h-px bg-gray-100 inline-block"></span></h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <a href="/calculators/gpa/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🎓</div>
+        <div class="font-semibold text-gray-800 text-sm">GPA Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Grade point average</div>
+      </a>
+      <a href="/calculators/grade/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📝</div>
+        <div class="font-semibold text-gray-800 text-sm">Grade Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Weighted final grade</div>
+      </a>
+      <a href="/calculators/fraction/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">½</div>
+        <div class="font-semibold text-gray-800 text-sm">Fraction Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Add, subtract, multiply</div>
+      </a>
+      <a href="/calculators/scientific/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🔬</div>
+        <div class="font-semibold text-gray-800 text-sm">Scientific Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Advanced math</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Math & Conversion -->
+  <div class="mb-12">
+    <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2"><span class="w-6 h-px bg-gray-200 inline-block"></span>Math & Conversion<span class="flex-1 h-px bg-gray-100 inline-block"></span></h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <a href="/calculators/unit-converter/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📏</div>
+        <div class="font-semibold text-gray-800 text-sm">Unit Converter</div>
+        <div class="text-xs text-gray-400 mt-1">Length, weight, temp</div>
+      </a>
+      <a href="/calculators/area/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📐</div>
+        <div class="font-semibold text-gray-800 text-sm">Area Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Any shape</div>
+      </a>
+      <a href="/calculators/speed/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">🚀</div>
+        <div class="font-semibold text-gray-800 text-sm">Speed Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Speed, distance & time</div>
+      </a>
+      <a href="/calculators/date/" class="tool-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:border-blue-200">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mx-auto mb-3">📅</div>
+        <div class="font-semibold text-gray-800 text-sm">Date Calculator</div>
+        <div class="text-xs text-gray-400 mt-1">Days between dates</div>
+      </a>
+    </div>
   </div>
 </div>
 {% endblock %}
