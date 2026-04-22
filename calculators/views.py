@@ -525,3 +525,103 @@ def retirement_calculator(request):
         except (ValueError, ZeroDivisionError):
             pass
     return render(request, 'calculators/retirement.html', {'result': result})
+
+
+def average_calculator(request):
+    result = None
+    if request.method == 'POST':
+        try:
+            raw = request.POST.get('numbers', '')
+            nums = [float(x.strip()) for x in raw.replace(',', '\n').splitlines() if x.strip()]
+            if nums:
+                total = sum(nums)
+                count = len(nums)
+                mean = round(total / count, 6)
+                sorted_nums = sorted(nums)
+                mid = count // 2
+                median = sorted_nums[mid] if count % 2 else round((sorted_nums[mid - 1] + sorted_nums[mid]) / 2, 6)
+                from collections import Counter
+                freq = Counter(nums)
+                max_freq = max(freq.values())
+                modes = [k for k, v in freq.items() if v == max_freq]
+                result = {
+                    'mean': mean,
+                    'median': median,
+                    'mode': ', '.join(str(m) for m in modes) if max_freq > 1 else 'No mode',
+                    'count': count,
+                    'sum': round(total, 6),
+                    'min': min(nums),
+                    'max': max(nums),
+                }
+        except (ValueError, ZeroDivisionError):
+            pass
+    return render(request, 'calculators/average.html', {'result': result})
+
+
+def sleep_calculator(request):
+    result = None
+    if request.method == 'POST':
+        try:
+            from datetime import datetime, timedelta
+            calc_type = request.POST.get('calc_type', 'wake')
+            if calc_type == 'wake':
+                wake_str = request.POST.get('wake_time', '')
+                wake_time = datetime.strptime(wake_str, '%H:%M')
+                cycle = 90
+                times = []
+                for cycles in range(6, 1, -1):
+                    sleep_time = wake_time - timedelta(minutes=cycles * cycle + 15)
+                    times.append({'cycles': cycles, 'hours': cycles * 1.5, 'time': sleep_time.strftime('%I:%M %p')})
+                result = {'type': 'wake', 'times': times, 'wake': wake_time.strftime('%I:%M %p')}
+            else:
+                sleep_str = request.POST.get('sleep_time', '')
+                sleep_time = datetime.strptime(sleep_str, '%H:%M')
+                cycle = 90
+                times = []
+                for cycles in range(2, 7):
+                    wake_time = sleep_time + timedelta(minutes=cycles * cycle + 15)
+                    times.append({'cycles': cycles, 'hours': cycles * 1.5, 'time': wake_time.strftime('%I:%M %p')})
+                result = {'type': 'sleep', 'times': times, 'sleep': sleep_time.strftime('%I:%M %p')}
+        except (ValueError, TypeError):
+            pass
+    return render(request, 'calculators/sleep.html', {'result': result})
+
+
+def water_intake_calculator(request):
+    result = None
+    if request.method == 'POST':
+        try:
+            weight = float(request.POST['weight'])
+            activity = request.POST.get('activity', 'moderate')
+            multipliers = {'sedentary': 30, 'light': 33, 'moderate': 37, 'active': 40, 'very_active': 45}
+            ml_per_kg = multipliers.get(activity, 37)
+            daily_ml = round(weight * ml_per_kg)
+            result = {
+                'daily_ml': daily_ml,
+                'daily_liters': round(daily_ml / 1000, 1),
+                'daily_oz': round(daily_ml / 29.574, 1),
+                'glasses': round(daily_ml / 240),
+            }
+        except (ValueError, ZeroDivisionError):
+            pass
+    return render(request, 'calculators/water_intake.html', {'result': result})
+
+
+def percentage_change_calculator(request):
+    result = None
+    if request.method == 'POST':
+        try:
+            old_val = float(request.POST['old_value'])
+            new_val = float(request.POST['new_value'])
+            change = new_val - old_val
+            pct = round((change / old_val) * 100, 4)
+            result = {
+                'change': round(change, 4),
+                'percent': pct,
+                'direction': 'Increase' if pct >= 0 else 'Decrease',
+                'old': old_val,
+                'new': new_val,
+            }
+        except (ValueError, ZeroDivisionError):
+            pass
+    return render(request, 'calculators/percentage_change.html', {'result': result})

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Text Tools — Free Online Text Utilities | ToolsVera{% endblock %}
-{% block meta_description %}Free online text tools: word counter, password generator, text case converter, lorem ipsum generator, base64 encoder/decoder. No signup required.{% endblock %}
-{% block meta_keywords %}text tools, word counter, password generator, text case converter, lorem ipsum, base64 encoder{% endblock %}
+{% block meta_description %}Free online text tools: word counter, password generator, text case converter, lorem ipsum, base64, JSON formatter, URL encoder and more. No signup required.{% endblock %}
+{% block meta_keywords %}text tools, word counter, password generator, text case converter, lorem ipsum, base64 encoder, json formatter, url encoder{% endblock %}
 {% block canonical_path %}/text/{% endblock %}
 {% block content %}
 <div class="max-w-5xl mx-auto px-6 py-12">
@@ -14,30 +14,45 @@
     <p class="text-gray-500">Free online text utilities — no signup, no ads, instant results.</p>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-    <a href="/text/word-counter/" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
+    <a href="/text/word-counter/" class="tool-card bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
       <div class="text-3xl mb-3">📝</div>
       <h2 class="text-base font-semibold text-gray-800 group-hover:text-blue-600 transition">Word Counter</h2>
       <p class="text-sm text-gray-400 mt-1">Count words, characters, sentences and paragraphs</p>
     </a>
-    <a href="/text/password-generator/" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
+    <a href="/text/password-generator/" class="tool-card bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
       <div class="text-3xl mb-3">🔐</div>
       <h2 class="text-base font-semibold text-gray-800 group-hover:text-blue-600 transition">Password Generator</h2>
       <p class="text-sm text-gray-400 mt-1">Generate strong, secure random passwords</p>
     </a>
-    <a href="/text/text-case/" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
+    <a href="/text/text-case/" class="tool-card bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
       <div class="text-3xl mb-3">🔡</div>
       <h2 class="text-base font-semibold text-gray-800 group-hover:text-blue-600 transition">Text Case Converter</h2>
-      <p class="text-sm text-gray-400 mt-1">Convert text to uppercase, lowercase, title case and more</p>
+      <p class="text-sm text-gray-400 mt-1">Convert to uppercase, lowercase, title case and more</p>
     </a>
-    <a href="/text/lorem-ipsum/" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
+    <a href="/text/lorem-ipsum/" class="tool-card bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
       <div class="text-3xl mb-3">📄</div>
       <h2 class="text-base font-semibold text-gray-800 group-hover:text-blue-600 transition">Lorem Ipsum Generator</h2>
       <p class="text-sm text-gray-400 mt-1">Generate placeholder lorem ipsum text for designs</p>
     </a>
-    <a href="/text/base64/" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
+    <a href="/text/base64/" class="tool-card bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
       <div class="text-3xl mb-3">🔢</div>
       <h2 class="text-base font-semibold text-gray-800 group-hover:text-blue-600 transition">Base64 Encoder / Decoder</h2>
       <p class="text-sm text-gray-400 mt-1">Encode or decode text using Base64 format</p>
+    </a>
+    <a href="/text/json-formatter/" class="tool-card bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
+      <div class="text-3xl mb-3">🗂️</div>
+      <h2 class="text-base font-semibold text-gray-800 group-hover:text-blue-600 transition">JSON Formatter</h2>
+      <p class="text-sm text-gray-400 mt-1">Beautify and validate JSON online</p>
+    </a>
+    <a href="/text/url-encoder/" class="tool-card bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
+      <div class="text-3xl mb-3">🔗</div>
+      <h2 class="text-base font-semibold text-gray-800 group-hover:text-blue-600 transition">URL Encoder / Decoder</h2>
+      <p class="text-sm text-gray-400 mt-1">Encode or decode URLs instantly</p>
+    </a>
+    <a href="/text/remove-duplicates/" class="tool-card bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-blue-200 transition group">
+      <div class="text-3xl mb-3">🧹</div>
+      <h2 class="text-base font-semibold text-gray-800 group-hover:text-blue-600 transition">Remove Duplicate Lines</h2>
+      <p class="text-sm text-gray-400 mt-1">Keep only unique lines from your text</p>
     </a>
   </div>
 </div>

@@ -30,4 +30,8 @@ urlpatterns = [
     path('calculators/random-number/', views.random_number, name='random_number'),
     path('calculators/pace/', views.pace_calculator, name='pace'),
     path('calculators/retirement/', views.retirement_calculator, name='retirement'),
+    path('calculators/average/', views.average_calculator, name='average'),
+    path('calculators/sleep/', views.sleep_calculator, name='sleep'),
+    path('calculators/water-intake/', views.water_intake_calculator, name='water_intake'),
+    path('calculators/percentage-change/', views.percentage_change_calculator, name='percentage_change'),
 ]

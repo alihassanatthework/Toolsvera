@@ -1,7 +1,9 @@
 from django.shortcuts import render
-import base64
+import base64 as b64lib
 import random
 import string
+import json
+import urllib.parse
 
 
 def texttools_home(request):
@@ -30,87 +32,157 @@ def word_counter(request):
 
 
 def password_generator(request):
-    password = None
+    result = None
     length = 16
     if request.method == 'POST':
-        length = int(request.POST.get('length', 16))
-        use_upper = request.POST.get('upper', 'on') == 'on'
-        use_lower = request.POST.get('lower', 'on') == 'on'
-        use_digits = request.POST.get('digits', 'on') == 'on'
-        use_symbols = request.POST.get('symbols', '') == 'on'
+        length = min(max(int(request.POST.get('length', 16)), 6), 64)
+        use_upper = 'uppercase' in request.POST
+        use_lower = 'lowercase' in request.POST
+        use_numbers = 'numbers' in request.POST
+        use_symbols = 'symbols' in request.POST
         pool = ''
-        if use_upper: pool += string.ascii_uppercase
-        if use_lower: pool += string.ascii_lowercase
-        if use_digits: pool += string.digits
+        if use_upper:   pool += string.ascii_uppercase
+        if use_lower:   pool += string.ascii_lowercase
+        if use_numbers: pool += string.digits
         if use_symbols: pool += '!@#$%^&*()_+-=[]{}|;:,.<>?'
-        if not pool:
-            pool = string.ascii_letters + string.digits
-        password = ''.join(random.choices(pool, k=length))
-    return render(request, 'texttools/password_generator.html', {'password': password, 'length': length})
+        if not pool:    pool = string.ascii_letters + string.digits
+        result = ''.join(random.choices(pool, k=length))
+    return render(request, 'texttools/password_generator.html', {'result': result, 'length': length})
+
+
+CASE_OPTIONS = [
+    ('upper', 'UPPERCASE'),
+    ('lower', 'lowercase'),
+    ('title', 'Title Case'),
+    ('sentence', 'Sentence case'),
+    ('alternate', 'aLtErNaTe'),
+    ('reverse', 'esreveR'),
+]
 
 
 def text_case_converter(request):
     result = None
     text = ''
-    mode = 'upper'
+    case = 'upper'
     if request.method == 'POST':
         text = request.POST.get('text', '')
-        mode = request.POST.get('mode', 'upper')
-        if mode == 'upper':
+        case = request.POST.get('case', 'upper')
+        if case == 'upper':
             result = text.upper()
-        elif mode == 'lower':
+        elif case == 'lower':
             result = text.lower()
-        elif mode == 'title':
+        elif case == 'title':
             result = text.title()
-        elif mode == 'sentence':
+        elif case == 'sentence':
             result = '. '.join(s.strip().capitalize() for s in text.split('.'))
-        elif mode == 'alternate':
+        elif case == 'alternate':
             result = ''.join(c.upper() if i % 2 == 0 else c.lower() for i, c in enumerate(text))
-        elif mode == 'reverse':
+        elif case == 'reverse':
             result = text[::-1]
-    return render(request, 'texttools/text_case.html', {'result': result, 'text': text, 'mode': mode})
+    return render(request, 'texttools/text_case.html', {
+        'result': result, 'text': text, 'case': case, 'cases': CASE_OPTIONS
+    })
+
+
+_LOREM_SENTENCES = [
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.",
+    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.",
+    "Curabitur pretium tincidunt lacus, nulla facilisis nisl facilisis.",
+    "Nunc molestie augue vel facilisis varius, lorem massa fermentum.",
+    "Pellentesque habitant morbi tristique senectus et netus et malesuada.",
+    "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.",
+    "Fusce dapibus tellus ac cursus commodo, tortor mauris condimentum nibh.",
+    "Integer nec odio praesent libero sed cursus ante dapibus diam.",
+    "Nulla quis sem at nibh elementum imperdiet duis sagittis ipsum.",
+]
+
+_LOREM_PARA = (
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt "
+    "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco "
+    "laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in "
+    "voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat "
+    "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+)
 
 
 def lorem_ipsum(request):
     result = None
     if request.method == 'POST':
-        count = int(request.POST.get('count', 3))
-        unit = request.POST.get('unit', 'paragraphs')
-        base = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        sentences = [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse.",
-            "Excepteur sint occaecat cupidatat non proident deserunt mollit.",
-            "Curabitur pretium tincidunt lacus, nulla facilisis nisl.",
-            "Nunc molestie augue vel facilisis varius.",
-            "Pellentesque habitant morbi tristique senectus et netus.",
-            "Vestibulum ante ipsum primis in faucibus orci luctus.",
-            "Fusce dapibus tellus ac cursus commodo, tortor mauris condimentum.",
-        ]
+        count = min(max(int(request.POST.get('count', 3)), 1), 20)
+        unit = request.POST.get('type', 'paragraphs')
         if unit == 'paragraphs':
-            result = '\n\n'.join(base for _ in range(count))
-        elif unit == 'sentences':
-            result = ' '.join((sentences * 10)[:count])
+            result = [_LOREM_PARA for _ in range(count)]
         elif unit == 'words':
-            words = (base.split() * 10)[:count]
-            result = ' '.join(words)
+            words = (_LOREM_PARA.split() * 10)[:count]
+            result = [' '.join(words)]
+        else:
+            sentences = (_LOREM_SENTENCES * 5)[:count]
+            result = sentences
     return render(request, 'texttools/lorem_ipsum.html', {'result': result})
 
 
 def base64_tool(request):
     result = None
-    mode = 'encode'
     text = ''
+    action = 'encode'
+    error = None
     if request.method == 'POST':
         text = request.POST.get('text', '')
-        mode = request.POST.get('mode', 'encode')
+        action = request.POST.get('action', 'encode')
         try:
-            if mode == 'encode':
-                result = base64.b64encode(text.encode()).decode()
+            if action == 'encode':
+                result = b64lib.b64encode(text.encode('utf-8')).decode('utf-8')
             else:
-                result = base64.b64decode(text.encode()).decode()
+                result = b64lib.b64decode(text.encode('utf-8')).decode('utf-8')
         except Exception:
-            result = 'Invalid input for decoding.'
-    return render(request, 'texttools/base64.html', {'result': result, 'text': text, 'mode': mode})
+            error = 'Invalid Base64 input. Please enter valid Base64 encoded text.'
+    return render(request, 'texttools/base64.html', {'result': result, 'text': text, 'action': action, 'error': error})
+
+
+def json_formatter(request):
+    result = None
+    text = ''
+    error = None
+    if request.method == 'POST':
+        text = request.POST.get('text', '')
+        try:
+            parsed = json.loads(text)
+            result = json.dumps(parsed, indent=2, ensure_ascii=False)
+        except json.JSONDecodeError as e:
+            error = f'Invalid JSON: {e}'
+    return render(request, 'texttools/json_formatter.html', {'result': result, 'text': text, 'error': error})
+
+
+def url_encoder(request):
+    result = None
+    text = ''
+    action = 'encode'
+    if request.method == 'POST':
+        text = request.POST.get('text', '')
+        action = request.POST.get('action', 'encode')
+        if action == 'encode':
+            result = urllib.parse.quote(text, safe='')
+        else:
+            result = urllib.parse.unquote(text)
+    return render(request, 'texttools/url_encoder.html', {'result': result, 'text': text, 'action': action})
+
+
+def remove_duplicates(request):
+    result = None
+    text = ''
+    count_removed = 0
+    if request.method == 'POST':
+        text = request.POST.get('text', '')
+        lines = text.splitlines()
+        seen = []
+        for line in lines:
+            if line not in seen:
+                seen.append(line)
+        count_removed = len(lines) - len(seen)
+        result = '\n'.join(seen)
+    return render(request, 'texttools/remove_duplicates.html', {
+        'result': result, 'text': text, 'count_removed': count_removed
+    })

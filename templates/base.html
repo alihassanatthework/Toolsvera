@@ -5,25 +5,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>ToolsVera — {% block title %}Free Online Tools{% endblock %}</title>
-  <meta name="description" content="{% block meta_description %}ToolsVera offers free online tools including calculators, PDF tools, file converters, and image editors. No signup required.{% endblock %}">
-  <meta name="keywords" content="{% block meta_keywords %}free online tools, calculators, pdf converter, image converter{% endblock %}">
+  <title>{% block title %}ToolsVera — Free Online Tools{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}ToolsVera offers 60+ free online tools including calculators, PDF tools, image editors and text utilities. No signup required.{% endblock %}">
+  <meta name="keywords" content="{% block meta_keywords %}free online tools, calculators, pdf converter, image converter, text tools{% endblock %}">
   <meta name="author" content="ToolsVera">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://toolsvera.com{% block canonical_path %}/{% endblock %}">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232563eb'/><text x='32' y='46' font-family='Arial' font-size='38' font-weight='900' fill='white' text-anchor='middle'>T</text></svg>">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ToolsVera">
   <meta property="og:title" content="{% block og_title %}ToolsVera — Free Online Tools{% endblock %}">
-  <meta property="og:description" content="{% block og_description %}Free online calculators, PDF tools, file converters and image editors.{% endblock %}">
-  <meta property="og:image" content="/static/img/og-image.png">
-
+  <meta property="og:description" content="{% block og_description %}Free online calculators, PDF tools, image editors and text utilities. No signup required.{% endblock %}">
+  <meta property="og:image" content="https://toolsvera.com/static/img/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{% block twitter_title %}ToolsVera — Free Online Tools{% endblock %}">
-  <meta name="twitter:description" content="{% block twitter_description %}Free online calculators, PDF tools, file converters and image editors.{% endblock %}">
+  <meta name="twitter:description" content="{% block twitter_description %}Free online calculators, PDF tools, image editors and text utilities.{% endblock %}">
 
   <script type="application/ld+json">
   {
@@ -31,14 +29,17 @@
     "@type": "WebSite",
     "name": "ToolsVera",
     "url": "https://toolsvera.com",
-    "description": "Free online tools including calculators, PDF tools, file converters and image editors"
+    "description": "Free online tools including calculators, PDF tools, image editors and text utilities",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://toolsvera.com/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
   }
   </script>
-
   {% block extra_schema %}{% endblock %}
 
   {% if not debug %}
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CNKXT3MW19"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -53,97 +54,160 @@
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            brand: '#2563eb',
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          }
+          colors: { brand: '#2563eb' },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
         }
       }
     }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', system-ui, sans-serif; }
-    .tool-card:hover { transform: translateY(-3px); }
-    .tool-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-    .gradient-hero { background: linear-gradient(135deg, #eff6ff 0%, #f8faff 50%, #f0fdf4 100%); }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    .tool-card { transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
+    .tool-card:hover { transform: translateY(-2px); }
+    .hero-bg { background: linear-gradient(160deg, #f0f6ff 0%, #f8faff 60%, #ffffff 100%); }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 50%; right: 50%; height: 2px; background: #2563eb; transition: left 0.2s ease, right 0.2s ease; border-radius: 2px; }
+    .nav-link:hover::after, .nav-link.active::after { left: 0; right: 0; }
+    #mobile-menu { transition: max-height 0.3s ease, opacity 0.3s ease; max-height: 0; opacity: 0; overflow: hidden; }
+    #mobile-menu.open { max-height: 400px; opacity: 1; }
   </style>
   {% block extra_head %}{% endblock %}
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
-  <!-- Header -->
-  <nav class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="/" class="flex items-center">
-        <span class="text-2xl font-extrabold text-blue-600">Tools</span><span class="text-2xl font-extrabold text-gray-900">Vera</span>
-      </a>
-      <div class="hidden md:flex items-center gap-1">
-        <a href="/calculators/" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">Calculators</a>
-        <a href="/pdf/merge/" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition">PDF Tools</a>
-        <a href="/files/word-to-pdf/" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition">File Tools</a>
-        <a href="/images/convert/" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition">Image Tools</a>
+  <!-- Navbar -->
+  <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-5">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Logo -->
+        <a href="/" class="flex items-center shrink-0">
+          <span class="text-xl font-extrabold text-blue-600 tracking-tight">Tools</span><span class="text-xl font-extrabold text-gray-900 tracking-tight">Vera</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-1">
+          <a href="/calculators/" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 rounded-lg transition-colors">Calculators</a>
+          <a href="/pdf/merge/" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 rounded-lg transition-colors">PDF Tools</a>
+          <a href="/images/convert/" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 rounded-lg transition-colors">Image Tools</a>
+          <a href="/text/" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 rounded-lg transition-colors">Text Tools</a>
+          <a href="/files/word-to-pdf/" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 rounded-lg transition-colors">File Tools</a>
+        </div>
+
+        <!-- Mobile Hamburger -->
+        <button id="nav-toggle" aria-label="Open menu" class="md:hidden flex flex-col justify-center items-center w-9 h-9 rounded-lg hover:bg-gray-100 transition gap-1.5">
+          <span class="hamburger-line block w-5 h-0.5 bg-gray-700 transition-all duration-200 origin-center"></span>
+          <span class="hamburger-line block w-5 h-0.5 bg-gray-700 transition-all duration-200"></span>
+          <span class="hamburger-line block w-5 h-0.5 bg-gray-700 transition-all duration-200 origin-center"></span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu">
+        <div class="pb-4 pt-1 border-t border-gray-100 flex flex-col gap-1">
+          <a href="/calculators/" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">Calculators</a>
+          <a href="/pdf/merge/" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">PDF Tools</a>
+          <a href="/images/convert/" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">Image Tools</a>
+          <a href="/text/" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">Text Tools</a>
+          <a href="/files/word-to-pdf/" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">File Tools</a>
+        </div>
       </div>
     </div>
   </nav>
 
-  <!-- Main content -->
+  <!-- Main -->
   <main class="flex-grow">
     {% block content %}{% endblock %}
   </main>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-300 mt-16">
-    <div class="max-w-7xl mx-auto px-6 py-12">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+  <footer class="bg-gray-950 text-gray-400 mt-20">
+    <div class="max-w-7xl mx-auto px-6 py-14">
+      <div class="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
 
-        <!-- Brand -->
-        <div class="col-span-1 md:col-span-1">
-          <div class="mb-3">
-            <span class="text-2xl font-extrabold text-blue-400">Tools</span><span class="text-2xl font-extrabold text-white">Vera</span>
+        <!-- Brand — spans 2 cols on md -->
+        <div class="col-span-2 md:col-span-2">
+          <div class="mb-4">
+            <span class="text-xl font-extrabold text-blue-400 tracking-tight">Tools</span><span class="text-xl font-extrabold text-white tracking-tight">Vera</span>
           </div>
-          <p class="text-sm text-gray-400 leading-relaxed">Free online tools for everyone. No signup, no ads, no limits.</p>
+          <p class="text-sm text-gray-500 leading-relaxed mb-5">Free online tools for everyone. No signup, no ads, no limits. 60+ tools across calculators, PDF, image, and text.</p>
+          <div class="flex flex-wrap gap-3 text-xs text-gray-600">
+            <span class="bg-gray-800 px-3 py-1.5 rounded-full">⚡ Instant Results</span>
+            <span class="bg-gray-800 px-3 py-1.5 rounded-full">🔒 No Data Stored</span>
+            <span class="bg-gray-800 px-3 py-1.5 rounded-full">🆓 Always Free</span>
+          </div>
         </div>
 
         <!-- Calculators -->
         <div>
-          <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Calculators</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="/calculators/bmi/" class="text-gray-400 hover:text-white transition">BMI Calculator</a></li>
-            <li><a href="/calculators/mortgage/" class="text-gray-400 hover:text-white transition">Mortgage Calculator</a></li>
-            <li><a href="/calculators/percentage/" class="text-gray-400 hover:text-white transition">Percentage Calculator</a></li>
+          <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">Calculators</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="/calculators/bmi/" class="hover:text-white transition-colors">BMI Calculator</a></li>
+            <li><a href="/calculators/mortgage/" class="hover:text-white transition-colors">Mortgage</a></li>
+            <li><a href="/calculators/loan/" class="hover:text-white transition-colors">Loan Calculator</a></li>
+            <li><a href="/calculators/retirement/" class="hover:text-white transition-colors">Retirement</a></li>
+            <li><a href="/calculators/age/" class="hover:text-white transition-colors">Age Calculator</a></li>
+            <li><a href="/calculators/" class="text-blue-500 hover:text-blue-400 transition-colors text-xs">All calculators →</a></li>
           </ul>
         </div>
 
         <!-- PDF Tools -->
         <div>
-          <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">PDF Tools</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="/pdf/merge/" class="text-gray-400 hover:text-white transition">Merge PDFs</a></li>
-            <li><a href="/pdf/split/" class="text-gray-400 hover:text-white transition">Split PDF</a></li>
-            <li><a href="/pdf/to-word/" class="text-gray-400 hover:text-white transition">PDF to Word</a></li>
-            <li><a href="/pdf/compress/" class="text-gray-400 hover:text-white transition">Compress PDF</a></li>
+          <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">PDF Tools</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="/pdf/merge/" class="hover:text-white transition-colors">Merge PDF</a></li>
+            <li><a href="/pdf/split/" class="hover:text-white transition-colors">Split PDF</a></li>
+            <li><a href="/pdf/to-word/" class="hover:text-white transition-colors">PDF to Word</a></li>
+            <li><a href="/pdf/compress/" class="hover:text-white transition-colors">Compress PDF</a></li>
+            <li><a href="/pdf/protect/" class="hover:text-white transition-colors">Protect PDF</a></li>
           </ul>
         </div>
 
-        <!-- File & Image Tools -->
+        <!-- Image & File Tools -->
         <div>
-          <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">File & Image</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="/files/word-to-pdf/" class="text-gray-400 hover:text-white transition">Word to PDF</a></li>
-            <li><a href="/images/convert/" class="text-gray-400 hover:text-white transition">Convert Image</a></li>
-            <li><a href="/images/resize/" class="text-gray-400 hover:text-white transition">Resize Image</a></li>
+          <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">Image & File</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="/images/convert/" class="hover:text-white transition-colors">Convert Image</a></li>
+            <li><a href="/images/resize/" class="hover:text-white transition-colors">Resize Image</a></li>
+            <li><a href="/images/compress/" class="hover:text-white transition-colors">Compress Image</a></li>
+            <li><a href="/images/crop/" class="hover:text-white transition-colors">Crop Image</a></li>
+            <li><a href="/files/word-to-pdf/" class="hover:text-white transition-colors">Word to PDF</a></li>
+          </ul>
+        </div>
+
+        <!-- Text Tools -->
+        <div>
+          <h4 class="text-white font-semibold text-xs mb-4 uppercase tracking-widest">Text Tools</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="/text/word-counter/" class="hover:text-white transition-colors">Word Counter</a></li>
+            <li><a href="/text/password-generator/" class="hover:text-white transition-colors">Password Generator</a></li>
+            <li><a href="/text/text-case/" class="hover:text-white transition-colors">Case Converter</a></li>
+            <li><a href="/text/base64/" class="hover:text-white transition-colors">Base64 Tool</a></li>
+            <li><a href="/text/lorem-ipsum/" class="hover:text-white transition-colors">Lorem Ipsum</a></li>
+            <li><a href="/text/" class="text-blue-500 hover:text-blue-400 transition-colors text-xs">All text tools →</a></li>
           </ul>
         </div>
 
       </div>
-      <div class="border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
-        © 2025 ToolsVera — All rights reserved.
+      <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-sm text-gray-600">© 2025 ToolsVera. All rights reserved.</p>
+        <p class="text-xs text-gray-700">Free tools. No data stored. No account needed.</p>
       </div>
     </div>
   </footer>
 
+  <script>
+    const toggle = document.getElementById('nav-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const lines = toggle.querySelectorAll('.hamburger-line');
+    toggle.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      lines[0].style.transform = open ? 'translateY(6px) rotate(45deg)' : '';
+      lines[1].style.opacity = open ? '0' : '1';
+      lines[2].style.transform = open ? 'translateY(-6px) rotate(-45deg)' : '';
+    });
+  </script>
 </body>
 </html>

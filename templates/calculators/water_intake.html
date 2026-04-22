@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Water Intake Calculator — Daily Water Needs Free | ToolsVera{% endblock %}
+{% block meta_description %}Calculate your daily water intake needs based on weight and activity level. Free online hydration calculator. No signup required.{% endblock %}
+{% block meta_keywords %}water intake calculator, daily water intake, hydration calculator, how much water to drink{% endblock %}
+{% block canonical_path %}/calculators/water-intake/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/calculators/" class="hover:text-blue-600 transition">Calculators</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Water Intake Calculator</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">💧</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Water Intake Calculator</h1>
+          <p class="text-blue-100 text-sm">Find your daily hydration needs</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post">
+        {% csrf_token %}
+        <div class="grid grid-cols-1 gap-5 mb-6">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Body Weight (kg)</label>
+            <input type="number" name="weight" step="0.1" placeholder="e.g. 70" required
+              class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Activity Level</label>
+            <select name="activity" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+              <option value="sedentary">Sedentary (little or no exercise)</option>
+              <option value="light">Light (exercise 1–3 days/week)</option>
+              <option value="moderate" selected>Moderate (exercise 3–5 days/week)</option>
+              <option value="active">Active (hard exercise 6–7 days/week)</option>
+              <option value="very_active">Very Active (intense daily training)</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Calculate</button>
+      </form>
+      {% if result %}
+      <div class="mt-8 space-y-3">
+        <div class="p-5 bg-blue-50 border border-blue-100 rounded-2xl text-center">
+          <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Daily Water Intake</p>
+          <p class="text-5xl font-extrabold text-blue-600">{{ result.daily_liters }}<span class="text-2xl font-bold text-blue-400 ml-1">L</span></p>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="p-4 bg-gray-50 border border-gray-100 rounded-2xl text-center">
+            <p class="text-2xl font-extrabold text-gray-800">{{ result.daily_ml }}</p>
+            <p class="text-xs text-gray-400 mt-1">ml / day</p>
+          </div>
+          <div class="p-4 bg-gray-50 border border-gray-100 rounded-2xl text-center">
+            <p class="text-2xl font-extrabold text-gray-800">{{ result.daily_oz }}</p>
+            <p class="text-xs text-gray-400 mt-1">oz / day</p>
+          </div>
+          <div class="p-4 bg-gray-50 border border-gray-100 rounded-2xl text-center">
+            <p class="text-2xl font-extrabold text-gray-800">{{ result.glasses }}</p>
+            <p class="text-xs text-gray-400 mt-1">glasses / day</p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 text-center pt-1">Based on 240ml per glass. Adjust for climate and health conditions.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

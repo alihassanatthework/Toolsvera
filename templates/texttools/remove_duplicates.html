@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Remove Duplicate Lines — Free Online Text Tool | ToolsVera{% endblock %}
+{% block meta_description %}Remove duplicate lines from text online for free. Keep only unique lines instantly. No signup required.{% endblock %}
+{% block meta_keywords %}remove duplicate lines, delete duplicate lines, unique lines tool, text deduplicator{% endblock %}
+{% block canonical_path %}/text/remove-duplicates/{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
+    <a href="/text/" class="hover:text-blue-600 transition">Text Tools</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Remove Duplicate Lines</span>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-2xl">🧹</div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">Remove Duplicate Lines</h1>
+          <p class="text-blue-100 text-sm">Keep only unique lines from your text</p>
+        </div>
+      </div>
+    </div>
+    <div class="px-8 py-8">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Paste your text</label>
+          <textarea name="text" rows="8" placeholder="apple&#10;banana&#10;apple&#10;cherry&#10;banana&#10;mango"
+            class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition resize-none font-mono text-sm">{{ text }}</textarea>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">Remove Duplicates</button>
+      </form>
+      {% if result is not None %}
+      <div class="mt-8">
+        {% if count_removed > 0 %}
+        <div class="mb-3 flex items-center gap-2">
+          <span class="text-xs bg-blue-100 text-blue-700 font-semibold px-3 py-1.5 rounded-full">{{ count_removed }} duplicate{{ count_removed|pluralize }} removed</span>
+        </div>
+        {% else %}
+        <div class="mb-3">
+          <span class="text-xs bg-gray-100 text-gray-600 font-semibold px-3 py-1.5 rounded-full">No duplicates found</span>
+        </div>
+        {% endif %}
+        <div class="p-5 bg-gray-50 border border-gray-100 rounded-2xl">
+          <div class="flex items-center justify-between mb-3">
+            <p class="text-xs text-gray-500 uppercase tracking-wide">Unique Lines</p>
+            <button onclick="navigator.clipboard.writeText(document.getElementById('dedup-out').innerText)"
+              class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 transition">Copy</button>
+          </div>
+          <pre id="dedup-out" class="text-sm text-gray-800 whitespace-pre-wrap break-words font-mono leading-relaxed">{{ result }}</pre>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
