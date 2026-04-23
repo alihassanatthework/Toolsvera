@@ -11,6 +11,10 @@ urlpatterns = [
     path('files/', include('filetools.urls')),
     path('images/', include('imagetools.urls')),
     path('text/', include('texttools.urls')),
+    path('about/', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+    path('contact/', TemplateView.as_view(template_name='pages/contact.html'), name='contact'),
+    path('terms/', TemplateView.as_view(template_name='pages/terms.html'), name='terms'),
+    path('privacy/', TemplateView.as_view(template_name='pages/privacy.html'), name='privacy'),
     path('sitemap.xml', TemplateView.as_view(
         template_name='sitemap.xml',
         content_type='application/xml'

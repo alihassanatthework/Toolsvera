@@ -4,6 +4,7 @@ from . import views
 app_name = 'pdftools'
 
 urlpatterns = [
+    path('', views.pdftools_home, name='home'),
     path('merge-pdf/', views.pdf_merge, name='merge'),
     path('split-pdf/', views.pdf_split, name='split'),
     path('pdf-to-word/', views.pdf_to_word, name='to_word'),

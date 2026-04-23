@@ -33,7 +33,6 @@
         <div class="mb-5">
           <label class="block text-sm font-semibold text-gray-700 mb-3">Category</label>
           <div class="flex flex-wrap gap-2">
-            {% for cat in 'length,weight,temperature,area,speed'|split:',' %}{% endfor %}
             <label class="cursor-pointer">
               <input type="radio" name="category" value="length" {% if category == 'length' %}checked{% endif %} class="sr-only peer" onchange="this.form.submit()">
               <span class="px-4 py-2 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:border-blue-400 transition">Length</span>
@@ -56,18 +55,6 @@
             </label>
           </div>
         </div>
-
-        {% if category == 'length' %}
-        {% with units='meter,kilometer,centimeter,millimeter,mile,yard,foot,inch' %}
-        {% elif category == 'weight' %}
-        {% with units='kilogram,gram,milligram,pound,ounce,ton' %}
-        {% elif category == 'temperature' %}
-        {% with units='celsius,fahrenheit,kelvin' %}
-        {% elif category == 'area' %}
-        {% with units='sq_meter,sq_kilometer,sq_foot,sq_inch,acre,hectare' %}
-        {% elif category == 'speed' %}
-        {% with units='mps,kph,mph,knot' %}
-        {% endif %}
 
         <div class="grid grid-cols-3 gap-4 mb-6 items-end">
           <div>

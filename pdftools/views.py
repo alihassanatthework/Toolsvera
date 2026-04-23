@@ -4,6 +4,7 @@ from pypdf import PdfWriter, PdfReader
 import uuid
 import os
 import io
+import re
 import tempfile
 from django.conf import settings
 
@@ -15,6 +16,19 @@ def _tmp():
     tmp = os.path.join(base, 'toolsvera')
     os.makedirs(tmp, exist_ok=True)
     return tmp
+
+
+def _safe_base(name, fallback='file'):
+    if not name:
+        return fallback
+    base = os.path.basename(name)
+    base, _ = os.path.splitext(base)
+    base = re.sub(r'[^A-Za-z0-9._-]+', '_', base).strip('_') or fallback
+    return base[:80]
+
+
+def pdftools_home(request):
+    return render(request, 'pdftools/home.html')
 
 
 def pdf_merge(request):
@@ -38,8 +52,10 @@ def pdf_merge(request):
             with open(output_path, 'wb') as out:
                 writer.write(out)
             writer.close()
-            response = FileResponse(open(output_path, 'rb'), as_attachment=True, filename='merged.pdf', content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename="merged.pdf"'
+            base = _safe_base(files[0].name if files else 'document')
+            fname = f'{base}_merged.pdf'
+            response = FileResponse(open(output_path, 'rb'), as_attachment=True, filename=fname, content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{fname}"'
             return response
         except Exception as e:
             return render(request, 'pdftools/merge.html', {'error': str(e)})
@@ -76,7 +92,8 @@ def pdf_split(request):
             output_path = os.path.join(_tmp(), f'{uid}_split.pdf')
             with open(output_path, 'wb') as out:
                 writer.write(out)
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='split.pdf')
+            base = _safe_base(f.name)
+            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=f'{base}_split.pdf')
         except Exception as e:
             return render(request, 'pdftools/split.html', {'error': str(e)})
     return render(request, 'pdftools/split.html')
@@ -96,13 +113,15 @@ def pdf_to_word(request):
             cv = Converter(pdf_path)
             cv.convert(docx_path)
             cv.close()
+            base = _safe_base(f.name)
+            fname = f'{base}.docx'
             response = FileResponse(
                 open(docx_path, 'rb'),
                 as_attachment=True,
-                filename='converted.docx',
+                filename=fname,
                 content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             )
-            response['Content-Disposition'] = 'attachment; filename="converted.docx"'
+            response['Content-Disposition'] = f'attachment; filename="{fname}"'
             return response
         except Exception as e:
             return render(request, 'pdftools/to_word.html', {'error': str(e)})
@@ -122,7 +141,8 @@ def pdf_compress(request):
             output_path = os.path.join(_tmp(), f'{uid}_compressed.pdf')
             with open(output_path, 'wb') as out:
                 writer.write(out)
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='compressed.pdf')
+            base = _safe_base(f.name)
+            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=f'{base}_compressed.pdf')
         except Exception as e:
             return render(request, 'pdftools/compress.html', {'error': str(e)})
     return render(request, 'pdftools/compress.html')
@@ -148,8 +168,10 @@ def pdf_to_jpg(request):
                     img_path = os.path.join(_tmp(), f'{uid}_page_{i+1}.jpg')
                     pix.save(img_path)
                     zf.write(img_path, f'page_{i+1}.jpg')
-            response = FileResponse(open(zip_path, 'rb'), as_attachment=True, filename='pdf_pages.zip', content_type='application/zip')
-            response['Content-Disposition'] = 'attachment; filename="pdf_pages.zip"'
+            base = _safe_base(f.name)
+            fname = f'{base}_pages.zip'
+            response = FileResponse(open(zip_path, 'rb'), as_attachment=True, filename=fname, content_type='application/zip')
+            response['Content-Disposition'] = f'attachment; filename="{fname}"'
             return response
         except Exception as e:
             return render(request, 'pdftools/to_jpg.html', {'error': str(e)})
@@ -169,7 +191,8 @@ def jpg_to_pdf(request):
             output_path = os.path.join(_tmp(), f'{uid}_images.pdf')
             if images:
                 images[0].save(output_path, save_all=True, append_images=images[1:])
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='images.pdf')
+            base = _safe_base(files[0].name if files else 'images')
+            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=f'{base}.pdf')
         except Exception as e:
             return render(request, 'pdftools/jpg_to_pdf.html', {'error': str(e)})
     return render(request, 'pdftools/jpg_to_pdf.html')
@@ -189,7 +212,8 @@ def pdf_rotate(request):
             output_path = os.path.join(_tmp(), f'{uid}_rotated.pdf')
             with open(output_path, 'wb') as out:
                 writer.write(out)
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='rotated.pdf')
+            base = _safe_base(f.name)
+            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=f'{base}_rotated.pdf')
         except Exception as e:
             return render(request, 'pdftools/rotate.html', {'error': str(e)})
     return render(request, 'pdftools/rotate.html')
@@ -218,7 +242,8 @@ def pdf_remove_pages(request):
             output_path = os.path.join(_tmp(), f'{uid}_removed.pdf')
             with open(output_path, 'wb') as out:
                 writer.write(out)
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='pages_removed.pdf')
+            base = _safe_base(f.name)
+            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=f'{base}_pages_removed.pdf')
         except Exception as e:
             return render(request, 'pdftools/remove_pages.html', {'error': str(e)})
     return render(request, 'pdftools/remove_pages.html')
@@ -247,7 +272,8 @@ def pdf_extract_pages(request):
             output_path = os.path.join(_tmp(), f'{uid}_extracted.pdf')
             with open(output_path, 'wb') as out:
                 writer.write(out)
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='extracted.pdf')
+            base = _safe_base(f.name)
+            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=f'{base}_extracted.pdf')
         except Exception as e:
             return render(request, 'pdftools/extract_pages.html', {'error': str(e)})
     return render(request, 'pdftools/extract_pages.html')
@@ -295,7 +321,8 @@ def pdf_add_page_numbers(request):
             output_path = os.path.join(_tmp(), f'{uid}_numbered.pdf')
             with open(output_path, 'wb') as out:
                 writer.write(out)
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='numbered.pdf')
+            base = _safe_base(f.name)
+            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=f'{base}_numbered.pdf')
         except Exception as e:
             return render(request, 'pdftools/add_page_numbers.html', {'error': str(e)})
     return render(request, 'pdftools/add_page_numbers.html')
@@ -335,7 +362,8 @@ def pdf_watermark(request):
             output_path = os.path.join(_tmp(), f'{uid}_watermarked.pdf')
             with open(output_path, 'wb') as out:
                 writer.write(out)
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='watermarked.pdf')
+            base = _safe_base(f.name)
+            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=f'{base}_watermarked.pdf')
         except Exception as e:
             return render(request, 'pdftools/watermark.html', {'error': str(e)})
     return render(request, 'pdftools/watermark.html')
@@ -355,7 +383,8 @@ def pdf_protect(request):
             output_path = os.path.join(_tmp(), f'{uid}_protected.pdf')
             with open(output_path, 'wb') as out:
                 writer.write(out)
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='protected.pdf')
+            base = _safe_base(f.name)
+            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=f'{base}_protected.pdf')
         except Exception as e:
             return render(request, 'pdftools/protect.html', {'error': str(e)})
     return render(request, 'pdftools/protect.html')
@@ -376,7 +405,8 @@ def pdf_unlock(request):
             output_path = os.path.join(_tmp(), f'{uid}_unlocked.pdf')
             with open(output_path, 'wb') as out:
                 writer.write(out)
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='unlocked.pdf')
+            base = _safe_base(f.name)
+            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=f'{base}_unlocked.pdf')
         except Exception as e:
             return render(request, 'pdftools/unlock.html', {'error': str(e)})
     return render(request, 'pdftools/unlock.html')
@@ -387,18 +417,30 @@ def pdf_organize(request):
         try:
             f = request.FILES['pdf']
             order_input = request.POST.get('order', '').strip()
+            if not order_input:
+                return render(request, 'pdftools/organize.html', {'error': 'Please enter a comma-separated list of page numbers (e.g. 3,1,2).'})
+            if not re.fullmatch(r'\s*\d+(\s*,\s*\d+)*\s*', order_input):
+                return render(request, 'pdftools/organize.html', {'error': 'Invalid format. Use comma-separated page numbers like 3,1,2.'})
             reader = PdfReader(f)
             total = len(reader.pages)
-            order = [int(x.strip()) - 1 for x in order_input.split(',') if x.strip()]
+            try:
+                order = [int(x.strip()) for x in order_input.split(',') if x.strip()]
+            except ValueError:
+                return render(request, 'pdftools/organize.html', {'error': 'Invalid page numbers.'})
+            if len(set(order)) != len(order):
+                return render(request, 'pdftools/organize.html', {'error': 'Duplicate page numbers are not allowed.'})
+            for n in order:
+                if n < 1 or n > total:
+                    return render(request, 'pdftools/organize.html', {'error': f'Page {n} is out of range. PDF has {total} pages.'})
             writer = PdfWriter()
-            for idx in order:
-                if 0 <= idx < total:
-                    writer.add_page(reader.pages[idx])
+            for n in order:
+                writer.add_page(reader.pages[n - 1])
             uid = str(uuid.uuid4())
             output_path = os.path.join(_tmp(), f'{uid}_organized.pdf')
             with open(output_path, 'wb') as out:
                 writer.write(out)
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename='organized.pdf')
+            base = _safe_base(f.name)
+            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=f'{base}_organized.pdf')
         except Exception as e:
             return render(request, 'pdftools/organize.html', {'error': str(e)})
     return render(request, 'pdftools/organize.html')

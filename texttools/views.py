@@ -132,13 +132,16 @@ def base64_tool(request):
     if request.method == 'POST':
         text = request.POST.get('text', '')
         action = request.POST.get('action', 'encode')
-        try:
-            if action == 'encode':
-                result = b64lib.b64encode(text.encode('utf-8')).decode('utf-8')
-            else:
-                result = b64lib.b64decode(text.encode('utf-8')).decode('utf-8')
-        except Exception:
-            error = 'Invalid Base64 input. Please enter valid Base64 encoded text.'
+        if not text.strip():
+            error = 'Please enter some text to convert.'
+        else:
+            try:
+                if action == 'encode':
+                    result = b64lib.b64encode(text.encode('utf-8')).decode('utf-8')
+                else:
+                    result = b64lib.b64decode(text.encode('utf-8')).decode('utf-8')
+            except Exception:
+                error = 'Invalid Base64 input. Please enter valid Base64 encoded text.'
     return render(request, 'texttools/base64.html', {'result': result, 'text': text, 'action': action, 'error': error})
 
 
@@ -177,12 +180,15 @@ def remove_duplicates(request):
     if request.method == 'POST':
         text = request.POST.get('text', '')
         lines = text.splitlines()
-        seen = []
+        seen = set()
+        out = []
         for line in lines:
+            line = line.rstrip()
             if line not in seen:
-                seen.append(line)
-        count_removed = len(lines) - len(seen)
-        result = '\n'.join(seen)
+                seen.add(line)
+                out.append(line)
+        count_removed = len(lines) - len(out)
+        result = '\n'.join(out)
     return render(request, 'texttools/remove_duplicates.html', {
         'result': result, 'text': text, 'count_removed': count_removed
     })
