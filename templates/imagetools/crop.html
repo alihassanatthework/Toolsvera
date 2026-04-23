@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Crop Image — Free Online Image Cropper | ToolsVera{% endblock %}
-{% block meta_description %}Crop images online for free. Enter exact pixel coordinates to crop any image. No signup, instant download.{% endblock %}
-{% block meta_keywords %}crop image, image cropper, crop photo online, trim image, free image editor{% endblock %}
+{% block title %}Crop Image Online – Trim Photos Free | ToolsVera{% endblock %}
+{% block meta_description %}Crop images online for free. Trim photos to any aspect ratio or custom pixels with the ToolsVera image cropper — no signup, fast results.{% endblock %}
+{% block meta_keywords %}crop image, image cropper, trim photo, crop jpg, photo cropper online, aspect ratio crop{% endblock %}
 {% block canonical_path %}/images/crop-image/{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this Image Cropper really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Image Cropper on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output."}},{"@type":"Question","name":"Does cropping change image quality?","acceptedAnswer":{"@type":"Answer","text":"No. Pixels inside the crop are preserved exactly; only the outside is removed."}},{"@type":"Question","name":"Can I preset aspect ratios like 16:9?","acceptedAnswer":{"@type":"Answer","text":"Yes \u2014 fix the aspect ratio to lock the crop shape."}},{"@type":"Question","name":"Which formats are supported?","acceptedAnswer":{"@type":"Answer","text":"JPG, PNG and WEBP are all supported."}},{"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed on the server and automatically deleted \u2014 we never store your content."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use the Image Cropper","step":[{"@type":"HowToStep","position":1,"name":"Upload your image","text":"Select the photo you want to crop."},{"@type":"HowToStep","position":2,"name":"Choose a crop region","text":"Drag the box or enter pixel dimensions."},{"@type":"HowToStep","position":3,"name":"Download the cropped image","text":"Save the trimmed result."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Cropper","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Crop images online for free. Trim photos to any aspect ratio or custom pixels with the ToolsVera image cropper \u2014 no signup, fast results."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolsvera.com/"},{"@type":"ListItem","position":2,"name":"Image Tools","item":"https://toolsvera.com/images/crop-image/"},{"@type":"ListItem","position":3,"name":"Image Cropper","item":"https://toolsvera.com/images/crop-image/"}]}</script>
+{% endblock %}
+
 {% block content %}
 <div class="max-w-2xl mx-auto px-6 py-12">
   <div class="text-sm text-gray-400 mb-6">
@@ -51,4 +58,17 @@
     </div>
   </div>
 </div>
+
+
+<section class="max-w-4xl mx-auto px-6 py-10 prose prose-sm prose-gray">
+  <h2 class="text-2xl font-bold text-gray-900 mb-3">About the Image Cropper</h2>
+  <p class="text-gray-600 leading-relaxed mb-5">The ToolsVera image cropper lets you trim any part of a photo to focus on what matters. Use it for profile pictures, product photos, banner images and cleaning up vacation shots before you share them.</p>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">How to use the Image Cropper</h3>
+  <ol class="list-decimal pl-5 text-gray-600 space-y-1 mb-5"><li><strong>Upload your image:</strong> Select the photo you want to crop.</li><li><strong>Choose a crop region:</strong> Drag the box or enter pixel dimensions.</li><li><strong>Download the cropped image:</strong> Save the trimmed result.</li></ol>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Why use our Image Cropper?</h3>
+  <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-5"><li>Supports common social aspect ratios.</li><li>Pixel-precise custom crops.</li><li>No quality loss outside the crop area.</li><li>Free and fast.</li></ul>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Frequently Asked Questions</h3>
+  <div class="space-y-4 text-gray-600"><div><p class="font-semibold text-gray-900 mb-1">Is this Image Cropper really free?</p><p>Yes. Image Cropper on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output.</p></div><div><p class="font-semibold text-gray-900 mb-1">Does cropping change image quality?</p><p>No. Pixels inside the crop are preserved exactly; only the outside is removed.</p></div><div><p class="font-semibold text-gray-900 mb-1">Can I preset aspect ratios like 16:9?</p><p>Yes — fix the aspect ratio to lock the crop shape.</p></div><div><p class="font-semibold text-gray-900 mb-1">Which formats are supported?</p><p>JPG, PNG and WEBP are all supported.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my data safe?</p><p>Yes. Files are processed on the server and automatically deleted — we never store your content.</p></div></div>
+</section>
+
 {% endblock %}

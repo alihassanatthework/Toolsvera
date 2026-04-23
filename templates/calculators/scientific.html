@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Scientific Calculator — Free Online | ToolsVera{% endblock %}
-{% block meta_description %}Free online scientific calculator with trigonometry, logarithms, powers and more. Works instantly in your browser. No signup required.{% endblock %}
-{% block meta_keywords %}scientific calculator, online calculator, trig calculator, math calculator, advanced calculator{% endblock %}
+{% block title %}Scientific Calculator Online – Advanced Math Free | ToolsVera{% endblock %}
+{% block meta_description %}Use a free online scientific calculator. Trig, logarithms, exponents and more with the ToolsVera scientific calculator — no signup, works in the browser.{% endblock %}
+{% block meta_keywords %}scientific calculator, online scientific calculator, trigonometry calculator, logarithm calculator, math calculator{% endblock %}
 {% block canonical_path %}/calculators/scientific-calculator/{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this Scientific Calculator really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Scientific Calculator on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output."}},{"@type":"Question","name":"Does it use degrees or radians?","acceptedAnswer":{"@type":"Answer","text":"You can toggle between degrees and radians for trig functions."}},{"@type":"Question","name":"Can it graph equations?","acceptedAnswer":{"@type":"Answer","text":"This is a scalar calculator. For graphing, pair it with a dedicated graphing tool."}},{"@type":"Question","name":"Does it remember previous answers?","acceptedAnswer":{"@type":"Answer","text":"The last result is shown on screen for reuse \u2014 clear the field to start fresh."}},{"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed on the server and automatically deleted \u2014 we never store your content."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use the Scientific Calculator","step":[{"@type":"HowToStep","position":1,"name":"Enter your expression","text":"Type a full expression with parentheses and functions."},{"@type":"HowToStep","position":2,"name":"Use sin/cos/log/etc.","text":"Tap the function buttons for trigonometry or logarithms."},{"@type":"HowToStep","position":3,"name":"See the result","text":"Press equals to evaluate the expression."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Scientific Calculator","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Use a free online scientific calculator. Trig, logarithms, exponents and more with the ToolsVera scientific calculator \u2014 no signup, works in the browser."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolsvera.com/"},{"@type":"ListItem","position":2,"name":"Calculators","item":"https://toolsvera.com/calculators/"},{"@type":"ListItem","position":3,"name":"Scientific Calculator","item":"https://toolsvera.com/calculators/scientific-calculator/"}]}</script>
+{% endblock %}
+
 {% block content %}
 <div class="max-w-md mx-auto px-6 py-12">
   <div class="text-sm text-gray-400 mb-6">
@@ -99,4 +106,17 @@ document.addEventListener('keydown', e => {
   else if (e.key === 'Escape') clear();
 });
 </script>
+
+
+<section class="max-w-4xl mx-auto px-6 py-10 prose prose-sm prose-gray">
+  <h2 class="text-2xl font-bold text-gray-900 mb-3">About the Scientific Calculator</h2>
+  <p class="text-gray-600 leading-relaxed mb-5">The ToolsVera scientific calculator handles trig, logs, exponents, roots and parentheses right in your browser. It is a great backup when your handheld is out of reach during homework, engineering work or quick algebra.</p>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">How to use the Scientific Calculator</h3>
+  <ol class="list-decimal pl-5 text-gray-600 space-y-1 mb-5"><li><strong>Enter your expression:</strong> Type a full expression with parentheses and functions.</li><li><strong>Use sin/cos/log/etc.:</strong> Tap the function buttons for trigonometry or logarithms.</li><li><strong>See the result:</strong> Press equals to evaluate the expression.</li></ol>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Why use our Scientific Calculator?</h3>
+  <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-5"><li>Full scientific function set in one clean UI.</li><li>Works offline once the page has loaded.</li><li>Great for students, engineers and curious minds.</li><li>Free and private — no account needed.</li></ul>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Frequently Asked Questions</h3>
+  <div class="space-y-4 text-gray-600"><div><p class="font-semibold text-gray-900 mb-1">Is this Scientific Calculator really free?</p><p>Yes. Scientific Calculator on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output.</p></div><div><p class="font-semibold text-gray-900 mb-1">Does it use degrees or radians?</p><p>You can toggle between degrees and radians for trig functions.</p></div><div><p class="font-semibold text-gray-900 mb-1">Can it graph equations?</p><p>This is a scalar calculator. For graphing, pair it with a dedicated graphing tool.</p></div><div><p class="font-semibold text-gray-900 mb-1">Does it remember previous answers?</p><p>The last result is shown on screen for reuse — clear the field to start fresh.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my data safe?</p><p>Yes. Files are processed on the server and automatically deleted — we never store your content.</p></div></div>
+</section>
+
 {% endblock %}

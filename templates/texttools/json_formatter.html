@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}JSON Formatter & Validator — Free Online | ToolsVera{% endblock %}
-{% block meta_description %}Format, beautify and validate JSON online for free. Instant JSON formatter with syntax checking. No signup required.{% endblock %}
-{% block meta_keywords %}json formatter, json beautifier, json validator, format json online, pretty print json{% endblock %}
+{% block title %}JSON Formatter Online – Beautify & Validate JSON Free | ToolsVera{% endblock %}
+{% block meta_description %}Format and validate JSON online for free. Pretty-print or minify with the ToolsVera JSON formatter — no signup, safe for API debugging.{% endblock %}
+{% block meta_keywords %}json formatter, json validator, beautify json, minify json, json pretty print, json parser{% endblock %}
 {% block canonical_path %}/text/json-formatter/{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this JSON Formatter really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. JSON Formatter on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output."}},{"@type":"Question","name":"Does it fix trailing commas?","acceptedAnswer":{"@type":"Answer","text":"Trailing commas are invalid JSON \u2014 the formatter flags them so you can remove them."}},{"@type":"Question","name":"Can it handle very large JSON?","acceptedAnswer":{"@type":"Answer","text":"Yes \u2014 even multi-megabyte payloads format smoothly in modern browsers."}},{"@type":"Question","name":"Is my JSON saved anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. Parsing runs in-memory and nothing is sent to a server."}},{"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed on the server and automatically deleted \u2014 we never store your content."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use the JSON Formatter","step":[{"@type":"HowToStep","position":1,"name":"Paste JSON","text":"Drop in any JSON response or config."},{"@type":"HowToStep","position":2,"name":"Beautify or minify","text":"Pick the transformation you want."},{"@type":"HowToStep","position":3,"name":"Copy the output","text":"Grab clean, valid JSON ready to use."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"JSON Formatter","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Format and validate JSON online for free. Pretty-print or minify with the ToolsVera JSON formatter \u2014 no signup, safe for API debugging."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolsvera.com/"},{"@type":"ListItem","position":2,"name":"Text Tools","item":"https://toolsvera.com/text/"},{"@type":"ListItem","position":3,"name":"JSON Formatter","item":"https://toolsvera.com/text/json-formatter/"}]}</script>
+{% endblock %}
+
 {% block content %}
 <div class="max-w-2xl mx-auto px-6 py-12">
   <div class="text-sm text-gray-400 mb-6">
@@ -48,4 +55,17 @@
     </div>
   </div>
 </div>
+
+
+<section class="max-w-4xl mx-auto px-6 py-10 prose prose-sm prose-gray">
+  <h2 class="text-2xl font-bold text-gray-900 mb-3">About the JSON Formatter</h2>
+  <p class="text-gray-600 leading-relaxed mb-5">The ToolsVera JSON formatter pretty-prints and validates JSON so developers can read, debug and share API responses. Minify when you need to save bytes, beautify when you need to read a payload quickly.</p>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">How to use the JSON Formatter</h3>
+  <ol class="list-decimal pl-5 text-gray-600 space-y-1 mb-5"><li><strong>Paste JSON:</strong> Drop in any JSON response or config.</li><li><strong>Beautify or minify:</strong> Pick the transformation you want.</li><li><strong>Copy the output:</strong> Grab clean, valid JSON ready to use.</li></ol>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Why use our JSON Formatter?</h3>
+  <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-5"><li>Instant validation with clear error messages.</li><li>Toggle between beautify and minify modes.</li><li>Great for API debugging.</li><li>Runs privately in your browser.</li></ul>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Frequently Asked Questions</h3>
+  <div class="space-y-4 text-gray-600"><div><p class="font-semibold text-gray-900 mb-1">Is this JSON Formatter really free?</p><p>Yes. JSON Formatter on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output.</p></div><div><p class="font-semibold text-gray-900 mb-1">Does it fix trailing commas?</p><p>Trailing commas are invalid JSON — the formatter flags them so you can remove them.</p></div><div><p class="font-semibold text-gray-900 mb-1">Can it handle very large JSON?</p><p>Yes — even multi-megabyte payloads format smoothly in modern browsers.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my JSON saved anywhere?</p><p>No. Parsing runs in-memory and nothing is sent to a server.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my data safe?</p><p>Yes. Files are processed on the server and automatically deleted — we never store your content.</p></div></div>
+</section>
+
 {% endblock %}

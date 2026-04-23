@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Compress Image — Reduce Image File Size Free | ToolsVera{% endblock %}
-{% block meta_description %}Compress images online for free. Reduce JPG file size without losing quality. No signup, instant download.{% endblock %}
-{% block meta_keywords %}compress image, reduce image size, image compressor, jpg compressor, optimize image{% endblock %}
+{% block title %}Compress Image Online – Reduce Image Size Free | ToolsVera{% endblock %}
+{% block meta_description %}Compress images online for free. Shrink JPG, PNG and WEBP without visible quality loss with ToolsVera — no signup, fast downloads.{% endblock %}
+{% block meta_keywords %}compress image, image compressor, reduce image size, shrink jpg, optimize image, image optimizer online{% endblock %}
 {% block canonical_path %}/images/compress-image/{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this Image Compressor really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Image Compressor on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output."}},{"@type":"Question","name":"How much can I compress an image?","acceptedAnswer":{"@type":"Answer","text":"It depends on the image \u2014 photographs compress more than graphics with flat colors."}},{"@type":"Question","name":"Does it support PNG compression?","acceptedAnswer":{"@type":"Answer","text":"Yes, PNG uses lossless optimization; JPG and WEBP can use lossy compression for bigger savings."}},{"@type":"Question","name":"Is metadata stripped?","acceptedAnswer":{"@type":"Answer","text":"Yes \u2014 EXIF data is removed to reduce size and protect privacy."}},{"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed on the server and automatically deleted \u2014 we never store your content."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use the Image Compressor","step":[{"@type":"HowToStep","position":1,"name":"Upload the image","text":"Select the image you want to compress."},{"@type":"HowToStep","position":2,"name":"Pick a quality level","text":"Balance file size against visual quality."},{"@type":"HowToStep","position":3,"name":"Download the smaller image","text":"Save the optimized file."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Compressor","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Compress images online for free. Shrink JPG, PNG and WEBP without visible quality loss with ToolsVera \u2014 no signup, fast downloads."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolsvera.com/"},{"@type":"ListItem","position":2,"name":"Image Tools","item":"https://toolsvera.com/images/compress-image/"},{"@type":"ListItem","position":3,"name":"Image Compressor","item":"https://toolsvera.com/images/compress-image/"}]}</script>
+{% endblock %}
+
 {% block content %}
 <div class="max-w-2xl mx-auto px-6 py-12">
   <div class="text-sm text-gray-400 mb-6">
@@ -39,4 +46,17 @@
     </div>
   </div>
 </div>
+
+
+<section class="max-w-4xl mx-auto px-6 py-10 prose prose-sm prose-gray">
+  <h2 class="text-2xl font-bold text-gray-900 mb-3">About the Image Compressor</h2>
+  <p class="text-gray-600 leading-relaxed mb-5">The ToolsVera image compressor reduces JPG, PNG and WEBP file sizes for faster websites and smaller email attachments. Smart compression keeps images looking great while trimming bytes your visitors (and inbox) will thank you for.</p>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">How to use the Image Compressor</h3>
+  <ol class="list-decimal pl-5 text-gray-600 space-y-1 mb-5"><li><strong>Upload the image:</strong> Select the image you want to compress.</li><li><strong>Pick a quality level:</strong> Balance file size against visual quality.</li><li><strong>Download the smaller image:</strong> Save the optimized file.</li></ol>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Why use our Image Compressor?</h3>
+  <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-5"><li>Typical savings of 40–80% file size.</li><li>Visible quality preserved at default settings.</li><li>No watermarks added.</li><li>Great for web performance and email.</li></ul>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Frequently Asked Questions</h3>
+  <div class="space-y-4 text-gray-600"><div><p class="font-semibold text-gray-900 mb-1">Is this Image Compressor really free?</p><p>Yes. Image Compressor on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output.</p></div><div><p class="font-semibold text-gray-900 mb-1">How much can I compress an image?</p><p>It depends on the image — photographs compress more than graphics with flat colors.</p></div><div><p class="font-semibold text-gray-900 mb-1">Does it support PNG compression?</p><p>Yes, PNG uses lossless optimization; JPG and WEBP can use lossy compression for bigger savings.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is metadata stripped?</p><p>Yes — EXIF data is removed to reduce size and protect privacy.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my data safe?</p><p>Yes. Files are processed on the server and automatically deleted — we never store your content.</p></div></div>
+</section>
+
 {% endblock %}

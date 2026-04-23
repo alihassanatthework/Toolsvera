@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Rotate & Flip Image — Free Online Image Rotator | ToolsVera{% endblock %}
-{% block meta_description %}Rotate or flip images online for free. Rotate 90°, 180°, 270° or flip horizontally and vertically. No signup required.{% endblock %}
-{% block meta_keywords %}rotate image, flip image, image rotator, rotate photo online, free image editor{% endblock %}
+{% block title %}Rotate Image Online – Rotate or Flip Photos Free | ToolsVera{% endblock %}
+{% block meta_description %}Rotate or flip images online for free. Fix orientation or mirror photos with the ToolsVera image rotator — no signup, fast download.{% endblock %}
+{% block meta_keywords %}rotate image, flip image, image rotator, turn photo, mirror image, rotate jpg online{% endblock %}
 {% block canonical_path %}/images/rotate-image/{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this Image Rotator really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Image Rotator on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output."}},{"@type":"Question","name":"Does rotation reduce image quality?","acceptedAnswer":{"@type":"Answer","text":"Quality is preserved at 90\u00b0, 180\u00b0 and 270\u00b0. Arbitrary angles may introduce slight re-sampling."}},{"@type":"Question","name":"Can I flip as well as rotate?","acceptedAnswer":{"@type":"Answer","text":"Yes \u2014 horizontal and vertical flips are available in addition to rotation."}},{"@type":"Question","name":"Which formats are supported?","acceptedAnswer":{"@type":"Answer","text":"JPG, PNG and WEBP all work."}},{"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed on the server and automatically deleted \u2014 we never store your content."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use the Image Rotator","step":[{"@type":"HowToStep","position":1,"name":"Upload your image","text":"Select the photo you want to rotate."},{"@type":"HowToStep","position":2,"name":"Pick an angle or flip","text":"Choose 90\u00b0, 180\u00b0, 270\u00b0 or a mirror axis."},{"@type":"HowToStep","position":3,"name":"Download the result","text":"Save the correctly oriented image."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Rotator","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Rotate or flip images online for free. Fix orientation or mirror photos with the ToolsVera image rotator \u2014 no signup, fast download."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolsvera.com/"},{"@type":"ListItem","position":2,"name":"Image Tools","item":"https://toolsvera.com/images/rotate-image/"},{"@type":"ListItem","position":3,"name":"Image Rotator","item":"https://toolsvera.com/images/rotate-image/"}]}</script>
+{% endblock %}
+
 {% block content %}
 <div class="max-w-2xl mx-auto px-6 py-12">
   <div class="text-sm text-gray-400 mb-6">
@@ -54,4 +61,17 @@
     </div>
   </div>
 </div>
+
+
+<section class="max-w-4xl mx-auto px-6 py-10 prose prose-sm prose-gray">
+  <h2 class="text-2xl font-bold text-gray-900 mb-3">About the Image Rotator</h2>
+  <p class="text-gray-600 leading-relaxed mb-5">The ToolsVera image rotator spins photos 90°, 180° or 270° and can also mirror them horizontally or vertically. Perfect for fixing sideways phone uploads and creating mirror effects for design work.</p>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">How to use the Image Rotator</h3>
+  <ol class="list-decimal pl-5 text-gray-600 space-y-1 mb-5"><li><strong>Upload your image:</strong> Select the photo you want to rotate.</li><li><strong>Pick an angle or flip:</strong> Choose 90°, 180°, 270° or a mirror axis.</li><li><strong>Download the result:</strong> Save the correctly oriented image.</li></ol>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Why use our Image Rotator?</h3>
+  <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-5"><li>Fixes sideways phone photos in one click.</li><li>Supports rotation and mirroring.</li><li>Preserves image quality.</li><li>Free and works on all devices.</li></ul>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Frequently Asked Questions</h3>
+  <div class="space-y-4 text-gray-600"><div><p class="font-semibold text-gray-900 mb-1">Is this Image Rotator really free?</p><p>Yes. Image Rotator on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output.</p></div><div><p class="font-semibold text-gray-900 mb-1">Does rotation reduce image quality?</p><p>Quality is preserved at 90°, 180° and 270°. Arbitrary angles may introduce slight re-sampling.</p></div><div><p class="font-semibold text-gray-900 mb-1">Can I flip as well as rotate?</p><p>Yes — horizontal and vertical flips are available in addition to rotation.</p></div><div><p class="font-semibold text-gray-900 mb-1">Which formats are supported?</p><p>JPG, PNG and WEBP all work.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my data safe?</p><p>Yes. Files are processed on the server and automatically deleted — we never store your content.</p></div></div>
+</section>
+
 {% endblock %}

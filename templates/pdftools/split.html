@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Split PDF Online Free — Extract Pages from PDF{% endblock %}
-{% block meta_description %}Split PDF files online for free. Extract pages from any PDF document instantly. No signup, no watermark.{% endblock %}
-{% block meta_keywords %}split pdf, extract pdf pages, pdf splitter online free, separate pdf pages{% endblock %}
-{% block canonical_path %}/pdf-tools/pdf-split/{% endblock %}
+{% block title %}Split PDF Online – Extract PDF Pages Free | ToolsVera{% endblock %}
+{% block meta_description %}Split PDF files online for free. Extract specific pages or page ranges into a new PDF instantly. No signup, no watermark — quick and secure with ToolsVera.{% endblock %}
+{% block meta_keywords %}split pdf, extract pdf pages, pdf splitter, separate pdf, split pdf online, divide pdf, pdf page extractor{% endblock %}
+{% block canonical_path %}/pdf-tools/split-pdf/{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this Split PDF really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Split PDF on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output."}},{"@type":"Question","name":"Can I split a large PDF into many small files?","acceptedAnswer":{"@type":"Answer","text":"Yes. Run the splitter once per range, or use a single range list to create multiple output PDFs."}},{"@type":"Question","name":"Does splitting a PDF reduce the quality?","acceptedAnswer":{"@type":"Answer","text":"No. Pages are copied directly from the source PDF without re-encoding, so quality is identical."}},{"@type":"Question","name":"What page range formats are supported?","acceptedAnswer":{"@type":"Answer","text":"You can enter individual pages (5), ranges (1-3) and comma-separated mixes (1-3, 5, 8-10)."}},{"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed on the server and automatically deleted \u2014 we never store your content."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use the Split PDF","step":[{"@type":"HowToStep","position":1,"name":"Upload your PDF","text":"Select a PDF from your device using the upload field."},{"@type":"HowToStep","position":2,"name":"Choose pages","text":"Enter the page numbers or range you want to extract (e.g. 1-3, 5, 8)."},{"@type":"HowToStep","position":3,"name":"Download your split PDF","text":"Click submit and save the new PDF containing only the pages you selected."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Split PDF","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Split PDF files online for free. Extract specific pages or page ranges into a new PDF instantly. No signup, no watermark \u2014 quick and secure with ToolsVera."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolsvera.com/"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://toolsvera.com/pdf-tools/split-pdf/"},{"@type":"ListItem","position":3,"name":"Split PDF","item":"https://toolsvera.com/pdf-tools/split-pdf/"}]}</script>
+{% endblock %}
+
 {% block og_title %}Split PDF Free — ToolsVera{% endblock %}
 {% block og_description %}Extract and split PDF pages instantly online. Free, no signup needed.{% endblock %}
 {% block twitter_title %}Split PDF Free — ToolsVera{% endblock %}
@@ -43,4 +50,17 @@
     </div>
   </div>
 </div>
+
+
+<section class="max-w-4xl mx-auto px-6 py-10 prose prose-sm prose-gray">
+  <h2 class="text-2xl font-bold text-gray-900 mb-3">About the Split PDF</h2>
+  <p class="text-gray-600 leading-relaxed mb-5">Split PDF documents online to pull out the exact pages you need. ToolsVera’s free PDF splitter handles single pages, page ranges and custom selections, making it easy to share chapters, invoices or signed sections without sending the whole file.</p>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">How to use the Split PDF</h3>
+  <ol class="list-decimal pl-5 text-gray-600 space-y-1 mb-5"><li><strong>Upload your PDF:</strong> Select a PDF from your device using the upload field.</li><li><strong>Choose pages:</strong> Enter the page numbers or range you want to extract (e.g. 1-3, 5, 8).</li><li><strong>Download your split PDF:</strong> Click submit and save the new PDF containing only the pages you selected.</li></ol>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Why use our Split PDF?</h3>
+  <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-5"><li>Extract any page or range from a PDF in seconds.</li><li>No watermarks, no signup and no software install.</li><li>Original PDF layout, fonts and images are preserved.</li><li>Works on every device — desktop, tablet and phone.</li></ul>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Frequently Asked Questions</h3>
+  <div class="space-y-4 text-gray-600"><div><p class="font-semibold text-gray-900 mb-1">Is this Split PDF really free?</p><p>Yes. Split PDF on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output.</p></div><div><p class="font-semibold text-gray-900 mb-1">Can I split a large PDF into many small files?</p><p>Yes. Run the splitter once per range, or use a single range list to create multiple output PDFs.</p></div><div><p class="font-semibold text-gray-900 mb-1">Does splitting a PDF reduce the quality?</p><p>No. Pages are copied directly from the source PDF without re-encoding, so quality is identical.</p></div><div><p class="font-semibold text-gray-900 mb-1">What page range formats are supported?</p><p>You can enter individual pages (5), ranges (1-3) and comma-separated mixes (1-3, 5, 8-10).</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my data safe?</p><p>Yes. Files are processed on the server and automatically deleted — we never store your content.</p></div></div>
+</section>
+
 {% endblock %}

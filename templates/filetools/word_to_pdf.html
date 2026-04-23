@@ -1,25 +1,19 @@
 {% extends 'base.html' %}
-{% block title %}Word to PDF Converter — Convert DOCX to PDF Free Online{% endblock %}
-{% block meta_description %}Convert Word documents to PDF online for free. Upload your .docx file and download a perfect PDF instantly. No signup needed, no watermark.{% endblock %}
-{% block meta_keywords %}word to pdf, convert docx to pdf, word to pdf converter free, doc to pdf{% endblock %}
+{% block title %}Word to PDF Online – Convert DOCX to PDF Free | ToolsVera{% endblock %}
+{% block meta_description %}Convert Word DOCX to PDF online for free. ToolsVera Word to PDF converter preserves formatting and fonts — no signup, instant download.{% endblock %}
+{% block meta_keywords %}word to pdf, docx to pdf, convert word to pdf, doc to pdf, free word to pdf, word pdf converter{% endblock %}
 {% block canonical_path %}/files/word-to-pdf/{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this Word to PDF really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Word to PDF on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output."}},{"@type":"Question","name":"Does it support .doc as well as .docx?","acceptedAnswer":{"@type":"Answer","text":"DOCX is recommended. Save older .doc files as .docx in Word first for best results."}},{"@type":"Question","name":"Are embedded images preserved?","acceptedAnswer":{"@type":"Answer","text":"Yes \u2014 images, tables and headers carry over faithfully."}},{"@type":"Question","name":"Can I convert password-protected DOCX?","acceptedAnswer":{"@type":"Answer","text":"Remove the document password first inside Word, then convert here."}},{"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed on the server and automatically deleted \u2014 we never store your content."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use the Word to PDF","step":[{"@type":"HowToStep","position":1,"name":"Upload your DOCX","text":"Select the Word document you want to convert."},{"@type":"HowToStep","position":2,"name":"Start conversion","text":"Click convert to render the file as PDF."},{"@type":"HowToStep","position":3,"name":"Download the PDF","text":"Save the final PDF for sharing or printing."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Word to PDF","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Convert Word DOCX to PDF online for free. ToolsVera Word to PDF converter preserves formatting and fonts \u2014 no signup, instant download."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolsvera.com/"},{"@type":"ListItem","position":2,"name":"File Tools","item":"https://toolsvera.com/files/word-to-pdf/"},{"@type":"ListItem","position":3,"name":"Word to PDF","item":"https://toolsvera.com/files/word-to-pdf/"}]}</script>
+{% endblock %}
+
 {% block og_title %}Word to PDF Converter Free — ToolsVera{% endblock %}
 {% block og_description %}Convert Word .docx files to PDF instantly online. Free, no signup, no watermark.{% endblock %}
 {% block twitter_title %}Word to PDF Converter Free — ToolsVera{% endblock %}
 {% block twitter_description %}Convert Word .docx files to PDF instantly online. Free, no signup, no watermark.{% endblock %}
-{% block extra_schema %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Word to PDF Converter",
-  "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "Web",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "Free online Word to PDF converter. Convert DOCX files to PDF instantly."
-}
-</script>
-{% endblock %}
 
 {% block content %}
 <div class="max-w-2xl mx-auto px-6 py-12">
@@ -56,4 +50,17 @@
     </div>
   </div>
 </div>
+
+
+<section class="max-w-4xl mx-auto px-6 py-10 prose prose-sm prose-gray">
+  <h2 class="text-2xl font-bold text-gray-900 mb-3">About the Word to PDF</h2>
+  <p class="text-gray-600 leading-relaxed mb-5">The ToolsVera Word to PDF converter turns DOCX documents into polished, shareable PDFs. Great for contracts, resumes and reports when you need a format that looks identical on every device and printer.</p>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">How to use the Word to PDF</h3>
+  <ol class="list-decimal pl-5 text-gray-600 space-y-1 mb-5"><li><strong>Upload your DOCX:</strong> Select the Word document you want to convert.</li><li><strong>Start conversion:</strong> Click convert to render the file as PDF.</li><li><strong>Download the PDF:</strong> Save the final PDF for sharing or printing.</li></ol>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Why use our Word to PDF?</h3>
+  <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-5"><li>Keeps fonts, layout and images intact.</li><li>Universally readable output.</li><li>No signup, no watermark.</li><li>Works on any device with a browser.</li></ul>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Frequently Asked Questions</h3>
+  <div class="space-y-4 text-gray-600"><div><p class="font-semibold text-gray-900 mb-1">Is this Word to PDF really free?</p><p>Yes. Word to PDF on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output.</p></div><div><p class="font-semibold text-gray-900 mb-1">Does it support .doc as well as .docx?</p><p>DOCX is recommended. Save older .doc files as .docx in Word first for best results.</p></div><div><p class="font-semibold text-gray-900 mb-1">Are embedded images preserved?</p><p>Yes — images, tables and headers carry over faithfully.</p></div><div><p class="font-semibold text-gray-900 mb-1">Can I convert password-protected DOCX?</p><p>Remove the document password first inside Word, then convert here.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my data safe?</p><p>Yes. Files are processed on the server and automatically deleted — we never store your content.</p></div></div>
+</section>
+
 {% endblock %}

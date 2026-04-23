@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Base64 Encoder Decoder — Free Online | ToolsVera{% endblock %}
-{% block meta_description %}Encode or decode text using Base64 format online for free. Instant results, no signup required.{% endblock %}
-{% block meta_keywords %}base64 encoder, base64 decoder, base64 converter, encode base64, decode base64{% endblock %}
+{% block title %}Base64 Encoder Decoder Online – Encode & Decode Free | ToolsVera{% endblock %}
+{% block meta_description %}Encode or decode Base64 text online for free. Fast, private ToolsVera Base64 encoder decoder — no signup, works instantly in the browser.{% endblock %}
+{% block meta_keywords %}base64 encoder, base64 decoder, encode base64, decode base64, base64 tool, online base64{% endblock %}
 {% block canonical_path %}/text/base64-encoder-decoder/{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this Base64 Encoder Decoder really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Base64 Encoder Decoder on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output."}},{"@type":"Question","name":"Is Base64 encryption?","acceptedAnswer":{"@type":"Answer","text":"No. Base64 is encoding, not encryption \u2014 it is easily reversed by anyone."}},{"@type":"Question","name":"What characters does Base64 use?","acceptedAnswer":{"@type":"Answer","text":"A\u2013Z, a\u2013z, 0\u20139, + and / with = used for padding."}},{"@type":"Question","name":"Can I encode files?","acceptedAnswer":{"@type":"Answer","text":"This tool focuses on text. For files, use your browser devtools or a developer utility that accepts binary input."}},{"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed on the server and automatically deleted \u2014 we never store your content."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use the Base64 Encoder Decoder","step":[{"@type":"HowToStep","position":1,"name":"Pick encode or decode","text":"Choose the direction you need."},{"@type":"HowToStep","position":2,"name":"Paste your text","text":"Drop in the content to transform."},{"@type":"HowToStep","position":3,"name":"Copy the result","text":"Use the copy button to paste elsewhere."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Base64 Encoder Decoder","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Encode or decode Base64 text online for free. Fast, private ToolsVera Base64 encoder decoder \u2014 no signup, works instantly in the browser."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolsvera.com/"},{"@type":"ListItem","position":2,"name":"Text Tools","item":"https://toolsvera.com/text/"},{"@type":"ListItem","position":3,"name":"Base64 Encoder Decoder","item":"https://toolsvera.com/text/base64-encoder-decoder/"}]}</script>
+{% endblock %}
+
 {% block content %}
 <div class="max-w-2xl mx-auto px-6 py-12">
   <div class="text-sm text-gray-400 mb-6">
@@ -55,4 +62,17 @@
     </div>
   </div>
 </div>
+
+
+<section class="max-w-4xl mx-auto px-6 py-10 prose prose-sm prose-gray">
+  <h2 class="text-2xl font-bold text-gray-900 mb-3">About the Base64 Encoder Decoder</h2>
+  <p class="text-gray-600 leading-relaxed mb-5">The ToolsVera Base64 tool encodes plain text into Base64 or decodes Base64 back to text. Developers use Base64 to embed data in JSON, HTML attributes, JWTs and emails without worrying about special characters.</p>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">How to use the Base64 Encoder Decoder</h3>
+  <ol class="list-decimal pl-5 text-gray-600 space-y-1 mb-5"><li><strong>Pick encode or decode:</strong> Choose the direction you need.</li><li><strong>Paste your text:</strong> Drop in the content to transform.</li><li><strong>Copy the result:</strong> Use the copy button to paste elsewhere.</li></ol>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Why use our Base64 Encoder Decoder?</h3>
+  <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-5"><li>Both encode and decode in one tool.</li><li>Handles UTF-8 text correctly.</li><li>Free and private.</li><li>Great for debugging APIs and JWTs.</li></ul>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Frequently Asked Questions</h3>
+  <div class="space-y-4 text-gray-600"><div><p class="font-semibold text-gray-900 mb-1">Is this Base64 Encoder Decoder really free?</p><p>Yes. Base64 Encoder Decoder on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is Base64 encryption?</p><p>No. Base64 is encoding, not encryption — it is easily reversed by anyone.</p></div><div><p class="font-semibold text-gray-900 mb-1">What characters does Base64 use?</p><p>A–Z, a–z, 0–9, + and / with = used for padding.</p></div><div><p class="font-semibold text-gray-900 mb-1">Can I encode files?</p><p>This tool focuses on text. For files, use your browser devtools or a developer utility that accepts binary input.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my data safe?</p><p>Yes. Files are processed on the server and automatically deleted — we never store your content.</p></div></div>
+</section>
+
 {% endblock %}

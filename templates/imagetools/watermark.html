@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Add Watermark to Image — Free Online Tool | ToolsVera{% endblock %}
-{% block meta_description %}Add a text watermark to any image online for free. Customize text and opacity. No signup, instant download.{% endblock %}
-{% block meta_keywords %}watermark image, add watermark, image watermark tool, stamp image, free image editor{% endblock %}
+{% block title %}Watermark Image Online – Add Text Watermark Free | ToolsVera{% endblock %}
+{% block meta_description %}Add a text watermark to images online for free. Stamp your name or logo text on photos with the ToolsVera image watermark tool — no signup.{% endblock %}
+{% block meta_keywords %}watermark image, add watermark to photo, image watermark online, text watermark, photo watermark, free watermark tool{% endblock %}
 {% block canonical_path %}/images/watermark-image/{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this Image Watermark really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Image Watermark on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output."}},{"@type":"Question","name":"Can I reposition the watermark?","acceptedAnswer":{"@type":"Answer","text":"Common positions such as corners and center are supported."}},{"@type":"Question","name":"Will the watermark lower image quality?","acceptedAnswer":{"@type":"Answer","text":"No \u2014 the underlying image is re-saved but at a high quality setting."}},{"@type":"Question","name":"Can I use a logo image as the watermark?","acceptedAnswer":{"@type":"Answer","text":"This version focuses on text watermarks; combine with our other tools to composite a logo manually."}},{"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed on the server and automatically deleted \u2014 we never store your content."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use the Image Watermark","step":[{"@type":"HowToStep","position":1,"name":"Upload your image","text":"Select the photo to watermark."},{"@type":"HowToStep","position":2,"name":"Enter watermark text","text":"Type the text you want stamped."},{"@type":"HowToStep","position":3,"name":"Download the watermarked image","text":"Save the branded file."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Watermark","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Add a text watermark to images online for free. Stamp your name or logo text on photos with the ToolsVera image watermark tool \u2014 no signup."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolsvera.com/"},{"@type":"ListItem","position":2,"name":"Image Tools","item":"https://toolsvera.com/images/watermark-image/"},{"@type":"ListItem","position":3,"name":"Image Watermark","item":"https://toolsvera.com/images/watermark-image/"}]}</script>
+{% endblock %}
+
 {% block content %}
 <div class="max-w-2xl mx-auto px-6 py-12">
   <div class="text-sm text-gray-400 mb-6">
@@ -42,4 +49,17 @@
     </div>
   </div>
 </div>
+
+
+<section class="max-w-4xl mx-auto px-6 py-10 prose prose-sm prose-gray">
+  <h2 class="text-2xl font-bold text-gray-900 mb-3">About the Image Watermark</h2>
+  <p class="text-gray-600 leading-relaxed mb-5">The ToolsVera image watermark tool stamps custom text onto your photos so you can claim ownership before posting online. Great for photographers, designers and anyone sharing work on social media.</p>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">How to use the Image Watermark</h3>
+  <ol class="list-decimal pl-5 text-gray-600 space-y-1 mb-5"><li><strong>Upload your image:</strong> Select the photo to watermark.</li><li><strong>Enter watermark text:</strong> Type the text you want stamped.</li><li><strong>Download the watermarked image:</strong> Save the branded file.</li></ol>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Why use our Image Watermark?</h3>
+  <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-5"><li>Protects your images from unauthorized reuse.</li><li>Simple, clean text watermark.</li><li>No watermark from us — only yours.</li><li>Free, no signup.</li></ul>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Frequently Asked Questions</h3>
+  <div class="space-y-4 text-gray-600"><div><p class="font-semibold text-gray-900 mb-1">Is this Image Watermark really free?</p><p>Yes. Image Watermark on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output.</p></div><div><p class="font-semibold text-gray-900 mb-1">Can I reposition the watermark?</p><p>Common positions such as corners and center are supported.</p></div><div><p class="font-semibold text-gray-900 mb-1">Will the watermark lower image quality?</p><p>No — the underlying image is re-saved but at a high quality setting.</p></div><div><p class="font-semibold text-gray-900 mb-1">Can I use a logo image as the watermark?</p><p>This version focuses on text watermarks; combine with our other tools to composite a logo manually.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my data safe?</p><p>Yes. Files are processed on the server and automatically deleted — we never store your content.</p></div></div>
+</section>
+
 {% endblock %}

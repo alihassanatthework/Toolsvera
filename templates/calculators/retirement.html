@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Retirement Calculator — Retirement Savings Estimator Free | ToolsVera{% endblock %}
-{% block meta_description %}Calculate how much you'll have saved by retirement. Free online retirement savings calculator. No signup required.{% endblock %}
-{% block meta_keywords %}retirement calculator, retirement savings, 401k calculator, retirement planning, savings calculator{% endblock %}
+{% block title %}Retirement Calculator Online – Savings Goal Free | ToolsVera{% endblock %}
+{% block meta_description %}Estimate your retirement savings online for free. Plan nest egg goals with the ToolsVera retirement calculator — no signup, simple inputs.{% endblock %}
+{% block meta_keywords %}retirement calculator, retirement savings, nest egg calculator, fire calculator, retirement planner, retirement estimate{% endblock %}
 {% block canonical_path %}/calculators/retirement-calculator/{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this Retirement Calculator really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Retirement Calculator on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output."}},{"@type":"Question","name":"What return rate should I use?","acceptedAnswer":{"@type":"Answer","text":"A long-term balanced portfolio historically returns 6\u20138% nominal. Be conservative in your planning and use 5\u20136% as a baseline."}},{"@type":"Question","name":"Does it account for inflation?","acceptedAnswer":{"@type":"Answer","text":"Use a real return (nominal minus expected inflation) to see inflation-adjusted values."}},{"@type":"Question","name":"Does it include taxes?","acceptedAnswer":{"@type":"Answer","text":"No. Results are pre-tax estimates \u2014 adjust for your country\u2019s retirement account rules."}},{"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed on the server and automatically deleted \u2014 we never store your content."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use the Retirement Calculator","step":[{"@type":"HowToStep","position":1,"name":"Enter current savings","text":"Type what you already have invested for retirement."},{"@type":"HowToStep","position":2,"name":"Add contributions","text":"Include your yearly contribution."},{"@type":"HowToStep","position":3,"name":"Set time and return","text":"Enter years to retirement and expected annual return."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Retirement Calculator","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Estimate your retirement savings online for free. Plan nest egg goals with the ToolsVera retirement calculator \u2014 no signup, simple inputs."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolsvera.com/"},{"@type":"ListItem","position":2,"name":"Calculators","item":"https://toolsvera.com/calculators/"},{"@type":"ListItem","position":3,"name":"Retirement Calculator","item":"https://toolsvera.com/calculators/retirement-calculator/"}]}</script>
+{% endblock %}
+
 {% block content %}
 <div class="max-w-2xl mx-auto px-6 py-12">
   <div class="text-sm text-gray-400 mb-6">
@@ -68,4 +75,17 @@
     </div>
   </div>
 </div>
+
+
+<section class="max-w-4xl mx-auto px-6 py-10 prose prose-sm prose-gray">
+  <h2 class="text-2xl font-bold text-gray-900 mb-3">About the Retirement Calculator</h2>
+  <p class="text-gray-600 leading-relaxed mb-5">The ToolsVera retirement calculator projects how your savings grow until retirement based on your current balance, annual contributions, expected return and time horizon. Perfect for early career planners and mid-career checkpoints.</p>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">How to use the Retirement Calculator</h3>
+  <ol class="list-decimal pl-5 text-gray-600 space-y-1 mb-5"><li><strong>Enter current savings:</strong> Type what you already have invested for retirement.</li><li><strong>Add contributions:</strong> Include your yearly contribution.</li><li><strong>Set time and return:</strong> Enter years to retirement and expected annual return.</li></ol>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Why use our Retirement Calculator?</h3>
+  <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-5"><li>Quick what-if modeling for savings goals.</li><li>Compounding is baked in over the full horizon.</li><li>Great for FIRE and traditional retirement planning.</li><li>Free, private, no signup.</li></ul>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Frequently Asked Questions</h3>
+  <div class="space-y-4 text-gray-600"><div><p class="font-semibold text-gray-900 mb-1">Is this Retirement Calculator really free?</p><p>Yes. Retirement Calculator on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output.</p></div><div><p class="font-semibold text-gray-900 mb-1">What return rate should I use?</p><p>A long-term balanced portfolio historically returns 6–8% nominal. Be conservative in your planning and use 5–6% as a baseline.</p></div><div><p class="font-semibold text-gray-900 mb-1">Does it account for inflation?</p><p>Use a real return (nominal minus expected inflation) to see inflation-adjusted values.</p></div><div><p class="font-semibold text-gray-900 mb-1">Does it include taxes?</p><p>No. Results are pre-tax estimates — adjust for your country’s retirement account rules.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my data safe?</p><p>Yes. Files are processed on the server and automatically deleted — we never store your content.</p></div></div>
+</section>
+
 {% endblock %}

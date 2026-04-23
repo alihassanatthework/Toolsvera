@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
-{% block title %}Organize PDF — Reorder PDF Pages Free Online | ToolsVera{% endblock %}
-{% block meta_description %}Reorder pages in your PDF online for free. Enter a custom page order. No signup, instant download.{% endblock %}
-{% block meta_keywords %}organize pdf, reorder pdf pages, rearrange pdf pages, pdf page organizer, free pdf editor{% endblock %}
-{% block canonical_path %}/pdf-tools/pdf-organize/{% endblock %}
+{% block title %}Organize PDF Online – Reorder PDF Pages Free | ToolsVera{% endblock %}
+{% block meta_description %}Organize PDF pages online for free. Reorder, rearrange and re-sequence pages in any PDF. No signup, no watermark — fast, secure with ToolsVera.{% endblock %}
+{% block meta_keywords %}organize pdf, reorder pdf pages, rearrange pdf, sort pdf pages, pdf organizer, arrange pdf pages{% endblock %}
+{% block canonical_path %}/pdf-tools/organize-pdf/{% endblock %}
+{% block extra_schema %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this Organize PDF really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Organize PDF on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output."}},{"@type":"Question","name":"Can I duplicate a page while reorganizing?","acceptedAnswer":{"@type":"Answer","text":"Yes. Include the same page number twice in your new order to duplicate it."}},{"@type":"Question","name":"Can I drop pages while reorganizing?","acceptedAnswer":{"@type":"Answer","text":"Yes \u2014 just leave them out of the new order and those pages are removed."}},{"@type":"Question","name":"Is there a page limit?","acceptedAnswer":{"@type":"Answer","text":"There is no strict limit; very large PDFs simply take a few extra seconds to process."}},{"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed on the server and automatically deleted \u2014 we never store your content."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use the Organize PDF","step":[{"@type":"HowToStep","position":1,"name":"Upload your PDF","text":"Select the PDF you want to reorganize."},{"@type":"HowToStep","position":2,"name":"Enter the new page order","text":"Type the pages in the sequence you want, like 3, 1, 2, 4."},{"@type":"HowToStep","position":3,"name":"Download the reorganized PDF","text":"Save your PDF with its pages in the new order."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Organize PDF","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Organize PDF pages online for free. Reorder, rearrange and re-sequence pages in any PDF. No signup, no watermark \u2014 fast, secure with ToolsVera."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolsvera.com/"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://toolsvera.com/pdf-tools/organize-pdf/"},{"@type":"ListItem","position":3,"name":"Organize PDF","item":"https://toolsvera.com/pdf-tools/organize-pdf/"}]}</script>
+{% endblock %}
+
 {% block content %}
 <div class="max-w-2xl mx-auto px-6 py-12">
   <div class="text-sm text-gray-400 mb-6">
     <a href="/" class="hover:text-blue-600 transition">Home</a><span class="mx-2">/</span>
-    <a href="/pdf-tools/pdf-merge/" class="hover:text-blue-600 transition">PDF Tools</a><span class="mx-2">/</span>
+    <a href="/pdf-tools/merge-pdf/" class="hover:text-blue-600 transition">PDF Tools</a><span class="mx-2">/</span>
     <span class="text-gray-600">Organize PDF</span>
   </div>
   <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
@@ -38,4 +45,17 @@
     </div>
   </div>
 </div>
+
+
+<section class="max-w-4xl mx-auto px-6 py-10 prose prose-sm prose-gray">
+  <h2 class="text-2xl font-bold text-gray-900 mb-3">About the Organize PDF</h2>
+  <p class="text-gray-600 leading-relaxed mb-5">Organize PDF pages online to get your document into the perfect order. ToolsVera lets you rearrange chapters, move an appendix up front or reorder slides before exporting — all without breaking fonts or layouts.</p>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">How to use the Organize PDF</h3>
+  <ol class="list-decimal pl-5 text-gray-600 space-y-1 mb-5"><li><strong>Upload your PDF:</strong> Select the PDF you want to reorganize.</li><li><strong>Enter the new page order:</strong> Type the pages in the sequence you want, like 3, 1, 2, 4.</li><li><strong>Download the reorganized PDF:</strong> Save your PDF with its pages in the new order.</li></ol>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Why use our Organize PDF?</h3>
+  <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-5"><li>Rearrange any number of pages in seconds.</li><li>Preserves original page quality and embedded content.</li><li>Free, with no signup or watermark.</li><li>Runs securely in your browser — files are auto-deleted.</li></ul>
+  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">Frequently Asked Questions</h3>
+  <div class="space-y-4 text-gray-600"><div><p class="font-semibold text-gray-900 mb-1">Is this Organize PDF really free?</p><p>Yes. Organize PDF on ToolsVera is 100% free to use with no signup, no hidden limits and no watermark added to your output.</p></div><div><p class="font-semibold text-gray-900 mb-1">Can I duplicate a page while reorganizing?</p><p>Yes. Include the same page number twice in your new order to duplicate it.</p></div><div><p class="font-semibold text-gray-900 mb-1">Can I drop pages while reorganizing?</p><p>Yes — just leave them out of the new order and those pages are removed.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is there a page limit?</p><p>There is no strict limit; very large PDFs simply take a few extra seconds to process.</p></div><div><p class="font-semibold text-gray-900 mb-1">Is my data safe?</p><p>Yes. Files are processed on the server and automatically deleted — we never store your content.</p></div></div>
+</section>
+
 {% endblock %}
