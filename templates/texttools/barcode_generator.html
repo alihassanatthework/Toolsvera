@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Barcode Generator Online — Free, Code128, EAN-13, UPC | ToolsVera{% endblock %}
+{% block meta_description %}Generate barcodes online for free. Code128, EAN-13, UPC, Code39 supported. Single or bulk via Excel. Download high-quality PNG.{% endblock %}
+{% block meta_keywords %}barcode generator, code128, ean13 generator, upc generator, bulk barcode, free barcode maker{% endblock %}
+{% block canonical_path %}/text/barcode-generator/{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600">Home</a><span class="mx-2">/</span>
+    <a href="/text/" class="hover:text-blue-600">Text Tools</a><span class="mx-2">/</span>
+    <span class="text-gray-600">Barcode Generator</span>
+  </div>
+
+  <h1 class="text-3xl font-bold text-gray-900 mb-2">Barcode Generator</h1>
+  <p class="text-gray-500 mb-8">Generate barcodes in Code128, EAN-13, UPC, or Code39 format. Single value or bulk via Excel.</p>
+
+  {% if error %}<div class="mb-5 bg-red-50 border border-red-100 text-red-700 text-sm rounded-xl px-4 py-3">{{ error }}</div>{% endif %}
+
+  <div class="flex gap-2 mb-5 border-b border-gray-200">
+    <button type="button" onclick="setBMode('single')" id="btab-single" class="px-4 py-2 text-sm font-semibold border-b-2 border-blue-600 text-blue-600">Single Barcode</button>
+    <button type="button" onclick="setBMode('bulk')" id="btab-bulk" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-800">Bulk (Excel)</button>
+  </div>
+
+  <form method="post" enctype="multipart/form-data" class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+    {% csrf_token %}
+    <input type="hidden" name="mode" id="bmode" value="single">
+
+    <div id="bpane-single">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Content</label>
+      <input name="content" value="{{ content }}" class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-200 focus:border-blue-400 outline-none">
+      <p class="text-xs text-gray-500 mt-1">EAN-13 needs 12 digits, UPC needs 11 digits. Code128 accepts any text.</p>
+    </div>
+
+    <div id="bpane-bulk" style="display:none">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Upload Excel (.xlsx)</label>
+      <input type="file" name="file" accept=".xlsx" class="w-full border border-gray-200 rounded-lg px-3 py-2">
+      <p class="text-xs text-gray-500 mt-2">Each non-empty cell becomes its own barcode. Output is a ZIP of PNGs.</p>
+    </div>
+
+    <div class="mt-4">
+      <label class="block text-xs font-medium text-gray-600 mb-1">Format</label>
+      <select name="format" class="w-full border border-gray-200 rounded-lg px-3 py-2">
+        <option value="code128">Code 128 (any text)</option>
+        <option value="ean13">EAN-13 (12 digits)</option>
+        <option value="upc">UPC-A (11 digits)</option>
+        <option value="code39">Code 39</option>
+      </select>
+    </div>
+
+    <button class="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition">Generate</button>
+  </form>
+
+  {% if image %}
+  <div class="mt-6 bg-white border border-gray-100 rounded-2xl p-6 text-center">
+    <img src="{{ image }}" alt="Barcode" class="mx-auto max-w-full">
+    <a href="{{ image }}" download="barcode.png" class="inline-block mt-4 bg-gray-900 hover:bg-black text-white px-5 py-2 rounded-lg text-sm font-semibold">Download PNG</a>
+  </div>
+  {% endif %}
+
+  <section class="mt-12 prose prose-sm prose-gray max-w-none">
+    <h2 class="text-xl font-bold text-gray-900 mb-2">Free Online Barcode Generator</h2>
+    <p class="text-gray-600">Create scannable barcodes for inventory, retail, asset tracking, or labeling. Choose Code 128 for free-form text, EAN-13/UPC for retail products, or Code 39 for industrial uses. Bulk-generate dozens of barcodes from an Excel file in seconds.</p>
+    <h3 class="text-base font-semibold text-gray-900 mt-5 mb-1">How to use</h3>
+    <ol class="list-decimal pl-5 text-gray-600 space-y-1">
+      <li>Choose single or bulk mode.</li>
+      <li>Enter content or upload your Excel file.</li>
+      <li>Pick a barcode format and click Generate.</li>
+    </ol>
+  </section>
+</div>
+
+<script>
+function setBMode(m){
+  document.getElementById('bmode').value = m;
+  document.getElementById('bpane-single').style.display = m==='single'?'block':'none';
+  document.getElementById('bpane-bulk').style.display = m==='bulk'?'block':'none';
+  document.getElementById('btab-single').className = 'px-4 py-2 text-sm font-semibold border-b-2 ' + (m==='single'?'border-blue-600 text-blue-600':'border-transparent text-gray-500 hover:text-gray-800');
+  document.getElementById('btab-bulk').className = 'px-4 py-2 text-sm font-semibold border-b-2 ' + (m==='bulk'?'border-blue-600 text-blue-600':'border-transparent text-gray-500 hover:text-gray-800');
+}
+</script>
+{% endblock %}

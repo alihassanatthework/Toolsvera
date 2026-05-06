@@ -192,3 +192,104 @@ def remove_duplicates(request):
     return render(request, 'texttools/remove_duplicates.html', {
         'result': result, 'text': text, 'count_removed': count_removed
     })
+
+
+# ──────────── QR Code Generator ────────────
+def qr_generator(request):
+    if request.method == 'POST':
+        try:
+            import qrcode
+            import io
+            from django.http import FileResponse
+            mode = request.POST.get('mode', 'single')
+            if mode == 'bulk' and request.FILES.get('file'):
+                import openpyxl, zipfile, tempfile, os, uuid, re
+                wb = openpyxl.load_workbook(request.FILES['file'], data_only=True)
+                ws = wb.active
+                buf = io.BytesIO()
+                with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as zf:
+                    n = 0
+                    for r_idx, row in enumerate(ws.iter_rows(values_only=True), start=1):
+                        for c_idx, val in enumerate(row, start=1):
+                            if val is None or str(val).strip() == '':
+                                continue
+                            img = qrcode.make(str(val))
+                            img_buf = io.BytesIO()
+                            img.save(img_buf, format='PNG')
+                            safe = re.sub(r'[^A-Za-z0-9._-]+', '_', str(val))[:40] or 'qr'
+                            zf.writestr(f'qr_r{r_idx}_c{c_idx}_{safe}.png', img_buf.getvalue())
+                            n += 1
+                buf.seek(0)
+                resp = FileResponse(buf, as_attachment=True, filename='qr_codes.zip', content_type='application/zip')
+                return resp
+            content = request.POST.get('content', '').strip()
+            if not content:
+                return render(request, 'texttools/qr_generator.html', {'error': 'Please enter some content.'})
+            box_size = int(request.POST.get('box_size', 10))
+            border = int(request.POST.get('border', 4))
+            ec_map = {'L': qrcode.constants.ERROR_CORRECT_L, 'M': qrcode.constants.ERROR_CORRECT_M,
+                      'Q': qrcode.constants.ERROR_CORRECT_Q, 'H': qrcode.constants.ERROR_CORRECT_H}
+            ec = ec_map.get(request.POST.get('ec', 'M'), qrcode.constants.ERROR_CORRECT_M)
+            qr = qrcode.QRCode(version=None, error_correction=ec, box_size=box_size, border=border)
+            qr.add_data(content)
+            qr.make(fit=True)
+            img = qr.make_image(fill_color='black', back_color='white')
+            buf = io.BytesIO()
+            img.save(buf, format='PNG')
+            buf.seek(0)
+            data_url = 'data:image/png;base64,' + b64lib.b64encode(buf.getvalue()).decode()
+            return render(request, 'texttools/qr_generator.html', {'image': data_url, 'content': content})
+        except Exception as e:
+            return render(request, 'texttools/qr_generator.html', {'error': str(e)})
+    return render(request, 'texttools/qr_generator.html')
+
+
+# ──────────── Barcode Generator ────────────
+def barcode_generator(request):
+    if request.method == 'POST':
+        try:
+            import barcode
+            from barcode.writer import ImageWriter
+            import io
+            from django.http import FileResponse
+            mode = request.POST.get('mode', 'single')
+            fmt = request.POST.get('format', 'code128').lower()
+
+            def make_one(value, fmt):
+                value = str(value)
+                try:
+                    cls = barcode.get_barcode_class(fmt)
+                    bc = cls(value, writer=ImageWriter())
+                except Exception:
+                    cls = barcode.get_barcode_class('code128')
+                    bc = cls(value, writer=ImageWriter())
+                buf = io.BytesIO()
+                bc.write(buf)
+                buf.seek(0)
+                return buf.getvalue()
+
+            if mode == 'bulk' and request.FILES.get('file'):
+                import openpyxl, zipfile, re
+                wb = openpyxl.load_workbook(request.FILES['file'], data_only=True)
+                ws = wb.active
+                out = io.BytesIO()
+                with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as zf:
+                    for r_idx, row in enumerate(ws.iter_rows(values_only=True), start=1):
+                        for c_idx, val in enumerate(row, start=1):
+                            if val is None or str(val).strip() == '':
+                                continue
+                            png = make_one(val, fmt)
+                            safe = re.sub(r'[^A-Za-z0-9._-]+', '_', str(val))[:40] or 'bc'
+                            zf.writestr(f'barcode_r{r_idx}_c{c_idx}_{safe}.png', png)
+                out.seek(0)
+                return FileResponse(out, as_attachment=True, filename='barcodes.zip', content_type='application/zip')
+
+            content = request.POST.get('content', '').strip()
+            if not content:
+                return render(request, 'texttools/barcode_generator.html', {'error': 'Please enter content.'})
+            png = make_one(content, fmt)
+            data_url = 'data:image/png;base64,' + b64lib.b64encode(png).decode()
+            return render(request, 'texttools/barcode_generator.html', {'image': data_url, 'content': content, 'format': fmt})
+        except Exception as e:
+            return render(request, 'texttools/barcode_generator.html', {'error': str(e)})
+    return render(request, 'texttools/barcode_generator.html')

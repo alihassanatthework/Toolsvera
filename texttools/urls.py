@@ -13,4 +13,6 @@ urlpatterns = [
     path('json-formatter/', views.json_formatter, name='json_formatter'),
     path('url-encoder-decoder/', views.url_encoder, name='url_encoder'),
     path('remove-duplicate-lines/', views.remove_duplicates, name='remove_duplicates'),
+    path('qr-code-generator/', views.qr_generator, name='qr_generator'),
+    path('barcode-generator/', views.barcode_generator, name='barcode_generator'),
 ]

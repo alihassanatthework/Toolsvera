@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}QR Code Generator Online — Free, No Watermark | ToolsVera{% endblock %}
+{% block meta_description %}Generate QR codes online for free. Single text/URL or bulk via Excel. Download high-quality PNG. No signup, no watermark.{% endblock %}
+{% block meta_keywords %}qr code generator, qr generator, bulk qr code, qr from excel, free qr maker{% endblock %}
+{% block canonical_path %}/text/qr-code-generator/{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-6 py-12">
+  <div class="text-sm text-gray-400 mb-6">
+    <a href="/" class="hover:text-blue-600">Home</a><span class="mx-2">/</span>
+    <a href="/text/" class="hover:text-blue-600">Text Tools</a><span class="mx-2">/</span>
+    <span class="text-gray-600">QR Code Generator</span>
+  </div>
+
+  <h1 class="text-3xl font-bold text-gray-900 mb-2">QR Code Generator</h1>
+  <p class="text-gray-500 mb-8">Generate a QR code from any text, URL, phone number, or upload an Excel file to create QR codes in bulk.</p>
+
+  {% if error %}<div class="mb-5 bg-red-50 border border-red-100 text-red-700 text-sm rounded-xl px-4 py-3">{{ error }}</div>{% endif %}
+
+  <div class="flex gap-2 mb-5 border-b border-gray-200">
+    <button type="button" onclick="setMode('single')" id="tab-single" class="px-4 py-2 text-sm font-semibold border-b-2 border-blue-600 text-blue-600">Single QR</button>
+    <button type="button" onclick="setMode('bulk')" id="tab-bulk" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-800">Bulk (Excel)</button>
+  </div>
+
+  <form method="post" enctype="multipart/form-data" class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+    {% csrf_token %}
+    <input type="hidden" name="mode" id="mode" value="single">
+
+    <div id="pane-single">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Content (text, URL, phone, etc.)</label>
+      <textarea name="content" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-200 focus:border-blue-400 outline-none">{{ content }}</textarea>
+
+      <div class="grid grid-cols-3 gap-3 mt-4">
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Size</label>
+          <input type="number" name="box_size" value="10" min="2" max="40" class="w-full border border-gray-200 rounded-lg px-3 py-2">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Border</label>
+          <input type="number" name="border" value="4" min="0" max="20" class="w-full border border-gray-200 rounded-lg px-3 py-2">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Error Correction</label>
+          <select name="ec" class="w-full border border-gray-200 rounded-lg px-3 py-2">
+            <option value="L">Low (~7%)</option>
+            <option value="M" selected>Medium (~15%)</option>
+            <option value="Q">Quartile (~25%)</option>
+            <option value="H">High (~30%)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div id="pane-bulk" style="display:none">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Upload Excel (.xlsx)</label>
+      <input type="file" name="file" accept=".xlsx" class="w-full border border-gray-200 rounded-lg px-3 py-2">
+      <p class="text-xs text-gray-500 mt-2">Each non-empty cell across rows and columns becomes its own QR code. Output is a ZIP of PNGs.</p>
+    </div>
+
+    <button class="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition">Generate</button>
+  </form>
+
+  {% if image %}
+  <div class="mt-6 bg-white border border-gray-100 rounded-2xl p-6 text-center">
+    <img src="{{ image }}" alt="QR code" class="mx-auto w-64 h-64">
+    <a href="{{ image }}" download="qr-code.png" class="inline-block mt-4 bg-gray-900 hover:bg-black text-white px-5 py-2 rounded-lg text-sm font-semibold">Download PNG</a>
+  </div>
+  {% endif %}
+
+  <section class="mt-12 prose prose-sm prose-gray max-w-none">
+    <h2 class="text-xl font-bold text-gray-900 mb-2">Free Online QR Code Generator</h2>
+    <p class="text-gray-600">Create QR codes for URLs, contact info, Wi-Fi credentials, or any text. Choose error-correction level for damage tolerance, customize size, and download as a high-resolution PNG. For bulk generation, upload an Excel file and we'll produce one QR code per cell.</p>
+    <h3 class="text-base font-semibold text-gray-900 mt-5 mb-1">How to use</h3>
+    <ol class="list-decimal pl-5 text-gray-600 space-y-1">
+      <li>Type your content or upload an Excel file.</li>
+      <li>Adjust size, border, or error correction (optional).</li>
+      <li>Click Generate and download the PNG.</li>
+    </ol>
+  </section>
+</div>
+
+<script>
+function setMode(m){
+  document.getElementById('mode').value = m;
+  document.getElementById('pane-single').style.display = m==='single'?'block':'none';
+  document.getElementById('pane-bulk').style.display = m==='bulk'?'block':'none';
+  document.getElementById('tab-single').className = 'px-4 py-2 text-sm font-semibold border-b-2 ' + (m==='single'?'border-blue-600 text-blue-600':'border-transparent text-gray-500 hover:text-gray-800');
+  document.getElementById('tab-bulk').className = 'px-4 py-2 text-sm font-semibold border-b-2 ' + (m==='bulk'?'border-blue-600 text-blue-600':'border-transparent text-gray-500 hover:text-gray-800');
+}
+</script>
+{% endblock %}
