@@ -55,11 +55,11 @@
     .nav-item>.nav-trigger{display:flex;align-items:center;gap:4px;padding:8px 12px;font-size:.875rem;font-weight:500;color:#4b5563;border-radius:8px;cursor:pointer;transition:color .15s,background .15s;white-space:nowrap;border:none;background:none}
     .nav-item>.nav-trigger:hover{color:#2563eb;background:#eff6ff}
     .nav-item>.nav-trigger .chevron{width:14px;height:14px;transition:transform .2s;flex-shrink:0}
-    .nav-item:hover>.nav-trigger .chevron{transform:rotate(180deg)}
-    .nav-item:hover>.nav-trigger{color:#2563eb;background:#eff6ff}
+    .nav-item:hover>.nav-trigger .chevron,.nav-item.open>.nav-trigger .chevron{transform:rotate(180deg)}
+    .nav-item:hover>.nav-trigger,.nav-item.open>.nav-trigger{color:#2563eb;background:#eff6ff}
 
     .dropdown{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 20px 60px -10px rgba(0,0,0,.15),0 4px 16px rgba(0,0,0,.06);padding:20px;min-width:520px;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;transform:translateX(-50%) translateY(-6px);z-index:200}
-    .nav-item:hover>.dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+    .nav-item:hover>.dropdown,.nav-item.open>.dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
     .dropdown-sm{min-width:220px}
     .dropdown-grid{display:grid;gap:4px}
     .dropdown-cols-2{grid-template-columns:repeat(2,1fr)}
@@ -176,6 +176,7 @@
               <a href="/pdf-tools/pdf-to-jpg/" class="dd-link"><span class="dd-icon">🖼️</span><span class="dd-label">PDF to JPG<span class="dd-sub">Pages to images</span></span></a>
               <a href="/pdf-tools/protect-pdf/" class="dd-link"><span class="dd-icon">🔐</span><span class="dd-label">Protect PDF<span class="dd-sub">Password lock</span></span></a>
               <a href="/pdf-tools/watermark-pdf/" class="dd-link"><span class="dd-icon">💧</span><span class="dd-label">Watermark PDF<span class="dd-sub">Stamp text on pages</span></span></a>
+              <a href="/pdf-tools/pdf-edit/" class="dd-link"><span class="dd-icon">✏️</span><span class="dd-label">Edit PDF<span class="dd-sub">Add text & annotations</span></span></a>
             </div>
           </div>
         </div>
@@ -423,6 +424,20 @@
     hlines[2].style.transform = open ? 'translateY(-6px) rotate(-45deg)' : '';
   });
 
+  // Desktop dropdown click-toggle (stays open until click outside)
+  document.querySelectorAll('.nav-item > .nav-trigger').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      var item = btn.parentElement;
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.nav-item.open').forEach(function(n){n.classList.remove('open')});
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.nav-item')) document.querySelectorAll('.nav-item.open').forEach(function(n){n.classList.remove('open')});
+  });
+
   // Mobile accordion sections
   function toggleMob(btn) {
     const links = btn.nextElementSibling;
@@ -481,6 +496,7 @@
     {n:"Extract PDF Pages",u:"/pdf-tools/extract-pages-from-pdf/",i:"📑",c:"PDF"},
     {n:"Add Page Numbers",u:"/pdf-tools/add-page-numbers-to-pdf/",i:"🔢",c:"PDF"},
     {n:"Watermark PDF",u:"/pdf-tools/watermark-pdf/",i:"💧",c:"PDF"},
+    {n:"Edit PDF",u:"/pdf-tools/pdf-edit/",i:"✏️",c:"PDF"},
     {n:"Protect PDF",u:"/pdf-tools/protect-pdf/",i:"🔐",c:"PDF"},
     {n:"Unlock PDF",u:"/pdf-tools/unlock-pdf/",i:"🔓",c:"PDF"},
     {n:"Organize PDF",u:"/pdf-tools/organize-pdf/",i:"🗃️",c:"PDF"},

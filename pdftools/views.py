@@ -480,7 +480,69 @@ def pdf_sign(request):
 
 
 def pdf_edit(request):
-    return render(request, 'coming_soon.html', {'tool_name': 'Edit PDF', 'tool_desc': 'Add text, images and annotations to your PDF.'})
+    if request.method == 'POST':
+        try:
+            from reportlab.pdfgen import canvas as rlcanvas
+            from reportlab.lib.colors import HexColor
+            f = request.FILES['pdf']
+            reader = PdfReader(f)
+            writer = PdfWriter()
+            # Parse repeating field arrays for overlays
+            pages = request.POST.getlist('page[]')
+            texts = request.POST.getlist('text[]')
+            xs = request.POST.getlist('x[]')
+            ys = request.POST.getlist('y[]')
+            sizes = request.POST.getlist('size[]')
+            colors = request.POST.getlist('color[]')
+            overlays_by_page = {}
+            for i in range(len(texts)):
+                txt = (texts[i] or '').strip()
+                if not txt:
+                    continue
+                try:
+                    pg = int(pages[i]) - 1
+                except Exception:
+                    pg = 0
+                overlays_by_page.setdefault(pg, []).append({
+                    'text': txt,
+                    'x': float(xs[i] or 50),
+                    'y': float(ys[i] or 50),
+                    'size': int(sizes[i] or 14),
+                    'color': colors[i] or '#000000',
+                })
+            for idx, page in enumerate(reader.pages):
+                if idx in overlays_by_page:
+                    w = float(page.mediabox.width)
+                    h = float(page.mediabox.height)
+                    packet = io.BytesIO()
+                    c = rlcanvas.Canvas(packet, pagesize=(w, h))
+                    for ov in overlays_by_page[idx]:
+                        try:
+                            c.setFillColor(HexColor(ov['color']))
+                        except Exception:
+                            c.setFillColor(HexColor('#000000'))
+                        c.setFont('Helvetica-Bold', ov['size'])
+                        # x/y as percent from top-left; PDF origin is bottom-left
+                        px = w * (ov['x'] / 100.0)
+                        py = h - h * (ov['y'] / 100.0)
+                        c.drawString(px, py, ov['text'])
+                    c.save()
+                    packet.seek(0)
+                    overlay_pdf = PdfReader(packet)
+                    page.merge_page(overlay_pdf.pages[0])
+                writer.add_page(page)
+            uid = str(uuid.uuid4())
+            output_path = os.path.join(_tmp(), f'{uid}_edited.pdf')
+            with open(output_path, 'wb') as out:
+                writer.write(out)
+            base = _safe_base(f.name)
+            fname = f'{base}_edited.pdf'
+            response = FileResponse(open(output_path, 'rb'), as_attachment=True, filename=fname, content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{fname}"'
+            return response
+        except Exception as e:
+            return render(request, 'pdftools/edit.html', {'error': str(e)})
+    return render(request, 'pdftools/edit.html')
 
 
 def pdf_repair(request):
