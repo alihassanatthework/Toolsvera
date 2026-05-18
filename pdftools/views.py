@@ -482,50 +482,62 @@ def pdf_sign(request):
 def pdf_edit(request):
     if request.method == 'POST':
         try:
+            import json
             from reportlab.pdfgen import canvas as rlcanvas
-            from reportlab.lib.colors import HexColor
+            from reportlab.lib.colors import HexColor, white
             f = request.FILES['pdf']
             reader = PdfReader(f)
             writer = PdfWriter()
-            # Parse repeating field arrays for overlays
-            pages = request.POST.getlist('page[]')
-            texts = request.POST.getlist('text[]')
-            xs = request.POST.getlist('x[]')
-            ys = request.POST.getlist('y[]')
-            sizes = request.POST.getlist('size[]')
-            colors = request.POST.getlist('color[]')
-            overlays_by_page = {}
-            for i in range(len(texts)):
-                txt = (texts[i] or '').strip()
-                if not txt:
-                    continue
+            edits = []
+            edits_raw = request.POST.get('edits_json', '').strip()
+            if edits_raw:
                 try:
-                    pg = int(pages[i]) - 1
+                    edits = json.loads(edits_raw)
+                except Exception:
+                    edits = []
+            by_page = {}
+            for ed in edits:
+                try:
+                    pg = int(ed.get('page', 1)) - 1
                 except Exception:
                     pg = 0
-                overlays_by_page.setdefault(pg, []).append({
-                    'text': txt,
-                    'x': float(xs[i] or 50),
-                    'y': float(ys[i] or 50),
-                    'size': int(sizes[i] or 14),
-                    'color': colors[i] or '#000000',
-                })
+                by_page.setdefault(pg, []).append(ed)
             for idx, page in enumerate(reader.pages):
-                if idx in overlays_by_page:
+                if idx in by_page:
                     w = float(page.mediabox.width)
                     h = float(page.mediabox.height)
                     packet = io.BytesIO()
                     c = rlcanvas.Canvas(packet, pagesize=(w, h))
-                    for ov in overlays_by_page[idx]:
+                    for ed in by_page[idx]:
+                        kind = ed.get('type', 'add')
+                        text = (ed.get('text') or '').strip()
+                        if not text:
+                            continue
+                        size = float(ed.get('size') or 14)
                         try:
-                            c.setFillColor(HexColor(ov['color']))
+                            fill = HexColor(ed.get('color') or '#000000')
                         except Exception:
-                            c.setFillColor(HexColor('#000000'))
-                        c.setFont('Helvetica-Bold', ov['size'])
-                        # x/y as percent from top-left; PDF origin is bottom-left
-                        px = w * (ov['x'] / 100.0)
-                        py = h - h * (ov['y'] / 100.0)
-                        c.drawString(px, py, ov['text'])
+                            fill = HexColor('#000000')
+                        if kind == 'edit':
+                            # PDF-space coords (origin bottom-left)
+                            px = float(ed.get('x', 0))
+                            py = float(ed.get('y', 0))  # baseline
+                            ow = float(ed.get('w', 0))
+                            # White rectangle to cover the original glyphs
+                            pad = max(1.5, size * 0.08)
+                            c.setFillColor(white)
+                            c.rect(px - pad, py - pad, ow + pad * 2, size + pad * 2, stroke=0, fill=1)
+                            # Overlay new text at the same baseline
+                            c.setFillColor(fill)
+                            c.setFont('Helvetica', size)
+                            c.drawString(px, py, text)
+                        else:
+                            # 'add' uses percent coords from top-left of page
+                            xp = float(ed.get('xPct', ed.get('x', 50)))
+                            yp = float(ed.get('yPct', ed.get('y', 50)))
+                            c.setFillColor(fill)
+                            c.setFont('Helvetica-Bold', size)
+                            c.drawString(w * (xp / 100.0), h - h * (yp / 100.0), text)
                     c.save()
                     packet.seek(0)
                     overlay_pdf = PdfReader(packet)
