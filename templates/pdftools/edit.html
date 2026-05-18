@@ -158,15 +158,30 @@ let quill = null, docName = 'document';
 
 document.getElementById('file-input').addEventListener('change', async (e) => {
   const f = e.target.files[0]; if (!f) return;
+  // Vercel serverless body limit is 4.5 MB; show a friendly error before uploading.
+  const MAX = 4.0 * 1024 * 1024;
+  if (f.size > MAX) {
+    alert('This file is ' + (f.size/1024/1024).toFixed(1) + ' MB. Our server limit is 4 MB. Please use a smaller PDF (try Compress PDF first).');
+    e.target.value = '';
+    return;
+  }
   docName = (f.name || 'document').replace(/\.pdf$/i, '');
   document.getElementById('doc-name').textContent = f.name;
   document.getElementById('extract-progress').classList.remove('hidden');
   try {
     const fd = new FormData();
     fd.append('pdf', f);
-    const res = await fetch('/pdf-tools/pdf-edit/extract/', {method: 'POST', body: fd, headers: {'X-CSRFToken': csrf}});
-    const data = await res.json();
-    if (!res.ok || data.error) throw new Error(data.error || 'Extraction failed');
+    fd.append('csrfmiddlewaretoken', csrf);
+    const res = await fetch('/pdf-tools/pdf-edit/extract/', {method: 'POST', body: fd, headers: {'X-CSRFToken': csrf}, credentials: 'same-origin'});
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch (_) {
+      // Server returned non-JSON (likely 413 Request Entity Too Large or a Vercel error page)
+      const snippet = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 200);
+      throw new Error('Server returned a non-JSON response' + (res.status?(' ['+res.status+']'):'') + (snippet?': '+snippet:''));
+    }
+    if (!res.ok || data.error) throw new Error(data.error || ('HTTP '+res.status));
     document.getElementById('upload-card').classList.add('hidden');
     document.getElementById('editor-wrap').classList.remove('hidden');
     initQuill(data.html || '<p></p>');

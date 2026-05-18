@@ -479,6 +479,10 @@ def pdf_sign(request):
     return render(request, 'coming_soon.html', {'tool_name': 'Sign PDF', 'tool_desc': 'Digitally sign your PDF documents online.'})
 
 
+from django.views.decorators.csrf import csrf_exempt
+
+
+@csrf_exempt
 def pdf_edit_extract(request):
     """POST a PDF, get back JSON {html} of editable content."""
     from django.http import JsonResponse
