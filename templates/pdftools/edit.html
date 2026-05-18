@@ -1,72 +1,251 @@
 {% extends 'base.html' %}
-{% block title %}Edit PDF Online — Add Text, Annotations Free | ToolsVera{% endblock %}
-{% block meta_description %}Edit PDF files online for free. Add text, notes, annotations on any page. No signup, no watermark — fast and secure.{% endblock %}
-{% block meta_keywords %}edit pdf, add text to pdf, pdf annotation, free pdf editor online, modify pdf{% endblock %}
+{% block title %}Edit PDF Online — Visual PDF Editor Free | ToolsVera{% endblock %}
+{% block meta_description %}Edit PDF files visually online. Preview each page and add or move text anywhere, like editing a Word document. Free, no signup, no watermark.{% endblock %}
+{% block meta_keywords %}edit pdf online, visual pdf editor, add text to pdf, free pdf editor, modify pdf{% endblock %}
 {% block canonical_path %}/pdf-tools/pdf-edit/{% endblock %}
 
+{% block extra_head %}
+<style>
+  .pdf-stage{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:14px;min-height:520px;overflow:auto;position:relative}
+  .pdf-page-wrap{position:relative;margin:18px auto;box-shadow:0 8px 22px -8px rgba(0,0,0,.18);background:white;width:fit-content}
+  .pdf-page-wrap canvas{display:block}
+  .pdf-overlay{position:absolute;top:0;left:0;width:100%;height:100%;cursor:crosshair}
+  .anno{position:absolute;min-width:60px;padding:2px 4px;background:rgba(255,255,255,.0);border:1px dashed transparent;cursor:move;outline:none;font-family:Helvetica,Arial,sans-serif;line-height:1.15;white-space:pre;user-select:text}
+  .anno:hover,.anno.selected{border-color:#2563eb;background:rgba(239,246,255,.5)}
+  .anno-del{position:absolute;top:-10px;right:-10px;width:20px;height:20px;background:#ef4444;color:white;border-radius:50%;font-size:12px;line-height:20px;text-align:center;cursor:pointer;display:none;font-weight:700}
+  .anno.selected .anno-del{display:block}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 14px;background:#f9fafb;border:1px solid #e5e7eb;border-bottom:0;border-radius:14px 14px 0 0}
+  .toolbar select,.toolbar input[type=number],.toolbar input[type=color]{font-size:.8125rem;padding:5px 8px;border:1px solid #e5e7eb;border-radius:7px;background:white}
+  .toolbar button{font-size:.8125rem;padding:6px 12px;border-radius:7px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:.13s}
+  .tb-primary{background:#2563eb;color:white}
+  .tb-primary:hover{background:#1d4ed8}
+  .tb-ghost{background:white;border-color:#e5e7eb;color:#374151}
+  .tb-ghost:hover{background:#f3f4f6}
+  .pg-pill{font-size:.75rem;color:#6b7280;padding:5px 10px;background:white;border:1px solid #e5e7eb;border-radius:99px}
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="max-w-3xl mx-auto px-6 py-12">
-  <div class="text-sm text-gray-400 mb-6">
+<div class="max-w-6xl mx-auto px-6 py-10">
+  <div class="text-sm text-gray-400 mb-5">
     <a href="/" class="hover:text-blue-600">Home</a><span class="mx-2">/</span>
     <a href="/pdf-tools/" class="hover:text-blue-600">PDF Tools</a><span class="mx-2">/</span>
     <span class="text-gray-600">Edit PDF</span>
   </div>
 
   <h1 class="text-3xl font-bold text-gray-900 mb-2">Edit PDF</h1>
-  <p class="text-gray-500 mb-8">Add text, notes, or annotations onto any page of your PDF. Position text precisely with percent-based coordinates.</p>
+  <p class="text-gray-500 mb-6">Upload a PDF, then click anywhere on a page to add editable text. Drag to reposition. Save to download the edited file.</p>
 
   {% if error %}<div class="mb-5 bg-red-50 border border-red-100 text-red-700 text-sm rounded-xl px-4 py-3">{{ error }}</div>{% endif %}
 
-  <form method="post" enctype="multipart/form-data" class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-    {% csrf_token %}
+  <!-- Step 1: pick file -->
+  <div id="upload-card" class="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm text-center">
+    <div class="text-5xl mb-3">📄</div>
+    <h2 class="font-semibold text-gray-900 mb-1">Choose a PDF to edit</h2>
+    <p class="text-sm text-gray-500 mb-5">Your file is processed securely in your browser and on our server, then deleted.</p>
+    <input type="file" id="file-input" accept="application/pdf" class="hidden">
+    <button onclick="document.getElementById('file-input').click()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-sm font-semibold">Select PDF</button>
+  </div>
 
-    <label class="block text-sm font-medium text-gray-700 mb-1">Upload PDF</label>
-    <input type="file" name="pdf" accept="application/pdf" required class="w-full border border-gray-200 rounded-lg px-3 py-2 mb-5">
-
-    <div class="flex items-center justify-between mb-2">
-      <h2 class="text-sm font-semibold text-gray-800">Text overlays</h2>
-      <button type="button" onclick="addRow()" class="text-xs font-semibold text-blue-600 hover:text-blue-700">+ Add another</button>
+  <!-- Step 2: editor (hidden until file picked) -->
+  <div id="editor" class="hidden">
+    <div class="toolbar">
+      <button type="button" onclick="prevPage()" class="tb-ghost">‹ Prev</button>
+      <span class="pg-pill"><span id="pg-cur">1</span> / <span id="pg-total">1</span></span>
+      <button type="button" onclick="nextPage()" class="tb-ghost">Next ›</button>
+      <span class="mx-2 text-gray-300">|</span>
+      <label class="text-xs text-gray-600">Size</label>
+      <input id="opt-size" type="number" min="6" max="120" value="14">
+      <label class="text-xs text-gray-600">Color</label>
+      <input id="opt-color" type="color" value="#000000">
+      <span class="mx-2 text-gray-300">|</span>
+      <button type="button" onclick="addTextHere()" class="tb-ghost">+ Add text</button>
+      <button type="button" onclick="deleteSelected()" class="tb-ghost">Delete</button>
+      <span class="ml-auto"></span>
+      <button type="button" onclick="resetEditor()" class="tb-ghost">Start over</button>
+      <button type="button" onclick="saveAndDownload()" class="tb-primary">Save & Download</button>
     </div>
+    <div id="stage" class="pdf-stage"></div>
+  </div>
 
-    <div id="rows" class="space-y-3"></div>
-
-    <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition">Apply changes & Download</button>
+  <form id="hidden-form" method="post" enctype="multipart/form-data" style="display:none">
+    {% csrf_token %}
+    <input type="file" name="pdf" id="hidden-file">
+    <div id="hidden-fields"></div>
   </form>
 
-  <section class="mt-12 prose prose-sm prose-gray max-w-none">
-    <h2 class="text-xl font-bold text-gray-900 mb-2">Free Online PDF Editor</h2>
-    <p class="text-gray-600">Add text annotations directly on any page of your PDF. Specify the page number, text content, position (X/Y as a percentage from the top-left), font size, and color. Multiple overlays can be added to the same or different pages. Your file is processed securely and never stored.</p>
+  <section class="mt-10 prose prose-sm prose-gray max-w-none">
+    <h2 class="text-xl font-bold text-gray-900 mb-2">Free Online Visual PDF Editor</h2>
+    <p class="text-gray-600">Open any PDF and edit it visually — click anywhere on a page to add a text box, type your content, then drag the box to position it precisely. Adjust the font size and color before placing. Navigate between pages using the toolbar. When you're done, click Save & Download to get the edited PDF.</p>
     <h3 class="text-base font-semibold text-gray-900 mt-5 mb-1">How to edit a PDF</h3>
     <ol class="list-decimal pl-5 text-gray-600 space-y-1">
-      <li>Upload your PDF.</li>
-      <li>Add one or more text overlays — page, text, position, size, color.</li>
-      <li>Click "Apply changes & Download".</li>
+      <li>Click <strong>Select PDF</strong> and choose your file.</li>
+      <li>Click anywhere on the page preview to add a new text box.</li>
+      <li>Type, drag, or delete annotations as needed.</li>
+      <li>Click <strong>Save &amp; Download</strong> to receive the edited PDF.</li>
     </ol>
     <h3 class="text-base font-semibold text-gray-900 mt-5 mb-1">FAQ</h3>
+    <p class="font-semibold text-gray-900 mb-1">Can I edit text that's already in the PDF?</p>
+    <p class="text-gray-600 mb-3">This tool overlays new text on top of the existing content. To replace existing text, place a white rectangle over the original and add new text on top. (Erase &amp; replace UI coming soon.)</p>
     <p class="font-semibold text-gray-900 mb-1">Is it free?</p>
-    <p class="text-gray-600 mb-3">Yes. No signup, no watermark, no usage limits.</p>
-    <p class="font-semibold text-gray-900 mb-1">Will the original be modified?</p>
-    <p class="text-gray-600">No. The original PDF is untouched; you download a new edited copy.</p>
+    <p class="text-gray-600 mb-3">Yes. Unlimited use, no signup, no watermark.</p>
+    <p class="font-semibold text-gray-900 mb-1">Is my file private?</p>
+    <p class="text-gray-600">Yes. The PDF is processed on our server then deleted immediately.</p>
   </section>
 </div>
 
-<template id="row-tmpl">
-  <div class="grid grid-cols-12 gap-2 items-end p-3 bg-gray-50 border border-gray-100 rounded-xl">
-    <div class="col-span-2"><label class="block text-xs text-gray-600 mb-1">Page</label><input type="number" name="page[]" min="1" value="1" class="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm"></div>
-    <div class="col-span-4"><label class="block text-xs text-gray-600 mb-1">Text</label><input name="text[]" placeholder="Approved" class="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm"></div>
-    <div class="col-span-2"><label class="block text-xs text-gray-600 mb-1">X %</label><input type="number" name="x[]" min="0" max="100" value="50" class="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm"></div>
-    <div class="col-span-2"><label class="block text-xs text-gray-600 mb-1">Y %</label><input type="number" name="y[]" min="0" max="100" value="50" class="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm"></div>
-    <div class="col-span-1"><label class="block text-xs text-gray-600 mb-1">Size</label><input type="number" name="size[]" min="6" max="120" value="14" class="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm"></div>
-    <div class="col-span-1 flex flex-col"><label class="block text-xs text-gray-600 mb-1">Color</label><input type="color" name="color[]" value="#000000" class="w-full h-8 border border-gray-200 rounded-lg"></div>
-    <div class="col-span-12 flex justify-end -mt-1"><button type="button" onclick="this.closest('.grid').remove()" class="text-xs text-red-500 hover:text-red-700">Remove</button></div>
-  </div>
-</template>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs" type="module"></script>
+<script type="module">
+import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs';
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.mjs';
 
-<script>
-function addRow(){
-  var t=document.getElementById('row-tmpl');
-  document.getElementById('rows').appendChild(t.content.cloneNode(true));
+let pdfDoc=null, currentPage=1, totalPages=1, fileObj=null, selectedAnno=null;
+const annos = {}; // {pageNum: [{x%,y%,text,size,color, el}]}
+
+const fileInput = document.getElementById('file-input');
+const stage = document.getElementById('stage');
+
+fileInput.addEventListener('change', async (e) => {
+  const f = e.target.files[0]; if (!f) return;
+  fileObj = f;
+  const buf = await f.arrayBuffer();
+  pdfDoc = await pdfjsLib.getDocument({data: buf}).promise;
+  totalPages = pdfDoc.numPages;
+  document.getElementById('pg-total').textContent = totalPages;
+  document.getElementById('upload-card').style.display = 'none';
+  document.getElementById('editor').classList.remove('hidden');
+  currentPage = 1;
+  await renderPage(1);
+});
+
+async function renderPage(n) {
+  document.getElementById('pg-cur').textContent = n;
+  stage.innerHTML = '';
+  const page = await pdfDoc.getPage(n);
+  const viewport = page.getViewport({scale: 1.5});
+  const wrap = document.createElement('div');
+  wrap.className = 'pdf-page-wrap';
+  wrap.style.width = viewport.width + 'px';
+  wrap.style.height = viewport.height + 'px';
+  const canvas = document.createElement('canvas');
+  canvas.width = viewport.width; canvas.height = viewport.height;
+  wrap.appendChild(canvas);
+  const overlay = document.createElement('div');
+  overlay.className = 'pdf-overlay';
+  overlay.dataset.page = n;
+  wrap.appendChild(overlay);
+  stage.appendChild(wrap);
+  await page.render({canvasContext: canvas.getContext('2d'), viewport}).promise;
+
+  // restore annotations for this page
+  (annos[n] || []).forEach(a => attachAnno(overlay, a, false));
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target !== overlay) return;
+    const rect = overlay.getBoundingClientRect();
+    const xPct = ((e.clientX - rect.left) / rect.width) * 100;
+    const yPct = ((e.clientY - rect.top) / rect.height) * 100;
+    const a = {
+      page: n,
+      xPct, yPct,
+      text: 'Edit me',
+      size: parseInt(document.getElementById('opt-size').value) || 14,
+      color: document.getElementById('opt-color').value || '#000000',
+    };
+    (annos[n] = annos[n] || []).push(a);
+    attachAnno(overlay, a, true);
+  });
 }
-addRow();
+
+function attachAnno(overlay, a, focus){
+  const el = document.createElement('div');
+  el.className = 'anno';
+  el.contentEditable = 'true';
+  el.style.left = a.xPct + '%';
+  el.style.top = a.yPct + '%';
+  el.style.fontSize = a.size + 'px';
+  el.style.color = a.color;
+  el.textContent = a.text;
+  const x = document.createElement('span');
+  x.className = 'anno-del'; x.textContent = '×';
+  x.addEventListener('click', (ev) => { ev.stopPropagation(); removeAnno(a); el.remove(); });
+  el.appendChild(x);
+  // drag
+  let drag=null;
+  el.addEventListener('mousedown', (e) => {
+    if (e.target === x) return;
+    selectAnno(el, a);
+    if (document.activeElement === el) return;
+    e.preventDefault();
+    const rect = overlay.getBoundingClientRect();
+    drag = {startX: e.clientX, startY: e.clientY, baseX: a.xPct, baseY: a.yPct, rw: rect.width, rh: rect.height};
+    const move = (ev) => {
+      if(!drag) return;
+      a.xPct = Math.min(100, Math.max(0, drag.baseX + (ev.clientX - drag.startX) / drag.rw * 100));
+      a.yPct = Math.min(100, Math.max(0, drag.baseY + (ev.clientY - drag.startY) / drag.rh * 100));
+      el.style.left = a.xPct + '%'; el.style.top = a.yPct + '%';
+    };
+    const up = () => { drag = null; document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); };
+    document.addEventListener('mousemove', move); document.addEventListener('mouseup', up);
+  });
+  el.addEventListener('click', () => selectAnno(el, a));
+  el.addEventListener('input', () => { a.text = el.textContent.replace(/×$/, '').trim() || 'Edit me'; });
+  overlay.appendChild(el);
+  if (focus) { selectAnno(el, a); setTimeout(()=>{ const r=document.createRange();r.selectNodeContents(el);const s=window.getSelection();s.removeAllRanges();s.addRange(r); el.focus(); }, 30); }
+}
+
+function selectAnno(el, a){
+  document.querySelectorAll('.anno.selected').forEach(n=>n.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedAnno = {el, a};
+}
+function removeAnno(a){
+  const arr = annos[a.page] || [];
+  const i = arr.indexOf(a);
+  if (i>=0) arr.splice(i,1);
+}
+
+window.prevPage = () => { if(currentPage>1){currentPage--; renderPage(currentPage);} };
+window.nextPage = () => { if(currentPage<totalPages){currentPage++; renderPage(currentPage);} };
+window.addTextHere = () => {
+  const overlay = stage.querySelector('.pdf-overlay');
+  if (!overlay) return;
+  const a = {page: currentPage, xPct: 30, yPct: 30, text: 'Edit me', size: parseInt(document.getElementById('opt-size').value)||14, color: document.getElementById('opt-color').value};
+  (annos[currentPage]=annos[currentPage]||[]).push(a);
+  attachAnno(overlay, a, true);
+};
+window.deleteSelected = () => {
+  if (selectedAnno){ removeAnno(selectedAnno.a); selectedAnno.el.remove(); selectedAnno=null; }
+};
+window.resetEditor = () => { if(confirm('Start over and lose changes?')) location.reload(); };
+
+window.saveAndDownload = async () => {
+  // Sync the editable text content back into annos data
+  document.querySelectorAll('.anno').forEach(el => {
+    const txt = el.cloneNode(true);
+    txt.querySelectorAll('.anno-del').forEach(n=>n.remove());
+    // find matching a
+  });
+  // Build hidden form fields
+  const wrap = document.getElementById('hidden-fields');
+  wrap.innerHTML = '';
+  Object.keys(annos).forEach(p => {
+    (annos[p]||[]).forEach(a => {
+      const txt = (a.text||'').replace(/×$/,'').trim();
+      if (!txt) return;
+      ['page','text','x','y','size','color'].forEach(k => {
+        const inp = document.createElement('input');
+        inp.type='hidden'; inp.name=k+'[]';
+        inp.value = (k==='page')?a.page:(k==='text')?txt:(k==='x')?a.xPct:(k==='y')?a.yPct:(k==='size')?a.size:a.color;
+        wrap.appendChild(inp);
+      });
+    });
+  });
+  // attach pdf file
+  const dt = new DataTransfer();
+  dt.items.add(fileObj);
+  document.getElementById('hidden-file').files = dt.files;
+  document.getElementById('hidden-form').submit();
+};
 </script>
 {% endblock %}
