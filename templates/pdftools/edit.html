@@ -1,322 +1,271 @@
 {% extends 'base.html' %}
-{% block title %}Edit PDF Online — Word-like Visual PDF Editor Free | ToolsVera{% endblock %}
-{% block meta_description %}Edit existing text in a PDF online for free, like Microsoft Word. Click any word and change it. No signup, no watermark.{% endblock %}
-{% block meta_keywords %}edit pdf online, edit pdf like word, replace text in pdf, free pdf editor, modify pdf text{% endblock %}
+{% block title %}PDF Editor Online — Edit PDF Like Word Free | ToolsVera{% endblock %}
+{% block meta_description %}Edit PDF files online like a Microsoft Word document. Change text, fonts, colors, alignment, headings, lists. Export back to PDF. Free, no signup.{% endblock %}
+{% block meta_keywords %}edit pdf online, pdf editor word, free pdf editor, edit pdf text, modify pdf{% endblock %}
 {% block canonical_path %}/pdf-tools/pdf-edit/{% endblock %}
 
 {% block extra_head %}
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
 <style>
-  .pdf-stage{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:14px;min-height:520px;overflow:auto;position:relative;padding:18px 0}
-  .pdf-page-wrap{position:relative;margin:0 auto 22px;box-shadow:0 8px 22px -8px rgba(0,0,0,.18);background:white;width:fit-content}
-  .pdf-page-wrap canvas{display:block}
-  .text-layer{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;line-height:1}
-  .tl-item{position:absolute;color:transparent;white-space:pre;cursor:text;font-family:Helvetica,Arial,sans-serif;transform-origin:0 100%;outline:none;padding:0;background:transparent;border:1px dashed transparent;border-radius:2px}
-  .tl-item:hover{border-color:rgba(37,99,235,.5);background:rgba(239,246,255,.25)}
-  .tl-item:focus{border-color:#2563eb;background:rgba(255,255,255,.97);color:#000;z-index:5}
-  .tl-item.modified{background:#fff;color:#000;border-color:#2563eb}
-  .add-layer{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
-  .anno{position:absolute;min-width:60px;padding:2px 6px;background:rgba(255,255,0,.15);border:1px dashed #f59e0b;cursor:move;outline:none;font-family:Helvetica,Arial,sans-serif;line-height:1.15;white-space:pre;color:#111;border-radius:3px;pointer-events:auto}
-  .anno:focus{background:#fff;border-style:solid}
-  .anno.selected{border-style:solid}
-  .anno-del{position:absolute;top:-9px;right:-9px;width:18px;height:18px;background:#ef4444;color:white;border-radius:50%;font-size:11px;line-height:18px;text-align:center;cursor:pointer;font-weight:700;display:none}
-  .anno.selected .anno-del{display:block}
-  .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 14px;background:#f9fafb;border:1px solid #e5e7eb;border-bottom:0;border-radius:14px 14px 0 0}
-  .toolbar select,.toolbar input[type=number],.toolbar input[type=color]{font-size:.8125rem;padding:5px 8px;border:1px solid #e5e7eb;border-radius:7px;background:white}
-  .toolbar button{font-size:.8125rem;padding:6px 12px;border-radius:7px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:.13s}
-  .tb-primary{background:#2563eb;color:white}
-  .tb-primary:hover{background:#1d4ed8}
-  .tb-ghost{background:white;border-color:#e5e7eb;color:#374151}
-  .tb-ghost:hover{background:#f3f4f6}
-  .pg-pill{font-size:.75rem;color:#6b7280;padding:5px 10px;background:white;border:1px solid #e5e7eb;border-radius:99px}
-  .add-mode .text-layer{pointer-events:none}
-  .add-mode .add-layer{pointer-events:auto;cursor:crosshair}
+  body.dark-edit{background:#0f172a;color:#e5e7eb}
+  body.dark-edit .editor-shell{background:#1e293b;border-color:#334155}
+  body.dark-edit .ql-toolbar{background:#0f172a !important;border-color:#334155 !important}
+  body.dark-edit .ql-container{background:#1e293b !important;border-color:#334155 !important;color:#e5e7eb}
+  body.dark-edit .ql-editor{color:#e5e7eb}
+  .editor-shell{background:white;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden}
+  .ql-container{min-height:560px;font-size:14px;font-family:'Inter','Calibri',sans-serif;background:#ffffff}
+  .ql-editor{padding:28px 36px;max-width:none}
+  .ql-editor h1{font-size:24px;margin:.6em 0 .3em}
+  .ql-editor h2{font-size:19px;margin:.6em 0 .3em}
+  .ql-editor h3{font-size:16px;margin:.6em 0 .3em}
+  .topbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 12px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:10px}
+  .topbar button{font-size:.8125rem;padding:6px 12px;border-radius:7px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:.13s}
+  .tb-primary{background:#2563eb;color:white}.tb-primary:hover{background:#1d4ed8}
+  .tb-ghost{background:white;border-color:#e5e7eb;color:#374151}.tb-ghost:hover{background:#f3f4f6}
+  .pill{font-size:.72rem;color:#6b7280;padding:5px 10px;background:white;border:1px solid #e5e7eb;border-radius:99px}
+  .progress{height:4px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin-top:8px}
+  .progress > div{height:100%;width:30%;background:#2563eb;animation:slide 1.1s infinite}
+  @keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(330%)}}
+  .find-bar{display:none;gap:6px;align-items:center;background:#fff;border:1px solid #e5e7eb;padding:6px 8px;border-radius:8px;margin-left:auto}
+  .find-bar.show{display:flex}
+  .find-bar input{font-size:.8125rem;padding:4px 8px;border:1px solid #e5e7eb;border-radius:6px}
+  mark.find-hit{background:#fde68a;padding:0;border-radius:2px}
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="max-w-6xl mx-auto px-6 py-10">
-  <div class="text-sm text-gray-400 mb-5">
+<div class="max-w-6xl mx-auto px-6 py-8">
+  <div class="text-sm text-gray-400 mb-4">
     <a href="/" class="hover:text-blue-600">Home</a><span class="mx-2">/</span>
     <a href="/pdf-tools/" class="hover:text-blue-600">PDF Tools</a><span class="mx-2">/</span>
-    <span class="text-gray-600">Edit PDF</span>
+    <span class="text-gray-600">PDF Editor</span>
   </div>
 
-  <h1 class="text-3xl font-bold text-gray-900 mb-2">Edit PDF</h1>
-  <p class="text-gray-500 mb-6">Click any word in the PDF to edit it like a Word document. Or switch to "Add text" to insert new text anywhere.</p>
+  <h1 class="text-3xl font-bold text-gray-900 mb-2">PDF Editor</h1>
+  <p class="text-gray-500 mb-6">Upload a PDF and edit its content like a Word document — change text, fonts, colors, alignment, headings, lists, links, images. Export back to PDF.</p>
 
   {% if error %}<div class="mb-5 bg-red-50 border border-red-100 text-red-700 text-sm rounded-xl px-4 py-3">{{ error }}</div>{% endif %}
 
-  <div id="upload-card" class="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm text-center">
-    <div class="text-5xl mb-3">📄</div>
+  <div id="upload-card" class="bg-white border border-gray-100 rounded-2xl p-10 shadow-sm text-center">
+    <div class="text-5xl mb-3">📝</div>
     <h2 class="font-semibold text-gray-900 mb-1">Choose a PDF to edit</h2>
-    <p class="text-sm text-gray-500 mb-5">Your file is processed securely then deleted.</p>
+    <p class="text-sm text-gray-500 mb-5">We'll extract the content into an editable Word-like view.</p>
     <input type="file" id="file-input" accept="application/pdf" class="hidden">
     <button onclick="document.getElementById('file-input').click()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-sm font-semibold">Select PDF</button>
-  </div>
-
-  <div id="editor" class="hidden">
-    <div class="toolbar">
-      <button type="button" onclick="prevPage()" class="tb-ghost">‹ Prev</button>
-      <span class="pg-pill"><span id="pg-cur">1</span> / <span id="pg-total">1</span></span>
-      <button type="button" onclick="nextPage()" class="tb-ghost">Next ›</button>
-      <span class="mx-2 text-gray-300">|</span>
-      <button type="button" id="mode-edit" onclick="setMode('edit')" class="tb-primary">Edit text</button>
-      <button type="button" id="mode-add" onclick="setMode('add')" class="tb-ghost">+ Add text</button>
-      <span class="mx-2 text-gray-300">|</span>
-      <label class="text-xs text-gray-600">Size</label>
-      <input id="opt-size" type="number" min="6" max="120" value="14">
-      <label class="text-xs text-gray-600">Color</label>
-      <input id="opt-color" type="color" value="#000000">
-      <span class="ml-auto"></span>
-      <button type="button" onclick="resetEditor()" class="tb-ghost">Start over</button>
-      <button type="button" onclick="saveAndDownload()" class="tb-primary">Save & Download</button>
+    <div id="extract-progress" class="hidden mt-6 text-sm text-gray-500">
+      Extracting editable content…
+      <div class="progress mt-2"><div></div></div>
     </div>
-    <div id="stage" class="pdf-stage"></div>
   </div>
 
-  <form id="hidden-form" method="post" enctype="multipart/form-data" style="display:none">
+  <div id="editor-wrap" class="hidden">
+    <div class="topbar">
+      <span class="pill" id="doc-name">document.pdf</span>
+      <button type="button" onclick="undo()" class="tb-ghost" title="Undo (Ctrl+Z)">↶ Undo</button>
+      <button type="button" onclick="redo()" class="tb-ghost" title="Redo (Ctrl+Y)">↷ Redo</button>
+      <button type="button" onclick="toggleFind()" class="tb-ghost">🔍 Find</button>
+      <button type="button" onclick="toggleDark()" class="tb-ghost">🌗 Theme</button>
+      <button type="button" onclick="zoomOut()" class="tb-ghost">−</button>
+      <span class="pill" id="zoom-pill">100%</span>
+      <button type="button" onclick="zoomIn()" class="tb-ghost">+</button>
+      <div class="find-bar" id="find-bar">
+        <input id="find-q" placeholder="Find" oninput="doFind()">
+        <input id="find-r" placeholder="Replace">
+        <button type="button" onclick="doReplace()" class="tb-ghost">Replace</button>
+        <button type="button" onclick="doReplaceAll()" class="tb-ghost">All</button>
+      </div>
+      <button type="button" onclick="newPDF()" class="tb-ghost ml-auto">Start over</button>
+      <button type="button" onclick="exportPDF()" class="tb-primary">Save & Export PDF</button>
+    </div>
+    <div class="editor-shell">
+      <div id="toolbar">
+        <span class="ql-formats">
+          <select class="ql-header">
+            <option value="1">Heading 1</option>
+            <option value="2">Heading 2</option>
+            <option value="3">Heading 3</option>
+            <option selected>Normal</option>
+          </select>
+          <select class="ql-font"></select>
+          <select class="ql-size"></select>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-bold"></button>
+          <button class="ql-italic"></button>
+          <button class="ql-underline"></button>
+          <button class="ql-strike"></button>
+        </span>
+        <span class="ql-formats">
+          <select class="ql-color"></select>
+          <select class="ql-background"></select>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-list" value="ordered"></button>
+          <button class="ql-list" value="bullet"></button>
+          <button class="ql-indent" value="-1"></button>
+          <button class="ql-indent" value="+1"></button>
+        </span>
+        <span class="ql-formats">
+          <select class="ql-align"></select>
+          <button class="ql-direction" value="rtl"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-link"></button>
+          <button class="ql-image"></button>
+          <button class="ql-blockquote"></button>
+          <button class="ql-code-block"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-clean"></button>
+        </span>
+      </div>
+      <div id="editor"></div>
+    </div>
+    <p class="text-xs text-gray-400 mt-3" id="autosave-note">Drafts autosaved locally.</p>
+  </div>
+
+  <form id="export-form" method="post" style="display:none">
     {% csrf_token %}
-    <input type="file" name="pdf" id="hidden-file">
-    <input type="hidden" name="edits_json" id="hidden-edits">
+    <input type="hidden" name="mode" value="export">
+    <input type="hidden" name="html" id="export-html">
+    <input type="hidden" name="name" id="export-name">
   </form>
 
   <section class="mt-10 prose prose-sm prose-gray max-w-none">
-    <h2 class="text-xl font-bold text-gray-900 mb-2">Edit PDF Like a Word Document</h2>
-    <p class="text-gray-600">Open any PDF and edit its text directly. ToolsVera reads each text fragment with its exact position, lets you click and rewrite it in place, then on Save it covers the original text and stamps your new text at the same coordinates. Use "Add text" to insert brand new content anywhere on a page.</p>
-    <h3 class="text-base font-semibold text-gray-900 mt-5 mb-1">How to edit a PDF</h3>
+    <h2 class="text-xl font-bold text-gray-900 mb-2">Online PDF Editor — Edit PDF Like Word</h2>
+    <p class="text-gray-600">Upload any text-based PDF and edit its content directly in a Word-style rich text editor. Change fonts, sizes, colors, headings, lists, and alignment. Insert images and links. Use Find &amp; Replace to update text in bulk. Export your edited document back to PDF in one click.</p>
+    <h3 class="text-base font-semibold text-gray-900 mt-5 mb-1">How it works</h3>
     <ol class="list-decimal pl-5 text-gray-600 space-y-1">
-      <li>Click <strong>Select PDF</strong> and upload your file.</li>
-      <li>Click any word — type your replacement.</li>
-      <li>Switch to <strong>+ Add text</strong> to insert new content; click anywhere to drop a new text box.</li>
-      <li>Click <strong>Save &amp; Download</strong>.</li>
+      <li>Upload your PDF — we extract the content into an editable view.</li>
+      <li>Edit text, formatting, and layout with the Word-like toolbar.</li>
+      <li>Use Find &amp; Replace, Undo/Redo, and zoom as needed.</li>
+      <li>Click <strong>Save &amp; Export PDF</strong> to download.</li>
     </ol>
     <h3 class="text-base font-semibold text-gray-900 mt-5 mb-1">FAQ</h3>
-    <p class="font-semibold text-gray-900 mb-1">Will fonts match the original?</p>
-    <p class="text-gray-600 mb-3">Edited text is rendered in Helvetica at the original size. For most text this looks very close to the original. Exotic fonts are not preserved.</p>
-    <p class="font-semibold text-gray-900 mb-1">Does it work for scanned PDFs?</p>
-    <p class="text-gray-600 mb-3">No — scanned PDFs contain images, not real text. Use a PDF with selectable text.</p>
-    <p class="font-semibold text-gray-900 mb-1">Is it free?</p>
-    <p class="text-gray-600">Yes. Unlimited use, no signup, no watermark.</p>
+    <p class="font-semibold text-gray-900 mb-1">Will the exported PDF match the original layout exactly?</p>
+    <p class="text-gray-600 mb-3">Content fidelity is high, layout fidelity is approximate. Complex multi-column or graphic-heavy PDFs simplify on export. For text-focused documents the result is very close.</p>
+    <p class="font-semibold text-gray-900 mb-1">Does it work on scanned PDFs?</p>
+    <p class="text-gray-600 mb-3">Scanned PDFs contain images, not selectable text. OCR support is on the roadmap.</p>
+    <p class="font-semibold text-gray-900 mb-1">Is it free and private?</p>
+    <p class="text-gray-600">Yes. No signup, no watermark. Files are processed and deleted server-side.</p>
   </section>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs" type="module"></script>
-<script type="module">
-import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs';
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.mjs';
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<script>
+const csrf = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+let quill = null, docName = 'document';
 
-const SCALE = 1.6;
-let pdfDoc=null, currentPage=1, totalPages=1, fileObj=null;
-let mode = 'edit';
-// per-page state: { edits: [{id, origText, currText, pdfX, pdfY, pdfW, size, color}], adds: [{xPct,yPct,text,size,color}] }
-const pageState = {};
-let selectedAdd = null;
-
-const fileInput = document.getElementById('file-input');
-const stage = document.getElementById('stage');
-
-fileInput.addEventListener('change', async (e) => {
+document.getElementById('file-input').addEventListener('change', async (e) => {
   const f = e.target.files[0]; if (!f) return;
-  fileObj = f;
-  const buf = await f.arrayBuffer();
-  pdfDoc = await pdfjsLib.getDocument({data: buf}).promise;
-  totalPages = pdfDoc.numPages;
-  document.getElementById('pg-total').textContent = totalPages;
-  document.getElementById('upload-card').style.display = 'none';
-  document.getElementById('editor').classList.remove('hidden');
-  await renderPage(1);
+  docName = (f.name || 'document').replace(/\.pdf$/i, '');
+  document.getElementById('doc-name').textContent = f.name;
+  document.getElementById('extract-progress').classList.remove('hidden');
+  try {
+    const fd = new FormData();
+    fd.append('pdf', f);
+    const res = await fetch('/pdf-tools/pdf-edit/extract/', {method: 'POST', body: fd, headers: {'X-CSRFToken': csrf}});
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || 'Extraction failed');
+    document.getElementById('upload-card').classList.add('hidden');
+    document.getElementById('editor-wrap').classList.remove('hidden');
+    initQuill(data.html || '<p></p>');
+  } catch (err) {
+    alert('Could not extract content: ' + err.message);
+    document.getElementById('extract-progress').classList.add('hidden');
+  }
 });
 
-window.setMode = (m) => {
-  mode = m;
-  document.getElementById('mode-edit').className = (m==='edit'?'tb-primary':'tb-ghost');
-  document.getElementById('mode-add').className = (m==='add'?'tb-primary':'tb-ghost');
-  const wrap = stage.querySelector('.pdf-page-wrap');
-  if (wrap) wrap.classList.toggle('add-mode', m==='add');
+function initQuill(html) {
+  // Register fonts and sizes
+  const Font = Quill.import('formats/font');
+  Font.whitelist = ['sans', 'serif', 'mono', 'calibri', 'times', 'arial', 'georgia'];
+  Quill.register(Font, true);
+  const Size = Quill.import('attributors/style/size');
+  Size.whitelist = ['10px','12px','14px','16px','18px','22px','28px','36px'];
+  Quill.register(Size, true);
+
+  quill = new Quill('#editor', {
+    theme: 'snow',
+    modules: {toolbar: '#toolbar', history: {delay: 500, maxStack: 200, userOnly: true}}
+  });
+  quill.clipboard.dangerouslyPasteHTML(html);
+
+  // Restore draft if exists
+  const draft = localStorage.getItem('pdfedit-draft-' + docName);
+  if (draft && confirm('A draft for this filename was found. Restore it?')) {
+    quill.clipboard.dangerouslyPasteHTML(draft);
+  }
+
+  // Autosave
+  quill.on('text-change', () => {
+    localStorage.setItem('pdfedit-draft-' + docName, quill.root.innerHTML);
+    const n = document.getElementById('autosave-note');
+    n.textContent = 'Draft saved · ' + new Date().toLocaleTimeString();
+  });
+}
+
+window.undo = () => quill && quill.history.undo();
+window.redo = () => quill && quill.history.redo();
+window.newPDF = () => { if (confirm('Discard this draft?')) { localStorage.removeItem('pdfedit-draft-' + docName); location.reload(); } };
+
+window.toggleDark = () => document.body.classList.toggle('dark-edit');
+
+let zoom = 100;
+function applyZoom(){ document.querySelector('#editor').style.fontSize = (zoom)+'%'; document.getElementById('zoom-pill').textContent = zoom+'%'; }
+window.zoomIn = () => { zoom = Math.min(200, zoom+10); applyZoom(); };
+window.zoomOut = () => { zoom = Math.max(60, zoom-10); applyZoom(); };
+
+window.toggleFind = () => document.getElementById('find-bar').classList.toggle('show');
+function clearHits(){ quill.root.querySelectorAll('mark.find-hit').forEach(m => { const t = document.createTextNode(m.textContent); m.parentNode.replaceChild(t, m); }); quill.root.normalize(); }
+window.doFind = () => {
+  clearHits();
+  const q = document.getElementById('find-q').value;
+  if (!q) return;
+  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  walkAndHighlight(quill.root, re);
+};
+function walkAndHighlight(node, re){
+  if (node.nodeType === 3) {
+    const text = node.nodeValue;
+    if (!re.test(text)) return;
+    re.lastIndex = 0;
+    const frag = document.createDocumentFragment();
+    let last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+      const mk = document.createElement('mark'); mk.className = 'find-hit'; mk.textContent = m[0]; frag.appendChild(mk);
+      last = m.index + m[0].length;
+    }
+    if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+    node.parentNode.replaceChild(frag, node);
+  } else if (node.nodeType === 1 && node.tagName !== 'MARK') {
+    Array.from(node.childNodes).forEach(c => walkAndHighlight(c, re));
+  }
+}
+window.doReplace = () => {
+  const q = document.getElementById('find-q').value; const r = document.getElementById('find-r').value;
+  if (!q) return;
+  clearHits();
+  const html = quill.root.innerHTML.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), r);
+  quill.root.innerHTML = html;
+};
+window.doReplaceAll = () => {
+  const q = document.getElementById('find-q').value; const r = document.getElementById('find-r').value;
+  if (!q) return;
+  clearHits();
+  const html = quill.root.innerHTML.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), r);
+  quill.root.innerHTML = html;
 };
 
-async function renderPage(n) {
-  currentPage = n;
-  document.getElementById('pg-cur').textContent = n;
-  stage.innerHTML = '';
-  const page = await pdfDoc.getPage(n);
-  const viewport = page.getViewport({scale: SCALE});
-
-  const wrap = document.createElement('div');
-  wrap.className = 'pdf-page-wrap' + (mode==='add'?' add-mode':'');
-  wrap.style.width = viewport.width + 'px';
-  wrap.style.height = viewport.height + 'px';
-
-  const canvas = document.createElement('canvas');
-  canvas.width = viewport.width;
-  canvas.height = viewport.height;
-  wrap.appendChild(canvas);
-
-  // editable text layer
-  const tl = document.createElement('div');
-  tl.className = 'text-layer';
-  wrap.appendChild(tl);
-
-  // free-add layer
-  const al = document.createElement('div');
-  al.className = 'add-layer';
-  wrap.appendChild(al);
-
-  stage.appendChild(wrap);
-  await page.render({canvasContext: canvas.getContext('2d'), viewport}).promise;
-
-  // Get the text content + positions
-  const content = await page.getTextContent();
-  const pageH = page.view[3] - page.view[1]; // PDF height in user units
-  if (!pageState[n]) pageState[n] = {edits: [], adds: []};
-  const st = pageState[n];
-  st.edits = []; // rebuild list to match current items
-
-  content.items.forEach((item, i) => {
-    if (!item.str || !item.str.trim()) return;
-    // canvas-space transform
-    const tx = pdfjsLib.Util.transform(viewport.transform, item.transform);
-    const angle = Math.atan2(tx[1], tx[0]);
-    const fontHeight = Math.hypot(tx[2], tx[3]); // px on canvas
-    const left = tx[4];
-    const top = tx[5] - fontHeight;
-
-    // PDF-space metrics for backend
-    const pdfFontSize = Math.hypot(item.transform[2], item.transform[3]) || Math.abs(item.transform[3]) || 12;
-    const pdfX = item.transform[4];
-    const pdfY = item.transform[5]; // baseline in PDF coords (origin bottom-left)
-    const pdfW = item.width;
-
-    const id = `p${n}_i${i}`;
-    const span = document.createElement('span');
-    span.className = 'tl-item';
-    span.contentEditable = 'true';
-    span.spellcheck = false;
-    span.dataset.id = id;
-    span.textContent = item.str;
-    // Size the span to the rendered glyph height; width auto-grows with content
-    span.style.fontSize = fontHeight + 'px';
-    span.style.left = left + 'px';
-    span.style.top = top + 'px';
-    if (angle) span.style.transform = `rotate(${angle}rad)`;
-    span.style.height = fontHeight + 'px';
-    span.style.lineHeight = fontHeight + 'px';
-    tl.appendChild(span);
-
-    const rec = {id, origText: item.str, currText: item.str, pdfX, pdfY, pdfW, pdfFontSize};
-    st.edits.push(rec);
-
-    span.addEventListener('input', () => {
-      rec.currText = span.textContent;
-      if (rec.currText !== rec.origText) span.classList.add('modified');
-      else span.classList.remove('modified');
-    });
-    span.addEventListener('focus', () => { if (mode!=='edit') setMode('edit'); });
-  });
-
-  // Restore "add" annotations for this page
-  st.adds.forEach(a => attachAdd(al, a, false));
-
-  al.addEventListener('click', (e) => {
-    if (mode !== 'add') return;
-    if (e.target !== al) return;
-    const r = al.getBoundingClientRect();
-    const a = {
-      xPct: ((e.clientX - r.left) / r.width) * 100,
-      yPct: ((e.clientY - r.top) / r.height) * 100,
-      text: 'New text',
-      size: parseInt(document.getElementById('opt-size').value)||14,
-      color: document.getElementById('opt-color').value || '#000000',
-    };
-    st.adds.push(a);
-    attachAdd(al, a, true);
-  });
-}
-
-function attachAdd(layer, a, focus){
-  const el = document.createElement('div');
-  el.className = 'anno';
-  el.contentEditable = 'true';
-  el.style.left = a.xPct + '%';
-  el.style.top = a.yPct + '%';
-  el.style.fontSize = a.size + 'px';
-  el.style.color = a.color;
-  el.textContent = a.text;
-  const x = document.createElement('span');
-  x.className = 'anno-del'; x.textContent = '×';
-  x.addEventListener('click', (ev) => {
-    ev.stopPropagation();
-    const arr = pageState[currentPage].adds;
-    const i = arr.indexOf(a); if (i>=0) arr.splice(i,1);
-    el.remove();
-  });
-  el.appendChild(x);
-  let drag=null;
-  el.addEventListener('mousedown', (e) => {
-    if (e.target === x) return;
-    document.querySelectorAll('.anno.selected').forEach(n=>n.classList.remove('selected'));
-    el.classList.add('selected');
-    if (document.activeElement === el) return;
-    e.preventDefault();
-    const r = layer.getBoundingClientRect();
-    drag = {sx:e.clientX, sy:e.clientY, bx:a.xPct, by:a.yPct, w:r.width, h:r.height};
-    const mv = (ev) => {
-      if (!drag) return;
-      a.xPct = Math.min(100, Math.max(0, drag.bx + (ev.clientX-drag.sx)/drag.w*100));
-      a.yPct = Math.min(100, Math.max(0, drag.by + (ev.clientY-drag.sy)/drag.h*100));
-      el.style.left = a.xPct+'%'; el.style.top = a.yPct+'%';
-    };
-    const up = () => { drag=null; document.removeEventListener('mousemove', mv); document.removeEventListener('mouseup', up); };
-    document.addEventListener('mousemove', mv); document.addEventListener('mouseup', up);
-  });
-  el.addEventListener('input', () => { a.text = el.textContent.replace(/×$/, ''); });
-  layer.appendChild(el);
-  if (focus) setTimeout(()=>{ const r=document.createRange(); r.selectNodeContents(el); const s=window.getSelection(); s.removeAllRanges(); s.addRange(r); el.focus(); }, 30);
-}
-
-window.prevPage = () => { if (currentPage>1) renderPage(currentPage-1); };
-window.nextPage = () => { if (currentPage<totalPages) renderPage(currentPage+1); };
-window.resetEditor = () => { if (confirm('Start over and lose changes?')) location.reload(); };
-
-window.saveAndDownload = () => {
-  const edits = [];
-  // edits to existing text — only modified items
-  Object.keys(pageState).forEach(p => {
-    const st = pageState[p];
-    st.edits.forEach(rec => {
-      if ((rec.currText || '') !== (rec.origText || '')) {
-        edits.push({
-          page: parseInt(p),
-          type: 'edit',
-          x: rec.pdfX,
-          y: rec.pdfY,
-          w: rec.pdfW,
-          size: rec.pdfFontSize,
-          text: rec.currText,
-          color: '#000000',
-        });
-      }
-    });
-    st.adds.forEach(a => {
-      const t = (a.text||'').trim();
-      if (!t) return;
-      edits.push({
-        page: parseInt(p),
-        type: 'add',
-        xPct: a.xPct,
-        yPct: a.yPct,
-        size: a.size,
-        text: t,
-        color: a.color,
-      });
-    });
-  });
-  if (!edits.length) { alert('No changes to save.'); return; }
-  document.getElementById('hidden-edits').value = JSON.stringify(edits);
-  const dt = new DataTransfer();
-  dt.items.add(fileObj);
-  document.getElementById('hidden-file').files = dt.files;
-  document.getElementById('hidden-form').submit();
+window.exportPDF = () => {
+  if (!quill) return;
+  clearHits();
+  document.getElementById('export-html').value = quill.root.innerHTML;
+  document.getElementById('export-name').value = docName;
+  const form = document.getElementById('export-form');
+  form.action = location.pathname;
+  form.submit();
 };
 </script>
 {% endblock %}

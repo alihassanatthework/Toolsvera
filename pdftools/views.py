@@ -479,9 +479,216 @@ def pdf_sign(request):
     return render(request, 'coming_soon.html', {'tool_name': 'Sign PDF', 'tool_desc': 'Digitally sign your PDF documents online.'})
 
 
+def pdf_edit_extract(request):
+    """POST a PDF, get back JSON {html} of editable content."""
+    from django.http import JsonResponse
+    if request.method != 'POST' or 'pdf' not in request.FILES:
+        return JsonResponse({'error': 'POST a PDF as `pdf`.'}, status=400)
+    try:
+        from pdf2docx import Converter
+        import mammoth
+        f = request.FILES['pdf']
+        uid = str(uuid.uuid4())
+        pdf_path = os.path.join(_tmp(), f'{uid}.pdf')
+        docx_path = os.path.join(_tmp(), f'{uid}.docx')
+        with open(pdf_path, 'wb') as out:
+            for chunk in f.chunks():
+                out.write(chunk)
+        cv = Converter(pdf_path)
+        cv.convert(docx_path)
+        cv.close()
+        with open(docx_path, 'rb') as docx_f:
+            result = mammoth.convert_to_html(docx_f)
+            html = result.value or ''
+        if not html.strip():
+            html = '<p>(No editable text extracted. The PDF may be a scan.)</p>'
+        return JsonResponse({'html': html, 'name': _safe_base(f.name)})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+def _html_to_pdf_bytes(html_str):
+    """Render Quill-style HTML to a PDF byte string using ReportLab Platypus."""
+    from html.parser import HTMLParser
+    from reportlab.lib.pagesizes import letter
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.units import inch
+    from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER, TA_JUSTIFY
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, ListFlowable, ListItem
+    import io as _io
+
+    styles = getSampleStyleSheet()
+    base = styles['BodyText']
+    base.fontSize = 11; base.leading = 15
+    H = {
+        1: ParagraphStyle('H1', parent=styles['Heading1'], fontSize=22, leading=26, spaceAfter=10),
+        2: ParagraphStyle('H2', parent=styles['Heading2'], fontSize=18, leading=22, spaceAfter=8),
+        3: ParagraphStyle('H3', parent=styles['Heading3'], fontSize=14, leading=18, spaceAfter=6),
+    }
+
+    flowables = []
+
+    class P(HTMLParser):
+        TAG_MAP = {'strong': 'b', 'b': 'b', 'em': 'i', 'i': 'i', 'u': 'u', 's': 'strike', 'strike': 'strike', 'br': 'br'}
+        def __init__(self):
+            super().__init__()
+            self.stack = []  # list of (tag, opening_str)
+            self.buf = []    # current paragraph inline content
+            self.block = None  # current block tag (p, h1..h3, li)
+            self.list_items = []  # accumulated <li> content while in list
+            self.list_type = None  # 'ul' or 'ol'
+            self.align = TA_LEFT
+        def _open(self, tag, attrs):
+            attrs = dict(attrs)
+            style = attrs.get('style', '') or ''
+            # span/font handling
+            if tag == 'span' or tag == 'font':
+                bits = []
+                color = None; size = None
+                for piece in style.split(';'):
+                    if ':' not in piece: continue
+                    k, v = [x.strip() for x in piece.split(':', 1)]
+                    if k == 'color': color = v
+                    if k == 'background-color' and v.lower() not in ('transparent','#fff','#ffffff','white'):
+                        # highlight: emulate with font color shift is wrong; ignore for now
+                        pass
+                    if k == 'font-size':
+                        size = v.replace('px','').replace('pt','').strip()
+                if color:
+                    self.buf.append(f'<font color="{color}">'); self.stack.append('</font>')
+                if size:
+                    try: int(float(size))
+                    except: size = None
+                if size:
+                    self.buf.append(f'<font size="{size}">'); self.stack.append('</font>')
+                return
+            mapped = self.TAG_MAP.get(tag)
+            if mapped:
+                self.buf.append(f'<{mapped}/>' if mapped == 'br' else f'<{mapped}>')
+                if mapped != 'br': self.stack.append(f'</{mapped}>')
+        def _close(self, tag):
+            if tag in ('span', 'font'):
+                # pop any stacked closers that were opened by this span
+                while self.stack and self.stack[-1] in ('</font>',):
+                    self.buf.append(self.stack.pop())
+                return
+            mapped = self.TAG_MAP.get(tag)
+            if mapped and mapped != 'br' and self.stack:
+                close = f'</{mapped}>'
+                # find and pop matching
+                if close in self.stack:
+                    while self.stack:
+                        c = self.stack.pop()
+                        self.buf.append(c)
+                        if c == close: break
+        def _flush_para(self, style=None):
+            text = ''.join(self.buf).strip()
+            self.buf = []
+            self.stack = []
+            if not text: return
+            st = style or base
+            if self.align != TA_LEFT:
+                st = ParagraphStyle('al', parent=st, alignment=self.align)
+            try:
+                flowables.append(Paragraph(text, st))
+                flowables.append(Spacer(1, 4))
+            except Exception:
+                # last-resort: strip tags
+                import re as _re
+                flowables.append(Paragraph(_re.sub(r'<[^>]+>', '', text), st))
+                flowables.append(Spacer(1, 4))
+        def handle_starttag(self, tag, attrs):
+            attrs_d = dict(attrs)
+            style = (attrs_d.get('style') or '').lower()
+            if 'text-align:right' in style: self.align = TA_RIGHT
+            elif 'text-align:center' in style: self.align = TA_CENTER
+            elif 'text-align:justify' in style: self.align = TA_JUSTIFY
+            elif 'text-align:left' in style: self.align = TA_LEFT
+            if tag in ('p','div'):
+                self.block = 'p'
+            elif tag in ('h1','h2','h3'):
+                self.block = tag
+            elif tag == 'ul':
+                self.list_type = 'ul'; self.list_items = []
+            elif tag == 'ol':
+                self.list_type = 'ol'; self.list_items = []
+            elif tag == 'li':
+                self.block = 'li'; self.buf = []; self.stack = []
+            elif tag == 'br':
+                self.buf.append('<br/>')
+            elif tag == 'hr':
+                flowables.append(Spacer(1, 6))
+            else:
+                self._open(tag, attrs)
+        def handle_endtag(self, tag):
+            if tag in ('p','div'):
+                self._flush_para()
+                self.block = None
+                self.align = TA_LEFT
+            elif tag in ('h1','h2','h3'):
+                self._flush_para(H.get(int(tag[1]), base))
+                self.block = None
+                self.align = TA_LEFT
+            elif tag == 'li':
+                text = ''.join(self.buf).strip()
+                self.buf = []; self.stack = []
+                if text:
+                    self.list_items.append(Paragraph(text, base))
+                self.block = None
+            elif tag in ('ul','ol'):
+                if self.list_items:
+                    flowables.append(ListFlowable(
+                        [ListItem(p) for p in self.list_items],
+                        bulletType='1' if tag == 'ol' else 'bullet',
+                        leftIndent=18,
+                    ))
+                    flowables.append(Spacer(1, 4))
+                self.list_items = []; self.list_type = None
+            else:
+                self._close(tag)
+        def handle_data(self, data):
+            if not self.block and not self.list_type:
+                if data.strip():
+                    self.block = 'p'
+                    self.buf.append(self._esc(data))
+            else:
+                self.buf.append(self._esc(data))
+        @staticmethod
+        def _esc(s):
+            return (s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
+
+    parser = P()
+    parser.feed(html_str or '')
+    parser._flush_para()
+
+    buf = _io.BytesIO()
+    doc = SimpleDocTemplate(buf, pagesize=letter,
+                            leftMargin=0.75*inch, rightMargin=0.75*inch,
+                            topMargin=0.75*inch, bottomMargin=0.75*inch)
+    if not flowables:
+        flowables = [Paragraph('(Empty document)', base)]
+    doc.build(flowables)
+    return buf.getvalue()
+
+
 def pdf_edit(request):
+    """GET: render editor. POST with `mode=export`: HTML → PDF download. Legacy overlay mode also supported."""
     if request.method == 'POST':
         try:
+            mode = request.POST.get('mode', 'overlay')
+            if mode == 'export':
+                html_str = request.POST.get('html', '')
+                name = _safe_base(request.POST.get('name') or 'edited')
+                pdf_bytes = _html_to_pdf_bytes(html_str)
+                uid = str(uuid.uuid4())
+                output_path = os.path.join(_tmp(), f'{uid}_edited.pdf')
+                with open(output_path, 'wb') as out:
+                    out.write(pdf_bytes)
+                fname = f'{name}_edited.pdf'
+                response = FileResponse(open(output_path, 'rb'), as_attachment=True, filename=fname, content_type='application/pdf')
+                response['Content-Disposition'] = f'attachment; filename="{fname}"'
+                return response
+            # ── legacy overlay path (kept for compatibility) ──
             import json
             from reportlab.pdfgen import canvas as rlcanvas
             from reportlab.lib.colors import HexColor, white

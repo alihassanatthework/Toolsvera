@@ -28,5 +28,6 @@ urlpatterns = [
     path('pdf-ocr/', views.pdf_ocr, name='ocr'),
     path('pdf-sign/', views.pdf_sign, name='sign'),
     path('pdf-edit/', views.pdf_edit, name='edit'),
+    path('pdf-edit/extract/', views.pdf_edit_extract, name='edit_extract'),
     path('pdf-repair/', views.pdf_repair, name='repair'),
 ]
